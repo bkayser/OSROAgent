@@ -1,0 +1,13 @@
+services:
+  osro-concierge:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      # Persist vector store data
+      - ./vector_store:/app/vector_store
+      # Mount data directory for ingestion
+      - ./data:/app/data
+    restart: unless-stopped
