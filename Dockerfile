@@ -1,17 +1,4 @@
-# Stage 1: Build the frontend
-FROM node:20-alpine AS frontend-builder
-
-WORKDIR /app/frontend
-
-# Copy package files and install dependencies
-COPY frontend/package*.json ./
-RUN npm ci
-
-# Copy frontend source and build
-COPY frontend/ ./
-RUN npm run build
-
-# Stage 2: Python backend with built frontend
+# Backend API only (not exposed outside Docker network)
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -29,9 +16,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/ ./backend/
 COPY ingest.py .
 
-# Copy built frontend from previous stage
-COPY --from=frontend-builder /app/frontend/dist ./static
-
 # Create directories for data and vector store
 RUN mkdir -p /app/data /app/vector_store
 
@@ -39,8 +23,8 @@ RUN mkdir -p /app/data /app/vector_store
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
-# Expose port
+# Port only used inside the container network (not published)
 EXPOSE 8000
 
-# Run the application
+# Run the API server
 CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

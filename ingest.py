@@ -9,7 +9,7 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader, WebBaseLoader
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
@@ -104,9 +104,7 @@ def split_documents(documents: list) -> list:
 
 def create_vector_store(chunks: list, store_path: Path) -> FAISS:
     """Create and save FAISS vector store from document chunks."""
-    embeddings = HuggingFaceEmbeddings(
-        model_name="all-MiniLM-L6-v2"
-    )
+    embeddings = FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5")
     
     vector_store = FAISS.from_documents(chunks, embeddings)
     

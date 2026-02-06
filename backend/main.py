@@ -12,7 +12,7 @@ from pathlib import Path
 
 from google import genai
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import FastEmbedEmbeddings
 
 
 app = FastAPI(
@@ -56,7 +56,7 @@ def load_vector_store():
     global vector_store
     
     if VECTOR_STORE_PATH.exists():
-        embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        embeddings = FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5")
         vector_store = FAISS.load_local(
             str(VECTOR_STORE_PATH), 
             embeddings,

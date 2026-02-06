@@ -58,6 +58,7 @@ OSROAgent/
    # Add documents to the data/ folder first
    python ingest.py
    ```
+   If you had an existing `vector_store/` from a previous version, remove it and re-run `ingest.py` (embedding model may have changed).
 
 5. Start the backend server:
    ```bash
