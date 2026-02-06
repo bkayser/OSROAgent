@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 # Update production vector store only: sync local ./vector_store to GCS, then deploy a new API revision.
-# Run from project root after `python ingest.py`. Requires: gcloud CLI.
+# Run from project root after ./ingest.py. Requires: gcloud CLI.
 # Uses same env vars as deploy-cloudrun.sh (GCP_PROJECT, GCP_REGION, VECTOR_STORE_BUCKET, TAG).
 
 PROJECT="${GCP_PROJECT:-oregon-referees}"
@@ -15,7 +15,7 @@ ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 cd "${ROOT_DIR}"
 
 if [[ ! -d ./vector_store ]]; then
-  echo "Error: ./vector_store not found. Run 'python ingest.py' first."
+  echo "Error: ./vector_store not found. Run ./ingest.py first."
   exit 1
 fi
 

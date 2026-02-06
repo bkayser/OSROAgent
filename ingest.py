@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Ingest script for Oregon Soccer Referee Concierge.
 This script handles document ingestion and vector store creation.

@@ -48,17 +48,9 @@ OSROAgent/
    pip install -r requirements.txt
    ```
 
-3. Set your Google API key:
-   ```bash
-   export GOOGLE_API_KEY="your-api-key-here"
-   ```
+3. Add your Google API key to a `.env` file in the project root (e.g. `GOOGLE_API_KEY=your-api-key-here`). Docker Compose and the VS Code/Cursor launch config load it automatically; for running the backend directly, source `.env` or export the variable.
 
-4. (Optional) Ingest documents:
-   ```bash
-   # Add documents to the data/ folder first
-   python ingest.py
-   ```
-   If you had an existing `vector_store/` from a previous version, remove it and re-run `ingest.py` (embedding model may have changed).
+4. (Optional) Ingest documents for local use: add PDFs or text files to `data/`, then run `./ingest.py` to build `./vector_store`. For production, run `./ingest.py` then `./scripts/update-vector-store.sh` to sync the index to Cloud Run (see Production section).
 
 5. Start the backend server:
    ```bash
@@ -84,7 +76,7 @@ OSROAgent/
 ## Usage
 
 1. Add referee documents, rules PDFs, or text files to the `data/` directory
-2. Run `python ingest.py` to create the vector store
+2. Run `./ingest.py` to create the vector store
 3. Start the backend and frontend servers
 4. Ask questions about soccer rules and referee procedures!
 
@@ -112,7 +104,7 @@ Images are tagged for **Google Container Registry**: `gcr.io/oregon-referees/osr
 
 - **Update only the vector store:** After changing documents and re-running ingest locally:
   ```bash
-  python ingest.py
+  ./ingest.py
   ./scripts/update-vector-store.sh
   ```
   This syncs `./vector_store` to the GCS bucket and deploys a new API revision so new instances load the updated index.
