@@ -107,9 +107,11 @@ async def chat(query: Query):
             sources = [doc.metadata.get("source", "Unknown") for doc in docs]
         
         # Generate response using Gemini
-        # Note: GOOGLE_API_KEY environment variable must be set
-        client = genai.Client()
-        
+        api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            raise HTTPException(status_code=500, detail="GOOGLE_API_KEY or GEMINI_API_KEY must be set")
+        client = genai.Client(api_key=api_key)
+
         prompt = f"""You are a helpful assistant for Oregon soccer referees. 
 Answer questions about soccer rules, referee procedures, and Oregon-specific regulations.
 

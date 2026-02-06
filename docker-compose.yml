@@ -2,8 +2,7 @@ services:
   osro-agent-api:
     image: gcr.io/oregon-referees/osro-agent-api:latest
     build: .
-    environment:
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    env_file: .env
     volumes:
       - ./vector_store:/app/vector_store
       - ./data:/app/data
