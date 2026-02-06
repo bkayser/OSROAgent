@@ -1,5 +1,5 @@
 services:
-  backend:
+  osro-agent-api:
     build: .
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
@@ -9,12 +9,12 @@ services:
     restart: unless-stopped
     # No ports: API only reachable from frontend container
 
-  frontend:
+  osro-agent-ui:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "8000:80"
     depends_on:
-      - backend
+      - osro-agent-api
     restart: unless-stopped
