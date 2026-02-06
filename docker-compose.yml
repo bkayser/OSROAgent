@@ -1,5 +1,6 @@
 services:
   osro-agent-api:
+    image: gcr.io/oregon-referees/osro-agent-api:latest
     build: .
     environment:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
@@ -10,6 +11,7 @@ services:
     # No ports: API only reachable from frontend container
 
   osro-agent-ui:
+    image: gcr.io/oregon-referees/osro-agent-ui:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile

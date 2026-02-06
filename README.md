@@ -88,6 +88,37 @@ OSROAgent/
 3. Start the backend and frontend servers
 4. Ask questions about soccer rules and referee procedures!
 
+## Production (GCR / Cloud Run)
+
+Images are tagged for **Google Container Registry**: `gcr.io/oregon-referees/osro-agent-api`, `gcr.io/oregon-referees/osro-agent-ui`. Deployments target project **oregon-referees**, region **us-west1**. The API reads the vector store from a **Cloud Storage bucket** mounted at `/app/vector_store`.
+
+- **One-time setup (bucket and IAM):** Create the bucket and grant the Cloud Run service account access:
+  ```bash
+  ./scripts/setup-cloudrun-storage.sh
+  ```
+  Uses bucket `{PROJECT}-osro-vector-store` by default; set `VECTOR_STORE_BUCKET` to override.
+
+- **Build and push to GCR:** From the project root, run:
+  ```bash
+  ./scripts/build-push.sh
+  ```
+  Optional: `TAG=sha-abc123 ./scripts/build-push.sh` to push a specific tag.
+
+- **Deploy to Cloud Run:** After pushing images, set `GOOGLE_API_KEY` and run:
+  ```bash
+  ./scripts/deploy-cloudrun.sh
+  ```
+  The script deploys the API (with the GCS bucket mounted at `/app/vector_store`) first, then the UI with `BACKEND_URL` set to the API service URL.
+
+- **Update only the vector store:** After changing documents and re-running ingest locally:
+  ```bash
+  python ingest.py
+  ./scripts/update-vector-store.sh
+  ```
+  This syncs `./vector_store` to the GCS bucket and deploys a new API revision so new instances load the updated index.
+
+- **Local Docker:** `docker compose up` still builds and runs the app; the UI uses `BACKEND_URL=http://osro-agent-api:8000` by default. Local API uses the mounted `./vector_store` directory.
+
 ## License
 
 MIT License - Copyright (c) 2026 William Kayser
