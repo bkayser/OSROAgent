@@ -9,11 +9,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from pathlib import Path
-
-from google import genai
-from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import FastEmbedEmbeddings
-
+# genai/langchain/FAISS imported lazily in handlers for fast startup
 
 app = FastAPI(
     title="Oregon Soccer Referee Concierge",
@@ -24,7 +20,7 @@ app = FastAPI(
 # CORS configuration for frontend (development)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:8000"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:8000"],  # 8000 = UI host port in docker
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -54,7 +50,9 @@ class Response(BaseModel):
 def load_vector_store():
     """Load the FAISS vector store if it exists."""
     global vector_store
-    
+    from langchain_community.embeddings import FastEmbedEmbeddings
+    from langchain_community.vectorstores import FAISS
+
     if VECTOR_STORE_PATH.exists():
         embeddings = FastEmbedEmbeddings(model_name="BAAI/bge-small-en-v1.5")
         vector_store = FAISS.load_local(
@@ -62,15 +60,20 @@ def load_vector_store():
             embeddings,
             allow_dangerous_deserialization=True
         )
-        print("Vector store loaded successfully")
-    else:
-        print("No vector store found. Run ingest.py first.")
+
+
+def get_vector_store():
+    """Return the vector store, loading it on first use (lazy load for fast Cloud Run startup)."""
+    global vector_store
+    if vector_store is None:
+        load_vector_store()
+    return vector_store
 
 
 @app.on_event("startup")
 async def startup_event():
-    """Initialize resources on startup."""
-    load_vector_store()
+    """Initialize resources on startup. Vector store is loaded lazily on first use."""
+    pass
 
 
 @app.get("/")
@@ -82,9 +85,10 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Detailed health check."""
+    store = get_vector_store()
     return {
         "status": "healthy",
-        "vector_store_loaded": vector_store is not None
+        "vector_store_loaded": store is not None
     }
 
 
@@ -101,12 +105,14 @@ async def chat(query: Query):
         sources = []
         
         # Retrieve relevant context if vector store is available
-        if vector_store:
-            docs = vector_store.similarity_search(query.question, k=3)
+        store = get_vector_store()
+        if store:
+            docs = store.similarity_search(query.question, k=3)
             context = "\n\n".join([doc.page_content for doc in docs])
             sources = [doc.metadata.get("source", "Unknown") for doc in docs]
         
         # Generate response using Gemini
+        from google import genai
         api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
         if not api_key:
             raise HTTPException(status_code=500, detail="GOOGLE_API_KEY or GEMINI_API_KEY must be set")
@@ -157,4 +163,4 @@ if STATIC_DIR.exists():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)

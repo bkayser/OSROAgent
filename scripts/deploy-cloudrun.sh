@@ -17,18 +17,19 @@ if ! gcloud storage buckets describe "gs://${BUCKET}" --project "${PROJECT}" &>/
   gcloud storage buckets create "gs://${BUCKET}" --project "${PROJECT}" --location "${REGION}"
 fi
 
-echo "Deploying API to Cloud Run (${REGION}) with vector store gs://${BUCKET}..."
+echo "Deploying API to Cloud Run (${REGION})..."
+# Deploy without volume first to verify container starts (volume mount can block startup).
+# To attach vector store bucket, run: gcloud run services update osro-agent-api --region ${REGION} --add-volume=... --add-volume-mount=...
 gcloud run deploy osro-agent-api \
   --image "${IMAGE_API}" \
   --region "${REGION}" \
   --platform managed \
   --project "${PROJECT}" \
+  --execution-environment gen2 \
   --ingress internal \
   --allow-unauthenticated \
   --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY}" \
-  --memory 1Gi \
-  --add-volume=name=vector-store,type=cloud-storage,bucket="${BUCKET}",readonly=true \
-  --add-volume-mount=volume=vector-store,mount-path=/app/vector_store
+  --memory 1Gi
 
 API_URL=$(gcloud run services describe osro-agent-api --region "${REGION}" --project "${PROJECT}" --format 'value(status.url)')
 echo "API URL: ${API_URL}"

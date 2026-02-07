@@ -11,8 +11,8 @@ REGISTRY="gcr.io/${PROJECT}"
 echo "Configuring Docker for GCR (project: ${PROJECT})..."
 gcloud auth configure-docker gcr.io --quiet
 
-echo "Building images..."
-docker compose build
+echo "Building images for linux/amd64 (Cloud Run)..."
+DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose build
 
 echo "Tagging and pushing (tag: ${TAG})..."
 docker tag "${REGISTRY}/osro-agent-api:latest" "${REGISTRY}/osro-agent-api:${TAG}"
