@@ -109,7 +109,7 @@ Images are tagged for **Google Container Registry**: `gcr.io/oregon-referees/osr
   ```
   This syncs `./vector_store` to the GCS bucket and deploys a new API revision so new instances load the updated index.
 
-- **Local Docker:** `docker compose up` still builds and runs the app; the UI uses `BACKEND_URL=http://osro-agent-api:8000` by default. Local API uses the mounted `./vector_store` directory.
+- **Local Docker:** `docker compose up` still builds and runs the app; the UI uses `BACKEND_URL=http://osro-agent-api:8080` by default. Local API uses the mounted `./vector_store` directory. The app is at http://localhost:8000 (host port 8000 is the UI).
 
 ## License
 
