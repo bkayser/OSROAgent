@@ -92,6 +92,14 @@ async def health_check():
     }
 
 
+@app.get("/chat", response_model=Response)
+async def chat_get(q: str = ""):
+    """Chat via GET ?q= for Cloud Run (avoids 405 on POST)."""
+    if not (q or "").strip():
+        raise HTTPException(status_code=400, detail="Query parameter 'q' cannot be empty")
+    return await chat(Query(question=q.strip()))
+
+
 @app.post("/chat", response_model=Response)
 async def chat(query: Query):
     """
@@ -99,7 +107,7 @@ async def chat(query: Query):
     """
     if not query.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
-    
+
     try:
         context = ""
         sources = []
