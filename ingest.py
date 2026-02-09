@@ -31,7 +31,7 @@ def load_urls(url_file: Path) -> list:
     # Read URLs from file (one per line, ignore comments and blank lines)
     urls = [
         line.strip() for line in url_file.read_text().split('\n')
-        if line.strip() and not line.startswith('#')
+        if (s := line.strip()) and not s.startswith('#')
     ]
     
     if not urls:
