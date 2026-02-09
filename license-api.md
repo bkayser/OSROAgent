@@ -111,58 +111,58 @@ Each license record contains:
 
 ## License ID Reference
 
-To look up detailed information about a license, concatenate the `discipline` and `license_id` fields (e.g., discipline `"referee"` + license_id `"1"` = `"referee1"`). Use the resulting identifier with the tables below.
+To look up detailed information about a license, concatenate the `discipline` and `license_id` fields with an underscore separator (e.g., discipline `"referee"` + license_id `"1"` = `"referee_1"`). Use the resulting identifier with the tables below.
 
 ### Referee Licenses
 
-| ID        | Name                  | Discipline | Rank | Pathway    |
-|-----------|-----------------------|------------|------|------------|
-| referee1  | Grassroots Referee    | Referee    | 8    | Grassroots |
-| referee2  | Regional Referee      | Referee    | 7    | Regional   |
-| referee3  | Advanced Regional Referee | Referee | 6   | Regional   |
-| referee4  | National 2 Referee    | Referee    | 5    | National   |
-| referee5  | National 1 Referee    | Referee    | 4    | National   |
-| referee6  | National Referee      | Referee    | 3    | National   |
-| referee7  | Professional Referee  | Referee    | 2    | Professional |
-| referee8  | FIFA Referee          | Referee    | 1    | FIFA       |
+| ID         | Name                  | Discipline | Rank | Pathway    |
+|------------|-----------------------|------------|------|------------|
+| referee_1  | Grassroots Referee    | Referee    | 8    | Grassroots |
+| referee_2  | Regional Referee      | Referee    | 7    | Regional   |
+| referee_3  | Advanced Regional Referee | Referee | 6   | Regional   |
+| referee_4  | National 2 Referee    | Referee    | 5    | National   |
+| referee_5  | National 1 Referee    | Referee    | 4    | National   |
+| referee_6  | National Referee      | Referee    | 3    | National   |
+| referee_7  | Professional Referee  | Referee    | 2    | Professional |
+| referee_8  | FIFA Referee          | Referee    | 1    | FIFA       |
 
 ### Futsal Licenses
 
-| ID       | Name                       | Discipline | Rank | Pathway    |
-|----------|----------------------------|------------|------|------------|
-| futsal1  | Grassroots Futsal Referee  | Futsal     | 4    | Grassroots |
-| futsal2  | Advanced Futsal Referee    | Futsal     | 3    | Regional   |
-| futsal3  | National Futsal Referee    | Futsal     | 2    | National   |
-| futsal4  | FIFA Futsal Referee        | Futsal     | 1    | FIFA       |
+| ID        | Name                       | Discipline | Rank | Pathway    |
+|-----------|----------------------------|------------|------|------------|
+| futsal_1  | Grassroots Futsal Referee  | Futsal     | 4    | Grassroots |
+| futsal_2  | Advanced Futsal Referee    | Futsal     | 3    | Regional   |
+| futsal_3  | National Futsal Referee    | Futsal     | 2    | National   |
+| futsal_4  | FIFA Futsal Referee        | Futsal     | 1    | FIFA       |
 
 ### Assignor Licenses
 
-| ID         | Name                | Discipline | Rank | Pathway    |
-|------------|---------------------|------------|------|------------|
-| assignor1  | Grassroots Assignor | Assignor   | 3    | Grassroots |
-| assignor2  | Regional Assignor   | Assignor   | 2    | Regional   |
-| assignor3  | National Assignor   | Assignor   | 1    | National   |
+| ID          | Name                | Discipline | Rank | Pathway    |
+|-------------|---------------------|------------|------|------------|
+| assignor_1  | Grassroots Assignor | Assignor   | 3    | Grassroots |
+| assignor_2  | Regional Assignor   | Assignor   | 2    | Regional   |
+| assignor_3  | National Assignor   | Assignor   | 1    | National   |
 
 ### Assessor Licenses
 
-| ID         | Name                | Discipline | Rank | Pathway    |
-|------------|---------------------|------------|------|------------|
-| assessor1  | Grassroots Assessor | Assessor   | 3    | Grassroots |
-| assessor2  | Regional Assessor   | Assessor   | 2    | Regional   |
-| assessor3  | National Assessor   | Assessor   | 1    | National   |
+| ID          | Name                | Discipline | Rank | Pathway    |
+|-------------|---------------------|------------|------|------------|
+| assessor_1  | Grassroots Assessor | Assessor   | 3    | Grassroots |
+| assessor_2  | Regional Assessor   | Assessor   | 2    | Regional   |
+| assessor_3  | National Assessor   | Assessor   | 1    | National   |
 
 ### Instructor Licenses
 
-| ID           | Name                  | Discipline  | Rank | Pathway    |
-|--------------|-----------------------|-------------|------|------------|
-| instructor1  | Grassroots Instructor | Instructor  | 3    | Grassroots |
-| instructor2  | Regional Instructor   | Instructor  | 2    | Regional   |
-| instructor3  | National Instructor   | Instructor  | 1    | National   |
+| ID            | Name                  | Discipline  | Rank | Pathway    |
+|---------------|-----------------------|-------------|------|------------|
+| instructor_1  | Grassroots Instructor | Instructor  | 3    | Grassroots |
+| instructor_2  | Regional Instructor   | Instructor  | 2    | Regional   |
+| instructor_3  | National Instructor   | Instructor  | 1    | National   |
 
 ### Mentor Licenses
 
-| ID       | Name              | Discipline | Rank | Pathway    |
-|----------|-------------------|------------|------|------------|
-| mentor1  | Grassroots Mentor | Mentor     | 3    | Grassroots |
-| mentor2  | Regional Mentor   | Mentor     | 2    | Regional   |
-| mentor3  | National Mentor   | Mentor     | 1    | National   |
+| ID        | Name              | Discipline | Rank | Pathway    |
+|-----------|-------------------|------------|------|------------|
+| mentor_1  | Grassroots Mentor | Mentor     | 3    | Grassroots |
+| mentor_2  | Regional Mentor   | Mentor     | 2    | Regional   |
+| mentor_3  | National Mentor   | Mentor     | 1    | National   |

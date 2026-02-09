@@ -85,12 +85,13 @@ def enrich_and_group_licenses(raw_licenses: list[dict]) -> dict:
     grouped: dict[str, list[dict]] = {}
 
     for lic in raw_licenses:
-        ref_key = f"{lic['discipline']}{lic['license_id']}"
+        ref_key = f"{lic['discipline']}_{lic['license_id']}"
         ref_entry = ref.get(ref_key)
         if ref_entry is None:
             continue
 
         enriched = {
+            "id": f"{lic['discipline']}_{lic['license_id']}",
             "name": ref_entry["name"],
             "discipline": ref_entry["discipline"],
             "rank": ref_entry["rank"],

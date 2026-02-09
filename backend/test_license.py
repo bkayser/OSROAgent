@@ -37,9 +37,9 @@ def test_load_license_reference():
     assert isinstance(ref, dict)
     assert len(ref) > 0
     # Spot-check a few keys
-    assert "referee1" in ref
-    assert ref["referee1"]["name"] == "Grassroots Referee"
-    assert ref["futsal3"]["discipline"] == "Futsal"
+    assert "referee_1" in ref
+    assert ref["referee_1"]["name"] == "Grassroots Referee"
+    assert ref["futsal_3"]["discipline"] == "Futsal"
 
 
 # ---------------------------------------------------------------------------
@@ -70,6 +70,7 @@ def test_enrich_and_group_single_license():
     assert "Referee" in result
     assert len(result["Referee"]) == 1
     lic = result["Referee"][0]
+    assert lic["id"] == "referee_1"
     assert lic["name"] == "Grassroots Referee"
     assert lic["discipline"] == "Referee"
     assert lic["rank"] == 8
@@ -183,6 +184,7 @@ def test_license_status_success(mock_lookup, mock_fetch):
     assert "Referee" in data
     assert "Futsal" in data
     ref_lic = data["Referee"][0]
+    assert ref_lic["id"] == "referee_1"
     assert ref_lic["name"] == "Grassroots Referee"
     assert ref_lic["discipline"] == "Referee"
     assert ref_lic["rank"] == 8
