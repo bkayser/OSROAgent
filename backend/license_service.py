@@ -39,7 +39,7 @@ async def _get_access_token(client: httpx.AsyncClient) -> str:
         json={"username": username, "password": password},
     )
     if resp.status_code != 200:
-        raise RuntimeError(f"USSF API login failed: {resp.status_code} {resp.text}")
+        raise RuntimeError(f"USSF API login failed with status {resp.status_code}")
     return resp.json()["access_token"]
 
 
@@ -55,7 +55,7 @@ async def lookup_ussf_id(email: str) -> str | None:
         if resp.status_code == 404:
             return None
         if resp.status_code != 200:
-            raise RuntimeError(f"USSF API user lookup failed: {resp.status_code} {resp.text}")
+            raise RuntimeError(f"USSF API user lookup failed with status {resp.status_code}")
         return resp.json().get("ussf_id")
 
 
@@ -68,7 +68,7 @@ async def fetch_active_licenses(ussf_id: str) -> list[dict]:
             headers={"Authorization": f"Bearer {token}"},
         )
         if resp.status_code != 200:
-            raise RuntimeError(f"USSF API license fetch failed: {resp.status_code} {resp.text}")
+            raise RuntimeError(f"USSF API license fetch failed with status {resp.status_code}")
         data = resp.json()
         return [lic for lic in data.get("licenses", []) if lic.get("status") == "active"]
 

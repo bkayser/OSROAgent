@@ -146,7 +146,7 @@ def test_license_status_email_not_found(mock_lookup):
 
 
 @patch("backend.license_service.lookup_ussf_id", new_callable=AsyncMock,
-       side_effect=RuntimeError("USSF API login failed: 401 Unauthorized"))
+       side_effect=RuntimeError("USSF API login failed with status 401"))
 def test_license_status_api_error_on_lookup(mock_lookup):
     """Should return 500 when the USSF API returns an error during lookup."""
     resp = client.get("/license-status", params={"email": "test@example.com"})
@@ -155,7 +155,7 @@ def test_license_status_api_error_on_lookup(mock_lookup):
 
 
 @patch("backend.license_service.fetch_active_licenses", new_callable=AsyncMock,
-       side_effect=RuntimeError("USSF API license fetch failed: 500 Internal Server Error"))
+       side_effect=RuntimeError("USSF API license fetch failed with status 500"))
 @patch("backend.license_service.lookup_ussf_id", new_callable=AsyncMock,
        return_value="1234567890123456")
 def test_license_status_api_error_on_fetch(mock_lookup, mock_fetch):

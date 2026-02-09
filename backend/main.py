@@ -159,7 +159,7 @@ async def license_status(email: str = ""):
     Look up the active USSF licenses for a referee by email address.
     Returns licenses grouped by discipline, ordered by rank within each group.
     """
-    if not (email or "").strip():
+    if not email.strip():
         raise HTTPException(status_code=400, detail="Query parameter 'email' is required")
 
     from backend.license_service import lookup_ussf_id, fetch_active_licenses, enrich_and_group_licenses
