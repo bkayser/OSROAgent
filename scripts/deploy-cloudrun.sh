@@ -59,5 +59,3 @@ gcloud run deploy osro-agent-ui \
 UI_URL=$(gcloud run services describe osro-agent-ui --region "${REGION}" --project "${PROJECT}" --format 'value(status.url)')
 echo "Done. UI: ${UI_URL}  API: ${API_URL}"
 echo "Vector store is mounted from gs://${BUCKET} at /app/vector_store. To update it only: ./scripts/update-vector-store.sh"
-echo ""
-echo "If /api/chat returns 200 with HTML (e.g. 478 bytes): Cloud Run UI env BACKEND_URL is wrong. In Console → Cloud Run → osro-agent-ui → Variables, set BACKEND_URL to the API URL above (not the UI URL)."
