@@ -17,7 +17,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 # Configuration
 DATA_DIR = Path("./data")
 VECTOR_STORE_PATH = Path("./vector_store")
-URLS_FILE = Path("./urls.txt")
+URLS_FILE = DATA_DIR / "urls.txt"
 
 
 def load_urls(url_file: Path) -> list:
@@ -41,6 +41,8 @@ def load_urls(url_file: Path) -> list:
     try:
         loader = WebBaseLoader(urls)
         documents = loader.load()
+        for doc in documents:
+            print(f"  Source: {doc.metadata.get('source', 'unknown')}")
         print(f"Loaded {len(documents)} web pages")
     except Exception as e:
         print(f"Error loading URLs: {e}")
@@ -65,6 +67,8 @@ def load_documents(data_dir: Path) -> list:
             loader_cls=TextLoader
         )
         txt_docs = loader.load()
+        for doc in txt_docs:
+            print(f"  Source: {doc.metadata.get('source', 'unknown')}")
         documents.extend(txt_docs)
         print(f"Loaded {len(txt_docs)} text files")
     except Exception as e:
@@ -78,6 +82,8 @@ def load_documents(data_dir: Path) -> list:
             loader_cls=PyPDFLoader
         )
         pdf_docs = loader.load()
+        for doc in pdf_docs:
+            print(f"  Source: {doc.metadata.get('source', 'unknown')}")
         documents.extend(pdf_docs)
         print(f"Loaded {len(pdf_docs)} PDF pages")
     except Exception as e:
