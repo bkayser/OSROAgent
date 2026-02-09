@@ -27,7 +27,7 @@ gcloud run deploy osro-agent-api \
   --platform managed \
   --project "${PROJECT}" \
   --execution-environment gen2 \
-  --ingress internal \
+  --ingress all \
   --allow-unauthenticated \
   --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY}" \
   --memory 1Gi \
@@ -35,6 +35,15 @@ gcloud run deploy osro-agent-api \
 
 API_URL=$(gcloud run services describe osro-agent-api --region "${REGION}" --project "${PROJECT}" --format 'value(status.url)')
 echo "API URL: ${API_URL}"
+
+if [ -z "${API_URL}" ]; then
+  echo "Error: Could not get API URL (osro-agent-api in ${REGION}). Fix API deploy or region/project."
+  exit 1
+fi
+if [[ "${API_URL}" != *"osro-agent-api"* ]]; then
+  echo "Error: API URL does not contain 'osro-agent-api': ${API_URL}"
+  exit 1
+fi
 
 echo "Deploying UI to Cloud Run (${REGION}) with BACKEND_URL=${API_URL}..."
 gcloud run deploy osro-agent-ui \
@@ -50,3 +59,5 @@ gcloud run deploy osro-agent-ui \
 UI_URL=$(gcloud run services describe osro-agent-ui --region "${REGION}" --project "${PROJECT}" --format 'value(status.url)')
 echo "Done. UI: ${UI_URL}  API: ${API_URL}"
 echo "Vector store is mounted from gs://${BUCKET} at /app/vector_store. To update it only: ./scripts/update-vector-store.sh"
+echo ""
+echo "If /api/chat returns 200 with HTML (e.g. 478 bytes): Cloud Run UI env BACKEND_URL is wrong. In Console → Cloud Run → osro-agent-ui → Variables, set BACKEND_URL to the API URL above (not the UI URL)."
