@@ -73,7 +73,8 @@ def get_vector_store():
 @app.on_event("startup")
 async def startup_event():
     """Initialize resources on startup. Vector store is loaded lazily on first use."""
-    pass
+    from backend.license_service import load_license_reference
+    load_license_reference()
 
 
 @app.get("/")
@@ -152,6 +153,36 @@ say so rather than making up information."""
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/license-status")
+async def license_status(email: str = ""):
+    """
+    Look up the active USSF licenses for a referee by email address.
+    Returns licenses grouped by discipline, ordered by rank within each group.
+    """
+    if not email.strip():
+        raise HTTPException(status_code=400, detail="Query parameter 'email' is required")
+
+    from backend.license_service import lookup_ussf_id, fetch_active_licenses, enrich_and_group_licenses
+
+    try:
+        ussf_id = await lookup_ussf_id(email.strip())
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    if ussf_id is None:
+        raise HTTPException(
+            status_code=404,
+            detail="No USSF ID found associated with that e-mail address",
+        )
+
+    try:
+        raw_licenses = await fetch_active_licenses(ussf_id)
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return enrich_and_group_licenses(raw_licenses)
+
+
 # Serve static frontend files in production
 if STATIC_DIR.exists():
     app.mount("/assets", StaticFiles(directory=STATIC_DIR / "assets"), name="assets")
@@ -160,7 +191,7 @@ if STATIC_DIR.exists():
     async def serve_frontend(request: Request, full_path: str):
         """Serve the frontend for all non-API routes."""
         # Don't serve frontend for API routes
-        if full_path.startswith("api/") or full_path in ["health", "chat", "docs", "openapi.json", "redoc"]:
+        if full_path.startswith("api/") or full_path in ["health", "chat", "license-status", "docs", "openapi.json", "redoc"]:
             raise HTTPException(status_code=404, detail="Not found")
         
         # Serve index.html for SPA routing
