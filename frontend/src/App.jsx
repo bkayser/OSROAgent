@@ -64,7 +64,7 @@ function App() {
               <div className="text-6xl mb-4">⚽</div>
               <h2 className="text-xl font-semibold mb-2">Welcome!</h2>
               <p className="max-w-md mx-auto">
-                Ask me anything about soccer rules, referee procedures, or Oregon-specific regulations.
+                Ask me anything about being a soccer official in Oregon: IFAB and league rules, referee procedures, getting assignments, and using Reftown.
               </p>
             </div>
           ) : (

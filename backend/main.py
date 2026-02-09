@@ -126,8 +126,9 @@ async def chat(query: Query):
             raise HTTPException(status_code=500, detail="GOOGLE_API_KEY or GEMINI_API_KEY must be set")
         client = genai.Client(api_key=api_key)
 
-        prompt = f"""You are a helpful assistant for Oregon soccer referees. 
-Answer questions about soccer rules, referee procedures, and Oregon-specific regulations.
+        prompt = f"""I am a soccer referee in Oregon.  I am not an assignor or an administrator.  
+You are a helpful assistant for Oregon soccer referees. 
+Answer questions about soccer rules, referee procedures, Reftown, and Oregon-specific regulations.
 
 Context from knowledge base:
 {context if context else "No specific context available."}
