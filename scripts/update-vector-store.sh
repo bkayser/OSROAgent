@@ -24,6 +24,7 @@ echo "Syncing ./vector_store to gs://${BUCKET}/..."
 gcloud storage rsync ./vector_store "gs://${BUCKET}/" --delete-unmatched-destination-objects
 
 echo "Deploying new API revision (same image) so new instances load the updated index..."
+# Use same options as deploy-cloudrun.sh so ingress/env/min-instances are not reverted (ingress all required for UI→API).
 # Note: volume mount omitted here; if you use a volume, add --add-volume and --add-volume-mount
 gcloud run deploy osro-agent-api \
   --image "${IMAGE_API}" \
@@ -31,9 +32,10 @@ gcloud run deploy osro-agent-api \
   --platform managed \
   --project "${PROJECT}" \
   --execution-environment gen2 \
-  --ingress internal \
+  --ingress all \
   --allow-unauthenticated \
   --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY}" \
-  --memory 1Gi
+  --memory 1Gi \
+  --min-instances 1
 
 echo "Done. New API revision is live; traffic will shift to it and new instances will use the updated vector store."

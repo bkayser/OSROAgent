@@ -18,6 +18,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 DATA_DIR = Path("./data")
 VECTOR_STORE_PATH = Path("./vector_store")
 URLS_FILE = DATA_DIR / "urls.txt"
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
 
 
 def load_urls(url_file: Path) -> list:
@@ -39,10 +40,11 @@ def load_urls(url_file: Path) -> list:
         return documents
     
     try:
-        loader = WebBaseLoader(urls)
+        print("Loading URLs...")
+        loader = WebBaseLoader(urls, requests_kwargs={"headers": {"User-Agent": USER_AGENT}})
         documents = loader.load()
-        for doc in documents:
-            print(f"  Source: {doc.metadata.get('source', 'unknown')}")
+        for source in sorted({doc.metadata.get("source", "unknown") for doc in documents}):
+            print(f"  Source: {source}")
         print(f"Loaded {len(documents)} web pages")
     except Exception as e:
         print(f"Error loading URLs: {e}")
@@ -61,29 +63,31 @@ def load_documents(data_dir: Path) -> list:
     
     # Load text files
     try:
+        print("Loading text files...")
         loader = DirectoryLoader(
             str(data_dir),
             glob="**/*.txt",
             loader_cls=TextLoader
         )
         txt_docs = loader.load()
-        for doc in txt_docs:
-            print(f"  Source: {doc.metadata.get('source', 'unknown')}")
+        for source in sorted({doc.metadata.get("source", "unknown") for doc in txt_docs}):
+            print(f"  Source: {source}")
         documents.extend(txt_docs)
         print(f"Loaded {len(txt_docs)} text files")
     except Exception as e:
         print(f"Error loading text files: {e}")
     
-    # Load PDF files
+    # Load PDF files (pypdf may print "Ignoring wrong pointing object" for malformed xrefs)
     try:
+        print("Loading PDFs...")
         loader = DirectoryLoader(
             str(data_dir),
             glob="**/*.pdf",
             loader_cls=PyPDFLoader
         )
         pdf_docs = loader.load()
-        for doc in pdf_docs:
-            print(f"  Source: {doc.metadata.get('source', 'unknown')}")
+        for source in sorted({doc.metadata.get("source", "unknown") for doc in pdf_docs}):
+            print(f"  Source: {source}")
         documents.extend(pdf_docs)
         print(f"Loaded {len(pdf_docs)} PDF pages")
     except Exception as e:
