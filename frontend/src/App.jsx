@@ -47,8 +47,13 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-oregon-green text-white py-4 px-6 shadow-lg">
-        <div className="max-w-4xl mx-auto">
+      <header className="bg-oregon-green text-white py-6 px-6 shadow-lg">
+        <div className="max-w-4xl mx-auto flex flex-col items-center">
+          <img 
+            src="/Logo_OSRO-1.png" 
+            alt="Oregon Soccer Referee Organization" 
+            className="h-20 mb-3"
+          />
           <h1 className="text-2xl font-bold">Oregon Soccer Referee Concierge</h1>
           <p className="text-green-100 text-sm mt-1">
             Your AI assistant for soccer rules and referee procedures
