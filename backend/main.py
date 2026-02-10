@@ -144,10 +144,18 @@ say so rather than making up information."""
             contents=prompt
         )
         
-        return Response(
+        result = Response(
             answer=response.text,
             sources=list(set(sources))
         )
+        # Log to Google Sheet for review (best-effort; never fail the request)
+        env = "prod" if os.environ.get("K_SERVICE") else "dev"
+        try:
+            from backend.chat_log import append_chat_log
+            append_chat_log(env, query.question, result.answer, result.sources)
+        except Exception:
+            pass
+        return result
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

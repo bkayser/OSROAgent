@@ -1,0 +1,79 @@
+"""
+Append chat queries and responses to a Google Sheet for review and improvement.
+"""
+
+import logging
+from pathlib import Path
+
+# Backend directory (same as this module); sheet_id and oregon-referees*.json live here
+# so they are included when Docker copies backend/ into the image.
+BACKEND_DIR = Path(__file__).resolve().parent
+
+# Max characters per cell (Google Sheets limit)
+MAX_CELL_CHARS = 50_000
+
+_sheet_client = None
+_sheet_id = None
+
+
+def _get_sheet_id() -> str | None:
+    """Read sheet ID from backend file 'sheet_id'."""
+    global _sheet_id
+    if _sheet_id is not None:
+        return _sheet_id
+    path = BACKEND_DIR / "sheet_id"
+    if not path.exists():
+        return None
+    try:
+        _sheet_id = path.read_text().strip()
+        return _sheet_id if _sheet_id else None
+    except Exception:
+        return None
+
+
+def _get_credentials_path() -> Path | None:
+    """Find service account JSON file starting with 'oregon-referees' in backend dir."""
+    for f in BACKEND_DIR.glob("oregon-referees*.json"):
+        if f.is_file():
+            return f
+    return None
+
+
+def _get_sheet_client():
+    """Return gspread client, or None if credentials/sheet not configured."""
+    global _sheet_client
+    if _sheet_client is not None:
+        return _sheet_client
+    creds_path = _get_credentials_path()
+    if not creds_path or not creds_path.exists():
+        return None
+    try:
+        import gspread
+        _sheet_client = gspread.service_account(filename=str(creds_path))
+        return _sheet_client
+    except Exception as e:
+        logging.warning("Chat log: could not create Sheets client: %s", e)
+        return None
+
+
+def append_chat_log(env: str, query: str, answer: str, sources: list[str]) -> None:
+    """
+    Append one row to the chat log sheet. Columns: Env, Timestamp, Query, Answer, Sources.
+    Does nothing if sheet ID or credentials are missing; logs and swallows errors so chat still works.
+    """
+    from datetime import datetime, timezone
+    sheet_id = _get_sheet_id()
+    if not sheet_id:
+        return
+    client = _get_sheet_client()
+    if not client:
+        return
+    try:
+        sheet = client.open_by_key(sheet_id).sheet1
+        ts = datetime.now(timezone.utc).isoformat()
+        answer_trunc = (answer[:MAX_CELL_CHARS] + "...") if len(answer) > MAX_CELL_CHARS else answer
+        sources_str = ", ".join(sources) if sources else ""
+        row = [env, ts, query, answer_trunc, sources_str]
+        sheet.append_row(row, value_input_option="USER_ENTERED")
+    except Exception as e:
+        logging.exception("Chat log append failed: %s", e)
