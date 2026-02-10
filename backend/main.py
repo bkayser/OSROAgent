@@ -165,7 +165,7 @@ async def license_status(email: str = ""):
     from backend.license_service import lookup_ussf_id, fetch_active_licenses, enrich_and_group_licenses
 
     try:
-        ussf_id = await lookup_ussf_id(email.strip())
+        ussf_id, full_name = await lookup_ussf_id(email.strip())
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -180,7 +180,13 @@ async def license_status(email: str = ""):
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    return enrich_and_group_licenses(raw_licenses)
+    grouped_licenses = enrich_and_group_licenses(raw_licenses)
+    
+    return {
+        "ussf_id": ussf_id,
+        "full_name": full_name,
+        "licenses": grouped_licenses
+    }
 
 
 # Serve static frontend files in production
