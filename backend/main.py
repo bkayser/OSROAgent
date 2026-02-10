@@ -3,6 +3,7 @@ FastAPI backend for Oregon Soccer Referee Concierge.
 """
 
 import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -11,10 +12,20 @@ from pydantic import BaseModel
 from pathlib import Path
 # genai/langchain/FAISS imported lazily in handlers for fast startup
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup: load license reference. Vector store is loaded lazily on first use. Shutdown: nothing."""
+    from backend.license_service import load_license_reference
+    load_license_reference()
+    yield
+
+
 app = FastAPI(
     title="Oregon Soccer Referee Concierge",
     description="AI-powered concierge for Oregon soccer referees",
-    version="1.0.0"
+    version="1.0.0",
+    lifespan=lifespan,
 )
 
 # CORS configuration for frontend (development)
@@ -68,13 +79,6 @@ def get_vector_store():
     if vector_store is None:
         load_vector_store()
     return vector_store
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize resources on startup. Vector store is loaded lazily on first use."""
-    from backend.license_service import load_license_reference
-    load_license_reference()
 
 
 @app.get("/")
