@@ -24,13 +24,15 @@ function LicenseCard({ discipline, licenses }) {
 
   const statusColors = {
     active: 'bg-green-100 text-green-800',
-    expiring: 'bg-yellow-100 text-yellow-800',
+    expiring_soon: 'bg-yellow-100 text-yellow-800',
+    critical: 'bg-orange-100 text-orange-800 font-semibold',
     expired: 'bg-red-100 text-red-800'
   }
 
   const statusLabels = {
     active: 'Active',
-    expiring: 'Expiring Soon',
+    expiring_soon: 'Expiring Soon',
+    critical: 'Expires Very Soon!',
     expired: 'Expired'
   }
 
@@ -51,7 +53,15 @@ function LicenseCard({ discipline, licenses }) {
             <div className="text-xs text-gray-500 mt-1">
               {lic.issuer && <div>Issued by: {lic.issuer}</div>}
               {lic.issue_date && <div>Issued: {lic.issue_date}</div>}
-              {lic.expiration_date && <div>Expires: {lic.expiration_date}</div>}
+              {lic.expiration_date && (
+                <div className={
+                  lic.status === 'critical' ? 'text-orange-700 font-semibold' :
+                  lic.status === 'expiring_soon' ? 'text-yellow-700' :
+                  lic.status === 'expired' ? 'text-red-700' : ''
+                }>
+                  Expires: {lic.expiration_date}
+                </div>
+              )}
             </div>
           </div>
         ))}

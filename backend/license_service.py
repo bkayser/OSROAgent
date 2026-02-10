@@ -82,7 +82,12 @@ async def fetch_active_licenses(ussf_id: str) -> list[dict]:
 def _calculate_status(expiration_date: str | None) -> str:
     """
     Calculate the status of a license based on its expiration date.
-    Returns: 'active', 'expiring', or 'expired'
+    Returns: 'active', 'expiring_soon', 'critical', or 'expired'
+    
+    - expired: already expired
+    - critical: expires within 2 weeks (14 days)
+    - expiring_soon: expires within 3 months (90 days)
+    - active: more than 3 months until expiration or no expiration
     """
     if expiration_date is None:
         return "active"
@@ -95,8 +100,10 @@ def _calculate_status(expiration_date: str | None) -> str:
         
         if exp < today:
             return "expired"
-        elif exp <= today + timedelta(days=60):
-            return "expiring"
+        elif exp <= today + timedelta(days=14):
+            return "critical"
+        elif exp <= today + timedelta(days=90):
+            return "expiring_soon"
         else:
             return "active"
     except ValueError:
