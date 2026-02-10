@@ -4,6 +4,22 @@ set -e
 # Run scripts/build-push.sh first. One-time: run scripts/setup-cloudrun-storage.sh to create bucket and IAM.
 # Requires: gcloud CLI. Set GOOGLE_API_KEY (or use Secret Manager) for the API service.
 
+# Auto-source .env file if it exists and GOOGLE_API_KEY is not set
+if [ -z "${GOOGLE_API_KEY}" ] && [ -f "$(dirname "$0")/../.env" ]; then
+  echo "Sourcing .env file..."
+  set -a
+  source "$(dirname "$0")/../.env"
+  set +a
+fi
+
+# Verify API key is set before deploying
+if [ -z "${GOOGLE_API_KEY}" ]; then
+  echo "Error: GOOGLE_API_KEY is not set. Either:"
+  echo "  1. Set it in .env file in the project root"
+  echo "  2. Export it: export GOOGLE_API_KEY=your-key"
+  exit 1
+fi
+
 PROJECT="${GCP_PROJECT:-oregon-referees}"
 REGION="${GCP_REGION:-us-west1}"
 TAG="${TAG:-latest}"
