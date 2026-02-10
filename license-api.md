@@ -8,49 +8,6 @@ The U.S. Soccer Federation provides a REST API through the Learning Center for v
 https://connect.learning.ussoccer.com/certifications
 ```
 
-## Authentication
-
-All requests (except `/login`) require a Bearer token in the `Authorization` header.
-
-### POST /login
-
-Authenticate and obtain access tokens.
-
-**Request Body:**
-```json
-{
-  "username": "<api_username>",
-  "password": "<api_password>"
-}
-```
-
-**Response (200):**
-```json
-{
-  "access_token": "<jwt_token>",
-  "refresh_token": "<refresh_token>"
-}
-```
-
-### POST /refresh
-
-Refresh an expired access token.
-
-**Request Body:**
-```json
-{
-  "refresh_token": "<refresh_token>"
-}
-```
-
-**Response (200):**
-```json
-{
-  "access_token": "<new_jwt_token>",
-  "refresh_token": "<new_refresh_token>"
-}
-```
-
 ## Endpoints
 
 ### GET /users

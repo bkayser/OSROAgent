@@ -3,7 +3,6 @@ Service module for interacting with the USSF Learning Center Certification API.
 """
 
 import json
-import os
 from pathlib import Path
 
 import httpx
@@ -27,30 +26,12 @@ def get_license_reference() -> dict:
     return _license_reference
 
 
-async def _get_access_token(client: httpx.AsyncClient) -> str:
-    """Authenticate with the USSF API and return an access token."""
-    username = os.environ.get("USSF_API_USERNAME")
-    password = os.environ.get("USSF_API_PASSWORD")
-    if not username or not password:
-        raise RuntimeError("USSF_API_USERNAME and USSF_API_PASSWORD environment variables must be set")
-
-    resp = await client.post(
-        f"{USSF_API_BASE_URL}/login",
-        json={"username": username, "password": password},
-    )
-    if resp.status_code != 200:
-        raise RuntimeError(f"USSF API login failed with status {resp.status_code}")
-    return resp.json()["access_token"]
-
-
 async def lookup_ussf_id(email: str) -> str | None:
     """Look up the USSF ID for the given email address. Returns None if not found."""
     async with httpx.AsyncClient(timeout=30.0) as client:
-        token = await _get_access_token(client)
         resp = await client.get(
             f"{USSF_API_BASE_URL}/users",
             params={"email": email},
-            headers={"Authorization": f"Bearer {token}"},
         )
         if resp.status_code == 404:
             return None
@@ -62,10 +43,8 @@ async def lookup_ussf_id(email: str) -> str | None:
 async def fetch_active_licenses(ussf_id: str) -> list[dict]:
     """Fetch the list of active licenses for the given USSF ID."""
     async with httpx.AsyncClient(timeout=30.0) as client:
-        token = await _get_access_token(client)
         resp = await client.get(
             f"{USSF_API_BASE_URL}/licenses/{ussf_id}",
-            headers={"Authorization": f"Bearer {token}"},
         )
         if resp.status_code != 200:
             raise RuntimeError(f"USSF API license fetch failed with status {resp.status_code}")
