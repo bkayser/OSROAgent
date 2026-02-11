@@ -295,7 +295,24 @@ function App() {
                     {message.sources && message.sources.length > 0 && (
                       <div className="mt-2 pt-2 border-t border-gray-200">
                         <p className="text-xs text-gray-500">
-                          Sources: {message.sources.join(', ')}
+                          Sources:{' '}
+                          {message.sources.map((source, idx) => (
+                            <span key={idx}>
+                              {idx > 0 && ', '}
+                              {source.startsWith('http://') || source.startsWith('https://') ? (
+                                <a 
+                                  href={source} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="text-gray-500 underline hover:text-gray-700"
+                                >
+                                  {source.replace(/^https?:\/\//, '').split('/')[0]}
+                                </a>
+                              ) : (
+                                source
+                              )}
+                            </span>
+                          ))}
                         </p>
                       </div>
                     )}
