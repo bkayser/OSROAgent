@@ -91,6 +91,48 @@ OSROAgent/
 
 The AI assistant's knowledge comes from documents in the `data/` directory. The `ingest.py` script processes these files and creates a vector store for semantic search.
 
+```mermaid
+flowchart LR
+    subgraph sources [Data Sources]
+        web[Remote Websites]
+        txt[".txt files"]
+        md[".md files"]
+        pdf[".pdf files"]
+        urls["urls.txt"]
+    end
+
+    subgraph curation [Curation]
+        fetch["fetch_pages.py"]
+        edit["Manual Editing"]
+    end
+
+    subgraph processing [Ingestion]
+        ingest["ingest.py"]
+        split["Text Splitter"]
+        embed["Embeddings Model"]
+    end
+
+    subgraph storage [Vector Store]
+        faiss["FAISS Index"]
+        chunks["Document Chunks"]
+    end
+
+    web -->|one-time download| fetch
+    fetch -->|creates| md
+    md -->|optional| edit
+    edit -->|saves| md
+
+    urls -->|live fetch| ingest
+    txt --> ingest
+    md --> ingest
+    pdf --> ingest
+
+    ingest --> split
+    split --> embed
+    embed --> faiss
+    embed --> chunks
+```
+
 ### Supported File Types
 
 | File Type | Extension | Notes |
