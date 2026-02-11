@@ -6,23 +6,30 @@ An AI-powered concierge for Oregon soccer referees, providing quick answers abou
 
 ```
 OSROAgent/
-├── backend/           # FastAPI backend
+├── backend/              # FastAPI backend
 │   ├── __init__.py
-│   └── main.py        # API endpoints
-├── frontend/          # Vite + React frontend
+│   ├── main.py           # API endpoints
+│   ├── license_service.py # USSF license lookup
+│   └── license_data.json # License reference data
+├── frontend/             # Vite + React frontend
 │   ├── public/
 │   ├── src/
-│   │   ├── App.jsx    # Main chat component
-│   │   ├── index.css  # Tailwind CSS
-│   │   └── main.jsx   # React entry point
+│   │   ├── App.jsx       # Main chat component
+│   │   ├── index.css     # Tailwind CSS
+│   │   └── main.jsx      # React entry point
 │   ├── index.html
 │   ├── package.json
 │   ├── tailwind.config.js
 │   └── vite.config.js
-├── data/              # Place documents here for ingestion
-├── vector_store/      # Generated FAISS index
-├── ingest.py          # Document ingestion script
-├── requirements.txt   # Python dependencies
+├── scripts/              # Utility scripts
+│   ├── fetch_pages.py    # Download webpages as markdown
+│   ├── build-push.sh     # Build and push Docker images
+│   ├── deploy-cloudrun.sh # Deploy to Cloud Run
+│   └── update-vector-store.sh # Sync vector store to GCS
+├── data/                 # Source documents for ingestion
+├── vector_store/         # Generated FAISS index
+├── ingest.py             # Document ingestion script
+├── requirements.txt      # Python dependencies
 ├── LICENSE
 └── README.md
 ```
@@ -79,6 +86,78 @@ OSROAgent/
 2. Run `./ingest.py` to create the vector store
 3. Start the backend and frontend servers
 4. Ask questions about soccer rules and referee procedures!
+
+## Managing Data Sources
+
+The AI assistant's knowledge comes from documents in the `data/` directory. The `ingest.py` script processes these files and creates a vector store for semantic search.
+
+### Supported File Types
+
+| File Type | Extension | Notes |
+|-----------|-----------|-------|
+| Text files | `.txt` | Plain text documents |
+| Markdown | `.md` | Markdown files (great for curated content) |
+| PDFs | `.pdf` | PDF documents |
+| Web URLs | `urls.txt` | URLs listed in this file are fetched live |
+
+**Note:** The file `urls.txt` is treated specially—it's not ingested as content, but each URL listed in it is fetched and processed during ingestion.
+
+### Curating Web Content
+
+For better control over web content, use the `fetch_pages.py` script to download pages as markdown files that you can edit before ingestion:
+
+```bash
+# Fetch a single page
+./scripts/fetch_pages.py https://www.theifab.com/laws/latest/fouls-and-misconduct/
+
+# Fetch multiple pages
+./scripts/fetch_pages.py https://url1.com/page https://url2.com/page
+
+# Fetch from a file containing URLs (one per line)
+./scripts/fetch_pages.py --file my-urls.txt
+```
+
+The script:
+- Downloads each webpage and converts it to clean markdown
+- Removes navigation, footers, scripts, and other non-content elements
+- Adds YAML frontmatter with source URL and title
+- Saves to `data/` with a filename based on the URL (e.g., `theifab.com_laws_latest_fouls-and-misconduct.md`)
+
+**Curated vs. Live URLs:**
+- **Curated (recommended):** Use `fetch_pages.py` to download pages, edit the markdown to remove irrelevant content, then run `ingest.py`. This gives you full control over what the AI knows.
+- **Live:** Add URLs to `data/urls.txt` and they'll be fetched fresh each time you run `ingest.py`. Good for frequently-updated content, but you can't edit it.
+
+### Ingestion Workflow
+
+```bash
+# 1. Add/edit files in data/
+#    - Add PDFs, text files, or markdown
+#    - Use fetch_pages.py to download and curate web content
+
+# 2. Build the vector store
+./ingest.py
+
+# 3. For production, sync to Cloud Storage
+./scripts/update-vector-store.sh
+```
+
+### Example: Curating IFAB Laws
+
+```bash
+# Download the laws pages
+./scripts/fetch_pages.py \
+  https://www.theifab.com/laws/latest/the-field-of-play/ \
+  https://www.theifab.com/laws/latest/the-ball/ \
+  https://www.theifab.com/laws/latest/the-players/
+
+# Edit the generated markdown files in data/ to:
+# - Remove cookie notices or irrelevant sections
+# - Add clarifying notes
+# - Fix formatting issues
+
+# Rebuild the vector store
+./ingest.py
+```
 
 ## Production (GCR / Cloud Run)
 

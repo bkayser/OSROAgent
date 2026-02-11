@@ -61,13 +61,14 @@ def load_documents(data_dir: Path) -> list:
         data_dir.mkdir(parents=True, exist_ok=True)
         return documents
     
-    # Load text files
+    # Load text files (excluding urls.txt which is used for URL fetching)
     try:
         print("Loading text files...")
         loader = DirectoryLoader(
             str(data_dir),
             glob="**/*.txt",
-            loader_cls=TextLoader
+            loader_cls=TextLoader,
+            exclude=["**/urls.txt"]
         )
         txt_docs = loader.load()
         for source in sorted({doc.metadata.get("source", "unknown") for doc in txt_docs}):
@@ -76,6 +77,22 @@ def load_documents(data_dir: Path) -> list:
         print(f"Loaded {len(txt_docs)} text files")
     except Exception as e:
         print(f"Error loading text files: {e}")
+    
+    # Load markdown files
+    try:
+        print("Loading markdown files...")
+        loader = DirectoryLoader(
+            str(data_dir),
+            glob="**/*.md",
+            loader_cls=TextLoader
+        )
+        md_docs = loader.load()
+        for source in sorted({doc.metadata.get("source", "unknown") for doc in md_docs}):
+            print(f"  Source: {source}")
+        documents.extend(md_docs)
+        print(f"Loaded {len(md_docs)} markdown files")
+    except Exception as e:
+        print(f"Error loading markdown files: {e}")
     
     # Load PDF files (pypdf may print "Ignoring wrong pointing object" for malformed xrefs)
     try:
