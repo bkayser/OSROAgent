@@ -7,8 +7,10 @@ This script handles document ingestion and vector store creation.
 import os
 from pathlib import Path
 
+import requests
 from bs4 import BeautifulSoup
-from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader, WebBaseLoader
+from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader
+from langchain_core.documents import Document
 
 import reftown_auth
 from langchain_community.vectorstores import FAISS
@@ -47,24 +49,36 @@ def load_urls(url_file: Path) -> list:
     try:
         print("Loading URLs...")
         all_docs = []
+        request_kwargs = {"headers": {"User-Agent": USER_AGENT}, "timeout": 30}
+
+        def fetch_url_to_doc(u: str, sess: requests.Session | None) -> Document | None:
+            try:
+                resp = reftown_auth.get_with_limited_redirects(u, session=sess, max_redirects=3, **request_kwargs)
+                resp.raise_for_status()
+                soup = BeautifulSoup(resp.text, "html.parser")
+                for tag in soup.find_all(["script", "style"]):
+                    tag.decompose()
+                text = soup.get_text(separator="\n", strip=True)
+                return Document(page_content=text, metadata={"source": u})
+            except Exception as e:
+                print(f"  Error loading {u}: {e}")
+                return None
 
         if other_urls:
-            loader = WebBaseLoader(other_urls, requests_kwargs={"headers": {"User-Agent": USER_AGENT}})
-            all_docs.extend(loader.load())
+            for u in other_urls:
+                doc = fetch_url_to_doc(u, None)
+                if doc:
+                    all_docs.append(doc)
 
         if reftown_urls:
             session = reftown_auth.get_reftown_session()
             if session is None:
                 print("  RefTown credentials (REFTOWN_USERNAME, REFTOWN_PASSWORD) not set; skipping RefTown URLs.")
             else:
-                loader = WebBaseLoader(
-                    reftown_urls,
-                    requests_kwargs={
-                        "headers": {"User-Agent": USER_AGENT},
-                        "cookies": session.cookies,
-                    },
-                )
-                all_docs.extend(loader.load())
+                for u in reftown_urls:
+                    doc = fetch_url_to_doc(u, session)
+                    if doc:
+                        all_docs.append(doc)
 
         documents = all_docs
         for source in sorted({doc.metadata.get("source", "unknown") for doc in documents}):

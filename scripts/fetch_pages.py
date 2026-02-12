@@ -5,7 +5,7 @@ Fetch public webpages and convert them to markdown for curation.
 Usage:
     ./scripts/fetch_pages.py <url1> [url2] [url3] ...
     
-    # Or with a file containing URLs (one per line):
+    # Or with a file containing URLs (one per line; empty lines and # comments are ignored):
     ./scripts/fetch_pages.py --file urls.txt
 
 Output files are saved to the data/ directory with filenames based on the URL.
@@ -85,12 +85,12 @@ def fetch_and_convert(url: str) -> tuple[str, str]:
         session = reftown_auth.get_reftown_session()
         if session is None:
             print("  -> RefTown credentials (REFTOWN_USERNAME, REFTOWN_PASSWORD) not set; fetching without auth.", file=sys.stderr)
-            response = requests.get(url, headers=headers, timeout=30)
+            response = reftown_auth.get_with_limited_redirects(url, session=None, headers=headers, timeout=30)
         else:
-            response = session.get(url, headers=headers, timeout=30)
+            response = reftown_auth.get_with_limited_redirects(url, session=session, headers=headers, timeout=30)
     else:
-        response = requests.get(url, headers=headers, timeout=30)
-    
+        response = reftown_auth.get_with_limited_redirects(url, session=None, headers=headers, timeout=30)
+
     response.raise_for_status()
     
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -104,12 +104,21 @@ def fetch_and_convert(url: str) -> tuple[str, str]:
         element.decompose()
     
     # Try to find the main content area
-    main_content = (
-        soup.find('main') or 
-        soup.find('article') or 
-        soup.find('div', class_=re.compile(r'content|main|article', re.I)) or
-        soup.find('body')
-    )
+    main_content = None
+    if reftown_auth.is_reftown_url(url):
+        # RefTown uses div.rtcontent for page body; avoid matching mainmenu/main
+        main_content = (
+            soup.find('div', class_=re.compile(r'^rtcontent$', re.I)) or
+            soup.find('div', class_=re.compile(r'customcontent-wrapper', re.I)) or
+            soup.find('div', id=re.compile(r'rtcontent|customcontent', re.I))
+        )
+    if main_content is None:
+        main_content = (
+            soup.find('main') or
+            soup.find('article') or
+            soup.find('div', class_=re.compile(r'content|main|article', re.I)) or
+            soup.find('body')
+        )
     
     if main_content is None:
         main_content = soup
@@ -187,16 +196,15 @@ def main():
     
     urls = list(args.urls)
     
-    # Load URLs from file if specified
+    # Load URLs from file if specified (empty lines and lines starting with # are ignored)
     if args.file:
         if not args.file.exists():
             print(f"Error: File not found: {args.file}", file=sys.stderr)
             sys.exit(1)
-        
         with open(args.file) as f:
             for line in f:
                 line = line.strip()
-                if line and not line.startswith('#'):
+                if line and not line.startswith("#"):
                     urls.append(line)
     
     if not urls:
