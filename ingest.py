@@ -9,6 +9,8 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader, WebBaseLoader
+
+import reftown_auth
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -39,10 +41,32 @@ def load_urls(url_file: Path) -> list:
         print("No URLs found in URL file")
         return documents
     
+    reftown_urls = [u for u in urls if reftown_auth.is_reftown_url(u)]
+    other_urls = [u for u in urls if u not in reftown_urls]
+
     try:
         print("Loading URLs...")
-        loader = WebBaseLoader(urls, requests_kwargs={"headers": {"User-Agent": USER_AGENT}})
-        documents = loader.load()
+        all_docs = []
+
+        if other_urls:
+            loader = WebBaseLoader(other_urls, requests_kwargs={"headers": {"User-Agent": USER_AGENT}})
+            all_docs.extend(loader.load())
+
+        if reftown_urls:
+            session = reftown_auth.get_reftown_session()
+            if session is None:
+                print("  RefTown credentials (REFTOWN_USERNAME, REFTOWN_PASSWORD) not set; skipping RefTown URLs.")
+            else:
+                loader = WebBaseLoader(
+                    reftown_urls,
+                    requests_kwargs={
+                        "headers": {"User-Agent": USER_AGENT},
+                        "cookies": session.cookies,
+                    },
+                )
+                all_docs.extend(loader.load())
+
+        documents = all_docs
         for source in sorted({doc.metadata.get("source", "unknown") for doc in documents}):
             print(f"  Source: {source}")
         print(f"Loaded {len(documents)} web pages")

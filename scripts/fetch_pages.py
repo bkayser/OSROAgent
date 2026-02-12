@@ -27,6 +27,12 @@ SCRIPT_DIR = Path(__file__).parent
 ROOT_DIR = SCRIPT_DIR.parent
 DATA_DIR = ROOT_DIR / "data"
 
+# Allow importing reftown_auth when run as ./scripts/fetch_pages.py
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+import reftown_auth
+
 
 def url_to_filename(url: str) -> str:
     """
@@ -75,7 +81,16 @@ def fetch_and_convert(url: str) -> tuple[str, str]:
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
     }
     
-    response = requests.get(url, headers=headers, timeout=30)
+    if reftown_auth.is_reftown_url(url):
+        session = reftown_auth.get_reftown_session()
+        if session is None:
+            print("  -> RefTown credentials (REFTOWN_USERNAME, REFTOWN_PASSWORD) not set; fetching without auth.", file=sys.stderr)
+            response = requests.get(url, headers=headers, timeout=30)
+        else:
+            response = session.get(url, headers=headers, timeout=30)
+    else:
+        response = requests.get(url, headers=headers, timeout=30)
+    
     response.raise_for_status()
     
     soup = BeautifulSoup(response.text, 'html.parser')

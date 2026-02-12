@@ -2,6 +2,8 @@
 
 An AI-powered concierge for Oregon soccer referees, providing quick answers about soccer rules, referee procedures, and Oregon-specific regulations.
 
+**Live Application:** [https://oregonreferee.app](https://oregonreferee.app)
+
 ## Project Structure
 
 ```
@@ -168,6 +170,12 @@ The script:
 **Curated vs. Live URLs:**
 - **Curated (recommended):** Use `fetch_pages.py` to download pages, edit the markdown to remove irrelevant content, then run `ingest.py`. This gives you full control over what the AI knows.
 - **Live:** Add URLs to `data/urls.txt` and they'll be fetched fresh each time you run `ingest.py`. Good for frequently-updated content, but you can't edit it.
+
+**RefTown (reftown.com):** Many documents are hosted on [reftown.com](https://reftown.com) and require a login. Both `fetch_pages.py` and `ingest.py` detect reftown.com URLs and log in automatically when these environment variables are set:
+- `REFTOWN_USERNAME` – your RefTown username or email
+- `REFTOWN_PASSWORD` – your RefTown password
+
+If they are not set, reftown.com URLs are requested without auth (you may get the login page or restricted content).
 
 ### Ingestion Workflow
 
