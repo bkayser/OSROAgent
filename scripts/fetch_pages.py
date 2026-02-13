@@ -8,7 +8,11 @@ Usage:
     # Or with a file containing URLs (one per line; empty lines and # comments are ignored):
     ./scripts/fetch_pages.py --file urls.txt
 
-Output files are saved to the data/ directory with filenames based on the URL.
+    # In the file, each line may be: URL  or  URL whitespace output-basename
+    # If the basename is present it is used for the markdown file (e.g. my-page becomes data/my-page.md).
+    # Otherwise the filename is derived from the URL path.
+
+Output files are saved to the data/ directory.
 """
 
 import argparse
@@ -148,27 +152,37 @@ title: {title}
     return header + markdown, title
 
 
-def process_url(url: str) -> bool:
+def process_url(url: str, output_basename: str | None = None) -> bool:
     """
     Process a single URL: fetch, convert, and save.
+
+    If output_basename is given (e.g. from a file line), use it for the markdown
+    filename (with .md added if needed); otherwise use the default from the URL.
+    If the output file already exists, an error is printed and the file is not overwritten.
     
     Returns:
         True if successful, False otherwise.
     """
     try:
-        markdown, title = fetch_and_convert(url)
-        
-        filename = url_to_filename(url)
+        if output_basename:
+            base = output_basename.strip()
+            base = Path(base).name  # no path components
+            base = re.sub(r'[<>:"/\\|?*]', '_', base)
+            filename = base if base.endswith(".md") else f"{base}.md"
+        else:
+            filename = url_to_filename(url)
         output_path = DATA_DIR / filename
-        
-        # Ensure data directory exists
         DATA_DIR.mkdir(parents=True, exist_ok=True)
-        
+
+        if output_path.exists():
+            print(f"  -> Error: {output_path} already exists; skipping (not overwriting).", file=sys.stderr)
+            return False
+
+        markdown, title = fetch_and_convert(url)
         output_path.write_text(markdown, encoding='utf-8')
         print(f"  -> Saved: {output_path} ({len(markdown)} chars)")
-        
         return True
-        
+
     except requests.RequestException as e:
         print(f"  -> Error fetching {url}: {e}", file=sys.stderr)
         return False
@@ -189,14 +203,14 @@ def main():
     parser.add_argument(
         '--file', '-f',
         type=Path,
-        help="File containing URLs (one per line)"
+        help="File containing URLs (one per line; optional whitespace and output basename)"
     )
     
     args = parser.parse_args()
     
-    urls = list(args.urls)
+    # List of (url, output_basename or None). CLI args have no basename.
+    entries: list[tuple[str, str | None]] = [(u, None) for u in args.urls]
     
-    # Load URLs from file if specified (empty lines and lines starting with # are ignored)
     if args.file:
         if not args.file.exists():
             print(f"Error: File not found: {args.file}", file=sys.stderr)
@@ -204,23 +218,27 @@ def main():
         with open(args.file) as f:
             for line in f:
                 line = line.strip()
-                if line and not line.startswith("#"):
-                    urls.append(line)
+                if not line or line.startswith("#"):
+                    continue
+                parts = line.split(None, 1)
+                url = parts[0].strip()
+                basename = parts[1].strip() if len(parts) > 1 and parts[1].strip() else None
+                entries.append((url, basename))
     
-    if not urls:
+    if not entries:
         parser.print_help()
         print("\nError: No URLs provided.", file=sys.stderr)
         sys.exit(1)
     
-    print(f"Processing {len(urls)} URL(s)...\n")
+    print(f"Processing {len(entries)} URL(s)...\n")
     
     success_count = 0
-    for url in urls:
-        if process_url(url):
+    for url, basename in entries:
+        if process_url(url, basename):
             success_count += 1
         print()
     
-    print(f"Done. {success_count}/{len(urls)} URLs processed successfully.")
+    print(f"Done. {success_count}/{len(entries)} URLs processed successfully.")
     print(f"Output directory: {DATA_DIR.absolute()}")
 
 
