@@ -1,0 +1,90 @@
+# The URLs on this page are ingested directly for the vector store
+
+# Laws of the game, page by page which includes the FAQs.
+https://www.theifab.com/laws/latest/the-field-of-play
+https://www.theifab.com/laws/latest/the-ball
+https://www.theifab.com/laws/latest/the-players
+https://www.theifab.com/laws/latest/the-players-equipment
+https://www.theifab.com/laws/latest/the-referee
+https://www.theifab.com/laws/latest/the-other-match-officials
+https://www.theifab.com/laws/latest/the-duration-of-the-match
+https://www.theifab.com/laws/latest/the-start-and-restart-of-play
+https://www.theifab.com/laws/latest/the-ball-in-and-out-of-play
+https://www.theifab.com/laws/latest/determining-the-outcome-of-a-match
+https://www.theifab.com/laws/latest/offside
+https://www.theifab.com/laws/latest/fouls-and-misconduct
+https://www.theifab.com/laws/latest/free-kicks
+https://www.theifab.com/laws/latest/the-penalty-kick
+https://www.theifab.com/laws/latest/the-throw-in
+https://www.theifab.com/laws/latest/the-goal-kick
+https://www.theifab.com/laws/latest/the-corner-kick
+
+# League Rules
+# https://static1.squarespace.com/static/648b75fdcd6027391c2f44d0/t/68c722a5a4bca514c5485e10/1757880997090/Soccer-5+2025-2026+Rules+%281%29.pdf
+
+# OYSA Dev League Rules
+# https://www.oregonyouthsoccer.org/wp-content/uploads/sites/279/2024/08/OYSA-Developmental-League-Rules-8.14.23.pdf
+
+# Reftown Orgs
+https://reftown.com/orgs.asp?Expand=&StateFilter=OR&SportFilter=5500
+
+# Org specific information
+https://reftown.com/default.asp?Assoc=NWSC--555
+https://reftown.com/default.asp?Assoc=PYSA--557
+https://reftown.com/info.asp?Assoc=MISOA--535
+
+# List of current and past leagues and tournaments
+
+https://oysa.sportsaffinity.com/tour/public/info/tournamentlist.asp?sessionguid=&tourtab=past&section=gaming
+https://oysa.sportsaffinity.com/tour/public/info/tournamentlist.asp?sessionguid=&tourtab=current&section=gaming
+
+# OYSA Pages
+
+https://www.oregonyouthsoccer.org/staff
+https://www.oregonyouthsoccer.org/board-of-directors
+https://www.oregonyouthsoccer.org/technical-advisory-committee/
+https://www.oregonyouthsoccer.org/soccer-landscape/
+
+https://www.oregonyouthsoccer.org/presidents-cup
+https://www.oregonyouthsoccer.org/founders-cup
+https://www.oregonyouthsoccer.org/state-cup
+
+# Age Group Changes
+https://www.oregonyouthsoccer.org/news/2025/12/03/2026-2027-updated-decision-on-age-group-formation/
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# OYSA Refs
+# basic info
+https://reftown.com/link.asp?A=555&Q=RID%3D73&P=custom.asp
+
+
+# Who are the assignors?
+# Rec Leagues:
+https://reftown.com/link.asp?A=555&Q=RID%3D105&P=custom.asp
+
+# OYSA Assignors:
+https://reftown.com/link.asp?A=555&Q=RID%3D41&P=custom.asp
+
+# Soccer5 Checkin Instructions
+https://reftown.com/link.asp?A=555&Q=RID%3D65&P=custom.asp
+
+# TVYSL Info
+https://reftown.com/link.asp?A=555&Q=RID%3D51&P=custom.asp
+
+# Eastside Timbers Info
+https://reftown.com/link.asp?A=555&Q=RID%3D49&P=custom.asp
+
+https://www.oregonreferee.com/contact
+https://www.oregonreferee.com
+
+
+# WUFC Referees
+https://willametteunitedfc.com/resources/referee-resources
+https://reftown.com/link.asp?A=555&Q=RID%3D55&P=custom.asp
+# CUSC Referees
+https://reftown.com/link.asp?A=555&Q=RID%3D53&P=custom.asp
+# NCSC Referees
+https://reftown.com/link.asp?A=555&Q=RID%3D61&P=custom.asp
+# OCSC Referees
+https://reftown.com/link.asp?A=555&Q=RID%3D55&P=custom.asp

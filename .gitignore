@@ -220,8 +220,5 @@ yarn-error.log*
 # Generated vector store (FAISS index + pickle); rebuild via ingest.py
 vector_store/
 
-# Ingested documents; often large or sensitive (remove this line to commit sample data)
-data/
-
 # Google Sheets service account key (sensitive)
 **/oregon-referees*.json

@@ -1,0 +1,13 @@
+# Download thes into markdown files using the command:
+# ./scripts/fetch_pages.py  --file data/fetch-and-edit.urls
+
+
+# NWSC Policies and procedures
+https://reftown.com/link.asp?A=555&Q=RID%3D59&P=custom.asp      NWSC-procedures.md
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# Oregon Referee Info
+https://www.oregonyouthsoccer.org/become-a-referee              OYSA-referee-certification.md
+https://www.oregonreferee.com/about                             OSRO-about.md
+https://www.oregonreferee.com/get-assigned                      OSRO-get-assigned.md
+https://www.oregonreferee.com/frequently-asked-questions        OSRO-FAQs.md
