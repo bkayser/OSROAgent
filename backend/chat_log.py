@@ -60,8 +60,10 @@ def append_chat_log(env: str, query: str, answer: str, sources: list[str]) -> No
     """
     Append one row to the chat log sheet. Columns: Env, Timestamp, Query, Answer, Sources.
     Does nothing if sheet ID or credentials are missing; logs and swallows errors so chat still works.
+    Timestamp is Pacific time formatted as y/m/d HH:MM pm.
     """
-    from datetime import datetime, timezone
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
     sheet_id = _get_sheet_id()
     if not sheet_id:
         return
@@ -70,7 +72,8 @@ def append_chat_log(env: str, query: str, answer: str, sources: list[str]) -> No
         return
     try:
         sheet = client.open_by_key(sheet_id).sheet1
-        ts = datetime.now(timezone.utc).isoformat()
+        dt = datetime.now(ZoneInfo("America/Los_Angeles"))
+        ts = dt.strftime("%y/%m/%d %I:%M ") + dt.strftime("%p").lower()
         answer_trunc = (answer[:MAX_CELL_CHARS] + "...") if len(answer) > MAX_CELL_CHARS else answer
         sources_str = ", ".join(sources) if sources else ""
         row = [env, ts, query, answer_trunc, sources_str]
