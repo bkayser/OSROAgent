@@ -20,6 +20,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # Configuration
 DATA_DIR = Path("./data")
+TEXT_DIR = DATA_DIR / "text"      # Markdown and text files
+PDFS_DIR = DATA_DIR / "pdfs"      # PDF documents
 VECTOR_STORE_PATH = Path("./vector_store")
 URLS_FILE = DATA_DIR / "urls.txt"
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
@@ -90,23 +92,21 @@ def load_urls(url_file: Path) -> list:
     return documents
 
 
-def load_documents(data_dir: Path) -> list:
-    """Load documents from the data directory."""
+def load_documents() -> list:
+    """Load documents from the data subdirectories and URLs file."""
     documents = []
     
-    if not data_dir.exists():
-        print(f"Data directory {data_dir} does not exist. Creating it...")
-        data_dir.mkdir(parents=True, exist_ok=True)
-        return documents
+    # Ensure directories exist
+    TEXT_DIR.mkdir(parents=True, exist_ok=True)
+    PDFS_DIR.mkdir(parents=True, exist_ok=True)
     
-    # Load text files (excluding urls.txt which is used for URL fetching)
+    # Load text files from data/text/
     try:
-        print("Loading text files...")
+        print(f"Loading text files from {TEXT_DIR}...")
         loader = DirectoryLoader(
-            str(data_dir),
+            str(TEXT_DIR),
             glob="**/*.txt",
-            loader_cls=TextLoader,
-            exclude=["**/urls.txt"]
+            loader_cls=TextLoader
         )
         txt_docs = loader.load()
         for source in sorted({doc.metadata.get("source", "unknown") for doc in txt_docs}):
@@ -116,11 +116,11 @@ def load_documents(data_dir: Path) -> list:
     except Exception as e:
         print(f"Error loading text files: {e}")
     
-    # Load markdown files
+    # Load markdown files from data/text/
     try:
-        print("Loading markdown files...")
+        print(f"Loading markdown files from {TEXT_DIR}...")
         loader = DirectoryLoader(
-            str(data_dir),
+            str(TEXT_DIR),
             glob="**/*.md",
             loader_cls=TextLoader
         )
@@ -132,11 +132,11 @@ def load_documents(data_dir: Path) -> list:
     except Exception as e:
         print(f"Error loading markdown files: {e}")
     
-    # Load PDF files (pypdf may print "Ignoring wrong pointing object" for malformed xrefs)
+    # Load PDF files from data/pdfs/
     try:
-        print("Loading PDFs...")
+        print(f"Loading PDFs from {PDFS_DIR}...")
         loader = DirectoryLoader(
-            str(data_dir),
+            str(PDFS_DIR),
             glob="**/*.pdf",
             loader_cls=PyPDFLoader
         )
@@ -148,7 +148,7 @@ def load_documents(data_dir: Path) -> list:
     except Exception as e:
         print(f"Error loading PDF files: {e}")
     
-    # Load from URLs file
+    # Load from URLs file (in data/ root)
     documents.extend(load_urls(URLS_FILE))
     
     print(f"Total loaded: {len(documents)} documents")
@@ -185,8 +185,8 @@ def main():
     """Main ingestion pipeline."""
     print("Starting document ingestion...")
     
-    # Load documents
-    documents = load_documents(DATA_DIR)
+    # Load documents from subdirectories
+    documents = load_documents()
     
     if not documents:
         print("No documents found. Please add documents to the data directory.")

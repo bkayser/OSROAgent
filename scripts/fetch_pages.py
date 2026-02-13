@@ -12,7 +12,7 @@ Usage:
     # If the basename is present it is used for the markdown file (e.g. my-page becomes data/my-page.md).
     # Otherwise the filename is derived from the URL path.
 
-Output files are saved to the data/ directory.
+Output files are saved to the data/text/ directory for ingestion.
 """
 
 import argparse
@@ -30,6 +30,7 @@ from markdownify import markdownify as md
 SCRIPT_DIR = Path(__file__).parent
 ROOT_DIR = SCRIPT_DIR.parent
 DATA_DIR = ROOT_DIR / "data"
+TEXT_DIR = DATA_DIR / "text"  # Output directory for fetched markdown files
 
 # Allow importing reftown_auth when run as ./scripts/fetch_pages.py
 if str(ROOT_DIR) not in sys.path:
@@ -171,8 +172,8 @@ def process_url(url: str, output_basename: str | None = None) -> bool:
             filename = base if base.endswith(".md") else f"{base}.md"
         else:
             filename = url_to_filename(url)
-        output_path = DATA_DIR / filename
-        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        output_path = TEXT_DIR / filename
+        TEXT_DIR.mkdir(parents=True, exist_ok=True)
 
         if output_path.exists():
             print(f"  -> Error: {output_path} already exists; skipping (not overwriting).", file=sys.stderr)
@@ -239,7 +240,7 @@ def main():
         print()
     
     print(f"Done. {success_count}/{len(entries)} URLs processed successfully.")
-    print(f"Output directory: {DATA_DIR.absolute()}")
+    print(f"Output directory: {TEXT_DIR.absolute()}")
 
 
 if __name__ == "__main__":
