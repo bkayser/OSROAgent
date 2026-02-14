@@ -1,6 +1,47 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+
+// Beta Splash Screen Component
+function BetaSplash({ onDismiss, content }) {
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="p-6 md:p-8">
+          {/* Header */}
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200">
+            <span className="text-3xl">⚽</span>
+            <div>
+              <span className="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
+                BETA
+              </span>
+              <h2 className="text-xl font-bold text-gray-800 mt-1">
+                Welcome, Administrators & Assignors
+              </h2>
+            </div>
+          </div>
+
+          {/* Content - rendered from markdown */}
+          <div className="prose prose-sm max-w-none prose-headings:text-gray-800 prose-h2:text-lg prose-h2:font-semibold prose-h2:text-oregon-green prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-p:text-gray-600 prose-li:text-gray-600 prose-a:text-oregon-green prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-700">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {content}
+            </ReactMarkdown>
+          </div>
+
+          {/* Dismiss Button */}
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={onDismiss}
+              className="bg-oregon-green hover:bg-green-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors shadow-md"
+            >
+              Got it, let's go!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 // Keywords that trigger license lookup flow
 const LICENSE_KEYWORDS = [
@@ -109,6 +150,40 @@ function App() {
   const [showEmailPrompt, setShowEmailPrompt] = useState(false)
   const [licenseEmail, setLicenseEmail] = useState('')
   const [licenseLoading, setLicenseLoading] = useState(false)
+  
+  // Beta splash screen state
+  const [showBetaSplash, setShowBetaSplash] = useState(false)
+  const [betaContent, setBetaContent] = useState('')
+
+  // Feedback modal state
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+  const [feedbackName, setFeedbackName] = useState('')
+  const [feedbackDescription, setFeedbackDescription] = useState('')
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
+  const [feedbackSuccess, setFeedbackSuccess] = useState(false)
+  
+  useEffect(() => {
+    // Check if user has dismissed the splash screen before
+    const dismissed = localStorage.getItem('betaSplashDismissed')
+    if (!dismissed) {
+      // Fetch the beta.md content
+      fetch('/beta.md')
+        .then(res => res.text())
+        .then(text => {
+          setBetaContent(text)
+          setShowBetaSplash(true)
+        })
+        .catch(err => {
+          console.error('Failed to load beta.md:', err)
+          // Don't show splash if we can't load content
+        })
+    }
+  }, [])
+  
+  const dismissBetaSplash = () => {
+    localStorage.setItem('betaSplashDismissed', 'true')
+    setShowBetaSplash(false)
+  }
 
   const submitQuestion = async (text) => {
     const q = (typeof text === 'string' ? text : question).trim()
@@ -203,6 +278,44 @@ function App() {
     setLicenseEmail('')
   }
 
+  const openFeedbackModal = () => {
+    setFeedbackSuccess(false)
+    setFeedbackName('')
+    setFeedbackDescription('')
+    setShowFeedbackModal(true)
+  }
+
+  const closeFeedbackModal = () => {
+    setShowFeedbackModal(false)
+    setFeedbackSubmitting(false)
+  }
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault()
+    const description = feedbackDescription.trim()
+    if (!description || feedbackSubmitting) return
+    setFeedbackSubmitting(true)
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: feedbackName.trim() || null,
+          description,
+        }),
+      })
+      if (!res.ok) throw new Error(res.statusText)
+      setFeedbackSuccess(true)
+      setFeedbackDescription('')
+      setFeedbackName('')
+      setTimeout(() => closeFeedbackModal(), 1500)
+    } catch (err) {
+      console.error('Feedback submit failed:', err)
+    } finally {
+      setFeedbackSubmitting(false)
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     submitQuestion(question)
@@ -216,6 +329,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Beta Splash Screen */}
+      {showBetaSplash && <BetaSplash onDismiss={dismissBetaSplash} content={betaContent} />}
+      
       {/* Header */}
       <header className="bg-oregon-green text-white py-3 px-4 md:py-6 md:px-6 shadow-lg">
         <div className="max-w-4xl mx-auto flex justify-center">
@@ -393,8 +509,78 @@ function App() {
 
       {/* Footer */}
       <footer className="text-center text-gray-500 text-sm py-3 md:py-4 border-t border-gray-200">
-        <p>Oregon Soccer Referee Concierge &copy; 2026</p>
+        <p className="mb-2">Oregon Soccer Referee Concierge &copy; 2026</p>
+        <button
+          type="button"
+          onClick={openFeedbackModal}
+          className="text-oregon-green hover:underline focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-1 rounded"
+        >
+          Submit feedback
+        </button>
       </footer>
+
+      {/* Feedback Modal */}
+      {showFeedbackModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl">
+            <div className="p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-1">Submit feedback</h2>
+              <p className="text-sm text-gray-500 mb-4">
+                Tell us what information is missing or incorrect so we can improve.
+              </p>
+              {feedbackSuccess ? (
+                <p className="text-oregon-green font-medium py-4">Thank you — your feedback has been submitted.</p>
+              ) : (
+                <form onSubmit={handleFeedbackSubmit} className="flex flex-col gap-3">
+                  <div>
+                    <label htmlFor="feedback-name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Name <span className="text-gray-400">(optional)</span>
+                    </label>
+                    <input
+                      id="feedback-name"
+                      type="text"
+                      value={feedbackName}
+                      onChange={(e) => setFeedbackName(e.target.value)}
+                      placeholder="Your name"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-oregon-green focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="feedback-description" className="block text-sm font-medium text-gray-700 mb-1">
+                      What’s missing or incorrect?
+                    </label>
+                    <textarea
+                      id="feedback-description"
+                      value={feedbackDescription}
+                      onChange={(e) => setFeedbackDescription(e.target.value)}
+                      placeholder="Describe what information is missing or incorrect..."
+                      rows={4}
+                      required
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-oregon-green focus:border-transparent resize-y"
+                    />
+                  </div>
+                  <div className="flex gap-2 justify-end pt-1">
+                    <button
+                      type="button"
+                      onClick={closeFeedbackModal}
+                      className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={feedbackSubmitting || !feedbackDescription.trim()}
+                      className="bg-oregon-green hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:cursor-not-allowed"
+                    >
+                      {feedbackSubmitting ? 'Submitting…' : 'Submit'}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

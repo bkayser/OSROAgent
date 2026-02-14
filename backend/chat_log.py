@@ -80,3 +80,39 @@ def append_chat_log(env: str, query: str, answer: str, sources: list[str]) -> No
         sheet.append_row(row, value_input_option="USER_ENTERED")
     except Exception as e:
         logging.exception("Chat log append failed: %s", e)
+
+
+def append_feedback(user: str, feedback: str) -> None:
+    """
+    Append one row to the Feedback sheet. Columns: Timestamp, User, Feedback.
+    Uses the same Google Sheet as the chat log; worksheet title is "Feedback".
+    Creates the worksheet with headers if it does not exist.
+    Does nothing if sheet ID or credentials are missing; logs and swallows errors.
+    """
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    sheet_id = _get_sheet_id()
+    if not sheet_id:
+        return
+    client = _get_sheet_client()
+    if not client:
+        return
+    try:
+        import gspread
+        from gspread.exceptions import WorksheetNotFound
+
+        spreadsheet = client.open_by_key(sheet_id)
+        try:
+            sheet = spreadsheet.worksheet("Feedback")
+        except WorksheetNotFound:
+            sheet = spreadsheet.add_worksheet(title="Feedback", rows=1000, cols=3)
+            sheet.append_row(["Timestamp", "User", "Feedback"], value_input_option="USER_ENTERED")
+
+        dt = datetime.now(ZoneInfo("America/Los_Angeles"))
+        ts = dt.strftime("%y/%m/%d %I:%M ") + dt.strftime("%p").lower()
+        feedback_trunc = (feedback[:MAX_CELL_CHARS] + "...") if len(feedback) > MAX_CELL_CHARS else feedback
+        user_str = (user or "").strip()
+        sheet.append_row([ts, user_str, feedback_trunc], value_input_option="USER_ENTERED")
+    except Exception as e:
+        logging.exception("Feedback append failed: %s", e)

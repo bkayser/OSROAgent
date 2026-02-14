@@ -58,6 +58,12 @@ class Response(BaseModel):
     sources: list[str] = []
 
 
+class FeedbackSubmit(BaseModel):
+    """Request model for feedback submission."""
+    name: str | None = None
+    description: str
+
+
 def load_vector_store():
     """Load the FAISS vector store if it exists."""
     global vector_store
@@ -201,6 +207,22 @@ async def license_status(email: str = ""):
     }
 
 
+@app.post("/feedback")
+async def submit_feedback(body: FeedbackSubmit):
+    """
+    Submit user feedback (missing or incorrect information). Stored in the same
+    Google Sheet as the chat log, under the Feedback tab.
+    """
+    if not (body.description or "").strip():
+        raise HTTPException(status_code=400, detail="Feedback description is required")
+    try:
+        from backend.chat_log import append_feedback
+        append_feedback(user=body.name or "", feedback=body.description.strip())
+    except Exception:
+        pass  # best-effort; don't fail the request
+    return {"status": "ok"}
+
+
 # Serve static frontend files in production
 if STATIC_DIR.exists():
     app.mount("/assets", StaticFiles(directory=STATIC_DIR / "assets"), name="assets")
@@ -209,7 +231,7 @@ if STATIC_DIR.exists():
     async def serve_frontend(request: Request, full_path: str):
         """Serve the frontend for all non-API routes."""
         # Don't serve frontend for API routes
-        if full_path.startswith("api/") or full_path in ["health", "chat", "license-status", "docs", "openapi.json", "redoc"]:
+        if full_path.startswith("api/") or full_path in ["health", "chat", "license-status", "feedback", "docs", "openapi.json", "redoc"]:
             raise HTTPException(status_code=404, detail="Not found")
         
         # Serve index.html for SPA routing
