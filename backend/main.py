@@ -126,7 +126,7 @@ async def chat(query: Query):
         # Retrieve relevant context if vector store is available
         store = get_vector_store()
         if store:
-            docs = store.similarity_search(query.question, k=4)
+            docs = store.similarity_search(query.question, k=5)
             context = "\n\n".join([doc.page_content for doc in docs])
             sources = [doc.metadata.get("source", "Unknown") for doc in docs]
         
