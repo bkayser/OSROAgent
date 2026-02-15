@@ -41,9 +41,30 @@ title: OYSA Leagues, Cups, Academy - Referee Information
 
 ---
 
+## Leagues
+
+OYSA runs sanctioned competitive leagues with various divisions in the Portland/Vancouver area.
+U8-U10 competitions take place in the OYSA Developmental League which is also referred to as Development League and Development Academy.
+There are two separate Developmental League programs: Developmental League for the Portland area, and Valley Academy League for north Willamette Valley, Oregon.
+
+OYSA competitive league play in Portland is divided between U11-U15 which runs full year, and U16-U19 which is high school age and breaks during
+the fall season so kids can play for their high school teams.
+
+Elite soccer programs exist and have games in regional or national leagues such as MLSNext and ECNL.  These games are assigned by various organizations
+and are usually invite-only for referees.
+
+
 ## Rules of competition
 
-- **Rules:** OYSA Developmental League Rules PDF; State Cup, Presidents Cup, Founders Cup rules. See OYSA and knowledge base.
+The rules vary by league and tournament.
+
+2025-26-Founders-Cup-Rules-2.pdf
+2025-26-Founders-Cup-Rules.pdf
+2025-26-Presidents-Cup-Rules.pdf
+2025-26-State-Cup-Rules.pdf
+OYSA-Competitive-Youth-Soccer-League-Rules-7.15.25.pdf
+OYSA-Developmental-League-Rules-8.14.23.pdf
+OYSA-Valley-Academy-League-Rules-8.14.24.pdf
 
 ---
 
