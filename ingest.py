@@ -7,6 +7,22 @@ This script handles document ingestion and vector store creation.
 import os
 from pathlib import Path
 
+# Load .env file if it exists (before importing modules that need env vars)
+def load_dotenv():
+    """Load environment variables from .env file in project root."""
+    env_file = Path(__file__).parent / ".env"
+    if env_file.exists():
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, _, value = line.partition('=')
+                    # Remove surrounding quotes if present
+                    value = value.strip().strip('"').strip("'")
+                    os.environ.setdefault(key.strip(), value)
+
+load_dotenv()
+
 import requests
 from bs4 import BeautifulSoup
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader

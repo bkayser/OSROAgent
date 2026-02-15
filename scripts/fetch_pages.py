@@ -32,6 +32,23 @@ ROOT_DIR = SCRIPT_DIR.parent
 DATA_DIR = ROOT_DIR / "data"
 TEXT_DIR = DATA_DIR / "text"  # Output directory for fetched markdown files
 
+# Load .env file if it exists (before importing reftown_auth)
+def load_dotenv():
+    """Load environment variables from .env file in project root."""
+    env_file = ROOT_DIR / ".env"
+    if env_file.exists():
+        import os
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#') and '=' in line:
+                    key, _, value = line.partition('=')
+                    # Remove surrounding quotes if present
+                    value = value.strip().strip('"').strip("'")
+                    os.environ.setdefault(key.strip(), value)
+
+load_dotenv()
+
 # Allow importing reftown_auth when run as ./scripts/fetch_pages.py
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
@@ -45,7 +62,7 @@ def url_to_filename(url: str) -> str:
     
     Examples:
         https://www.theifab.com/laws/latest/fouls-and-misconduct/
-        -> theifab.com_laws_latest_fouls-and-misconduct.md
+        -> ifab_latest_fouls-and-misconduct.md
     """
     parsed = urlparse(url)
     
@@ -157,8 +174,9 @@ def process_url(url: str, output_basename: str | None = None) -> bool:
     """
     Process a single URL: fetch, convert, and save.
 
-    If output_basename is given (e.g. from a file line), use it for the markdown
-    filename (with .md added if needed); otherwise use the default from the URL.
+    If output_basename is given (e.g. from a file line), use it as a path relative
+    to the data/ directory. Can include subdirectories like "orgs/NWSC/assignors.md".
+    If not given, defaults to data/text/{url-derived-name}.md.
     If the output file already exists, an error is printed and the file is not overwritten.
     
     Returns:
@@ -166,14 +184,21 @@ def process_url(url: str, output_basename: str | None = None) -> bool:
     """
     try:
         if output_basename:
-            base = output_basename.strip()
-            base = Path(base).name  # no path components
-            base = re.sub(r'[<>:"/\\|?*]', '_', base)
-            filename = base if base.endswith(".md") else f"{base}.md"
+            # Interpret as relative path from data/ directory
+            rel_path = output_basename.strip()
+            # Sanitize each path component (but preserve directory structure)
+            parts = Path(rel_path).parts
+            sanitized_parts = [re.sub(r'[<>:"|?*]', '_', p) for p in parts]
+            rel_path = str(Path(*sanitized_parts))
+            if not rel_path.endswith(".md"):
+                rel_path = f"{rel_path}.md"
+            output_path = DATA_DIR / rel_path
         else:
             filename = url_to_filename(url)
-        output_path = TEXT_DIR / filename
-        TEXT_DIR.mkdir(parents=True, exist_ok=True)
+            output_path = TEXT_DIR / filename
+        
+        # Ensure parent directories exist
+        output_path.parent.mkdir(parents=True, exist_ok=True)
 
         if output_path.exists():
             print(f"  -> Error: {output_path} already exists; skipping (not overwriting).", file=sys.stderr)
