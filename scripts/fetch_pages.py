@@ -106,10 +106,9 @@ def fetch_and_convert(url: str) -> tuple[str, str]:
     if reftown_auth.is_reftown_url(url):
         session = reftown_auth.get_reftown_session()
         if session is None:
-            print("  -> RefTown credentials (REFTOWN_USERNAME, REFTOWN_PASSWORD) not set; fetching without auth.", file=sys.stderr)
-            response = reftown_auth.get_with_limited_redirects(url, session=None, headers=headers, timeout=30)
-        else:
-            response = reftown_auth.get_with_limited_redirects(url, session=session, headers=headers, timeout=30)
+            print("Error: RefTown URLs require REFTOWN_USERNAME and REFTOWN_PASSWORD to be set.", file=sys.stderr)
+            sys.exit(1)
+        response = reftown_auth.get_with_limited_redirects(url, session=session, headers=headers, timeout=30)
     else:
         response = reftown_auth.get_with_limited_redirects(url, session=None, headers=headers, timeout=30)
 
@@ -255,7 +254,12 @@ def main():
         parser.print_help()
         print("\nError: No URLs provided.", file=sys.stderr)
         sys.exit(1)
-    
+
+    has_reftown = any(reftown_auth.is_reftown_url(url) for url, _ in entries)
+    if has_reftown and reftown_auth.get_reftown_session() is None:
+        print("Error: RefTown URLs require REFTOWN_USERNAME and REFTOWN_PASSWORD to be set.", file=sys.stderr)
+        sys.exit(1)
+
     print(f"Processing {len(entries)} URL(s)...\n")
     
     success_count = 0

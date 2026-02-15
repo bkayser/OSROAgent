@@ -5,6 +5,7 @@ This script handles document ingestion and vector store creation.
 """
 
 import os
+import sys
 from pathlib import Path
 
 # Load .env file if it exists (before importing modules that need env vars)
@@ -173,12 +174,12 @@ def load_urls(url_file: Path) -> list:
         if reftown_urls:
             session = reftown_auth.get_reftown_session()
             if session is None:
-                print("  RefTown credentials (REFTOWN_USERNAME, REFTOWN_PASSWORD) not set; skipping RefTown URLs.")
-            else:
-                for u in reftown_urls:
-                    doc = fetch_url_to_doc(u, session)
-                    if doc:
-                        all_docs.append(doc)
+                print("Error: RefTown URLs require REFTOWN_USERNAME and REFTOWN_PASSWORD to be set.", file=sys.stderr)
+                sys.exit(1)
+            for u in reftown_urls:
+                doc = fetch_url_to_doc(u, session)
+                if doc:
+                    all_docs.append(doc)
 
         documents = all_docs
         for source in sorted({doc.metadata.get("source", "unknown") for doc in documents}):
