@@ -6,8 +6,8 @@ This document explains how to manage and ingest data sources for the Oregon Socc
 
 ```
 data/
-├── urls.txt              # URLs fetched live during ingestion
-├── fetch-and-edit.urls   # URLs for fetch_pages.py to download
+├── _urls.txt             # URLs fetched live during ingestion (not ingested as content)
+├── _fetch-and-edit.urls  # URLs for fetch_pages.py to download (not ingested)
 ├── text/                 # Markdown and text files (curated content)
 │   ├── OSRO-FAQs.md
 │   ├── OYSA-referee-certification.md
@@ -22,10 +22,12 @@ data/
 
 | Directory | Contents | Notes |
 |-----------|----------|-------|
-| `data/urls.txt` | URLs to fetch **live** during ingestion | Content is fetched fresh each time `ingest.py` runs |
-| `data/fetch-and-edit.urls` | URLs for one-time download | Used with `fetch_pages.py` for curated content |
+| `data/_urls.txt` | URLs to fetch **live** during ingestion | Content is fetched fresh each time `ingest.py` runs |
+| `data/_fetch-and-edit.urls` | URLs for one-time download | Used with `fetch_pages.py` for curated content |
 | `data/text/` | `.md` and `.txt` files | Editable content - best for curated web pages |
 | `data/pdfs/` | PDF documents | League rules, handbooks, etc. |
+
+**Note:** Files starting with `_` are excluded from ingestion. Use this prefix for configuration files or content you don't want indexed.
 
 ## Workflow Overview
 
@@ -36,8 +38,8 @@ flowchart LR
     end
 
     subgraph datadir [data/]
-        urls["urls.txt"]
-        fetchurls["fetch-and-edit.urls"]
+        urls["_urls.txt"]
+        fetchurls["_fetch-and-edit.urls"]
         subgraph text [text/]
             md[".md files"]
             txt[".txt files"]

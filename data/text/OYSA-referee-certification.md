@@ -5,8 +5,6 @@ title: Become a Referee - USYS Oregon
 
 # Become a Referee - USYS Oregon
 
-# Become a Referee
-
 ## OYSA’s Commitment
 
 ### Oregon Youth Soccer Association is committed to fostering an educational environment to allow referees at all levels develop.

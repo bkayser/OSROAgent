@@ -166,9 +166,6 @@ of the problem.
 
 If the problems persist, contact the ORC office with screenshots of the issue and we will be happy to assist you!
 
-##### I HAVE MORE QUESTIONS! WHERE CAN I GET ANSWERS?
-
-We’re here to help! [Click here to contact us!](/contact)
 
 ### Address
 
@@ -180,8 +177,4 @@ Tigard, Oregon
 
 info@oregonreferee.com
 
-## Subscribe to our Newsletter
 
-© 2026 Oregon Referee Committee. All rights reserved. Designed by [Lewis Media Group](https://www.lewismediagroup.net) | Privacy Policy | Terms and Conditions
-
-- [Follow](# "Follow on Facebook")

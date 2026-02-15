@@ -82,9 +82,12 @@ https://www.oregonreferee.com
 # WUFC Referees
 https://willametteunitedfc.com/resources/referee-resources
 https://reftown.com/link.asp?A=555&Q=RID%3D55&P=custom.asp
+
 # CUSC Referees
 https://reftown.com/link.asp?A=555&Q=RID%3D53&P=custom.asp
+
 # NCSC Referees
 https://reftown.com/link.asp?A=555&Q=RID%3D61&P=custom.asp
+
 # OCSC Referees
 https://reftown.com/link.asp?A=555&Q=RID%3D55&P=custom.asp
