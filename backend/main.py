@@ -233,7 +233,11 @@ if STATIC_DIR.exists():
         # Don't serve frontend for API routes
         if full_path.startswith("api/") or full_path in ["health", "chat", "license-status", "feedback", "docs", "openapi.json", "redoc"]:
             raise HTTPException(status_code=404, detail="Not found")
-        
+        # Serve static files (e.g. .md) if they exist under STATIC_DIR
+        if ".." not in full_path:
+            static_file = STATIC_DIR / full_path
+            if static_file.is_file():
+                return FileResponse(static_file)
         # Serve index.html for SPA routing
         index_path = STATIC_DIR / "index.html"
         if index_path.exists():

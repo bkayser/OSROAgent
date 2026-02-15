@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
@@ -40,6 +41,50 @@ function BetaSplash({ onDismiss, content }) {
         </div>
       </div>
     </div>
+  )
+}
+
+// Reusable markdown page: fetches /{slug}.md and renders with prose styling
+function MarkdownPage({ slug, title }) {
+  const navigate = useNavigate()
+  const [content, setContent] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    setLoading(true)
+    setError(null)
+    fetch(`/${slug}.md`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Page not found')
+        return res.text()
+      })
+      .then(setContent)
+      .catch(setError)
+      .finally(() => setLoading(false))
+  }, [slug])
+
+  const proseClass = 'prose prose-sm max-w-none prose-headings:text-gray-800 prose-h2:text-lg prose-h2:font-semibold prose-h2:text-oregon-green prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-p:text-gray-600 prose-li:text-gray-600 prose-a:text-oregon-green prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-700'
+  return (
+    <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6">
+      <div className="mb-4">
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="text-oregon-green hover:underline focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-1 rounded"
+        >
+          ← Chat
+        </button>
+      </div>
+      <h1 className="text-2xl font-bold text-gray-800 mb-4">{title}</h1>
+      {loading && <p className="text-gray-500">Loading…</p>}
+      {error && <p className="text-red-600">Failed to load content.</p>}
+      {!loading && !error && content && (
+        <div className={proseClass}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+        </div>
+      )}
+    </main>
   )
 }
 
@@ -141,45 +186,248 @@ function LicenseDisplay({ data }) {
   )
 }
 
-function App() {
-  const [question, setQuestion] = useState('')
-  const [messages, setMessages] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  
-  // License lookup state
-  const [showEmailPrompt, setShowEmailPrompt] = useState(false)
-  const [licenseEmail, setLicenseEmail] = useState('')
-  const [licenseLoading, setLicenseLoading] = useState(false)
-  
-  // Beta splash screen state
-  const [showBetaSplash, setShowBetaSplash] = useState(false)
-  const [betaContent, setBetaContent] = useState('')
-
-  // Feedback modal state
+// Layout: header (hamburger right), drawer, footer, feedback modal, outlet
+function Layout() {
+  const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
   const [showFeedbackModal, setShowFeedbackModal] = useState(false)
   const [feedbackName, setFeedbackName] = useState('')
   const [feedbackDescription, setFeedbackDescription] = useState('')
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
   const [feedbackSuccess, setFeedbackSuccess] = useState(false)
-  
+
+  const openFeedbackModal = useCallback(() => {
+    setFeedbackSuccess(false)
+    setFeedbackName('')
+    setFeedbackDescription('')
+    setShowFeedbackModal(true)
+  }, [])
+  const closeFeedbackModal = useCallback(() => {
+    setShowFeedbackModal(false)
+    setFeedbackSubmitting(false)
+  }, [])
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault()
+    const description = feedbackDescription.trim()
+    if (!description || feedbackSubmitting) return
+    setFeedbackSubmitting(true)
+    try {
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: feedbackName.trim() || null,
+          description,
+        }),
+      })
+      if (!res.ok) throw new Error(res.statusText)
+      setFeedbackSuccess(true)
+      setFeedbackDescription('')
+      setFeedbackName('')
+      setTimeout(() => closeFeedbackModal(), 1500)
+    } catch (err) {
+      console.error('Feedback submit failed:', err)
+    } finally {
+      setFeedbackSubmitting(false)
+    }
+  }
+
   useEffect(() => {
-    // Check if user has dismissed the splash screen before
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    if (menuOpen) {
+      window.addEventListener('keydown', onKeyDown)
+      return () => window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [menuOpen])
+
+  const menuItems = [
+    { label: 'Chat', action: () => { navigate('/'); setMenuOpen(false) } },
+    { label: 'Look up License Info', action: () => { navigate('/?license=1'); setMenuOpen(false) } },
+    { label: 'Sample questions', action: () => { navigate('/sample-questions'); setMenuOpen(false) } },
+    { label: 'List of Organizations', action: () => { navigate('/organizations'); setMenuOpen(false) } },
+    { label: 'For Assignors', action: () => { navigate('/for-assignors'); setMenuOpen(false) } },
+    { label: 'About', action: () => { navigate('/about'); setMenuOpen(false) } },
+    { label: 'Feedback and Corrections', action: () => { openFeedbackModal(); setMenuOpen(false) } },
+  ]
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <header className="bg-oregon-green text-white py-3 px-4 md:py-6 md:px-6 shadow-lg">
+        <div className="max-w-4xl mx-auto flex flex-row items-center justify-between gap-4">
+          <div className="flex flex-row items-center gap-8 min-w-0">
+            <img
+              src="/Logo_OSRO-alpha.png"
+              alt="Oregon Soccer Referee Organization"
+              className="h-20 shrink-0 hidden md:block"
+            />
+            <div className="text-left min-w-0">
+              <h1 className="text-2xl font-bold">Soccer Referee Concierge</h1>
+              <p className="text-green-100 text-sm mt-1">
+                Your AI assistant for soccer rules and referee procedures
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(true)}
+            className="shrink-0 p-2 rounded-lg hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white"
+            aria-label="Open menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      {menuOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            aria-hidden="true"
+            onClick={() => setMenuOpen(false)}
+          />
+          <div className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-white shadow-xl z-50 flex flex-col p-4">
+            <div className="flex justify-between items-center mb-4">
+              <span className="font-semibold text-gray-800">Menu</span>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-oregon-green"
+                aria-label="Close menu"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> </svg>
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1">
+              {menuItems.map(({ label, action }) => (
+                <button
+                  key={label}
+                  type="button"
+                  onClick={action}
+                  className="text-left px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 hover:text-oregon-green focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-inset"
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        </>
+      )}
+
+      <Outlet />
+
+      <footer className="text-center text-gray-500 text-sm py-3 md:py-4 border-t border-gray-200 mt-auto">
+        <p className="mb-2">Oregon Soccer Referee Concierge &copy; 2026</p>
+        <button
+          type="button"
+          onClick={openFeedbackModal}
+          className="text-oregon-green hover:underline focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-1 rounded"
+        >
+          Submit feedback
+        </button>
+      </footer>
+
+      {showFeedbackModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl">
+            <div className="p-6">
+              <h2 className="text-xl font-bold text-gray-800 mb-1">Submit feedback</h2>
+              <p className="text-sm text-gray-500 mb-4">
+                Tell us what information is missing or incorrect so we can improve.
+              </p>
+              {feedbackSuccess ? (
+                <p className="text-oregon-green font-medium py-4">Thank you — your feedback has been submitted.</p>
+              ) : (
+                <form onSubmit={handleFeedbackSubmit} className="flex flex-col gap-3">
+                  <div>
+                    <label htmlFor="feedback-name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Name <span className="text-gray-400">(optional)</span>
+                    </label>
+                    <input
+                      id="feedback-name"
+                      type="text"
+                      value={feedbackName}
+                      onChange={(e) => setFeedbackName(e.target.value)}
+                      placeholder="Your name"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-oregon-green focus:border-transparent"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="feedback-description" className="block text-sm font-medium text-gray-700 mb-1">
+                      What's missing or incorrect?
+                    </label>
+                    <textarea
+                      id="feedback-description"
+                      value={feedbackDescription}
+                      onChange={(e) => setFeedbackDescription(e.target.value)}
+                      placeholder="Describe what information is missing or incorrect..."
+                      rows={4}
+                      required
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-oregon-green focus:border-transparent resize-y"
+                    />
+                  </div>
+                  <div className="flex gap-2 justify-end pt-1">
+                    <button
+                      type="button"
+                      onClick={closeFeedbackModal}
+                      className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={feedbackSubmitting || !feedbackDescription.trim()}
+                      className="bg-oregon-green hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:cursor-not-allowed"
+                    >
+                      {feedbackSubmitting ? 'Submitting…' : 'Submit'}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ChatView() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [question, setQuestion] = useState('')
+  const [messages, setMessages] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [showEmailPrompt, setShowEmailPrompt] = useState(false)
+  const [licenseEmail, setLicenseEmail] = useState('')
+  const [licenseLoading, setLicenseLoading] = useState(false)
+  const [showBetaSplash, setShowBetaSplash] = useState(false)
+  const [betaContent, setBetaContent] = useState('')
+
+  // When navigated with ?license=1, show license prompt once then clear param
+  useEffect(() => {
+    if (searchParams.get('license') === '1') {
+      setShowEmailPrompt(true)
+      setSearchParams({}, { replace: true })
+    }
+  }, [searchParams, setSearchParams])
+
+  useEffect(() => {
     const dismissed = localStorage.getItem('betaSplashDismissed')
     if (!dismissed) {
-      // Fetch the beta.md content
       fetch('/beta.md')
         .then(res => res.text())
         .then(text => {
           setBetaContent(text)
           setShowBetaSplash(true)
         })
-        .catch(err => {
-          console.error('Failed to load beta.md:', err)
-          // Don't show splash if we can't load content
-        })
+        .catch(err => console.error('Failed to load beta.md:', err))
     }
   }, [])
-  
+
   const dismissBetaSplash = () => {
     localStorage.setItem('betaSplashDismissed', 'true')
     setShowBetaSplash(false)
@@ -278,44 +526,6 @@ function App() {
     setLicenseEmail('')
   }
 
-  const openFeedbackModal = () => {
-    setFeedbackSuccess(false)
-    setFeedbackName('')
-    setFeedbackDescription('')
-    setShowFeedbackModal(true)
-  }
-
-  const closeFeedbackModal = () => {
-    setShowFeedbackModal(false)
-    setFeedbackSubmitting(false)
-  }
-
-  const handleFeedbackSubmit = async (e) => {
-    e.preventDefault()
-    const description = feedbackDescription.trim()
-    if (!description || feedbackSubmitting) return
-    setFeedbackSubmitting(true)
-    try {
-      const res = await fetch('/api/feedback', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: feedbackName.trim() || null,
-          description,
-        }),
-      })
-      if (!res.ok) throw new Error(res.statusText)
-      setFeedbackSuccess(true)
-      setFeedbackDescription('')
-      setFeedbackName('')
-      setTimeout(() => closeFeedbackModal(), 1500)
-    } catch (err) {
-      console.error('Feedback submit failed:', err)
-    } finally {
-      setFeedbackSubmitting(false)
-    }
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     submitQuestion(question)
@@ -328,30 +538,8 @@ function App() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Beta Splash Screen */}
+    <>
       {showBetaSplash && <BetaSplash onDismiss={dismissBetaSplash} content={betaContent} />}
-      
-      {/* Header */}
-      <header className="bg-oregon-green text-white py-3 px-4 md:py-6 md:px-6 shadow-lg">
-        <div className="max-w-4xl mx-auto flex justify-center">
-          <div className="flex flex-row items-center gap-8">
-            <img 
-              src="/Logo_OSRO-alpha.png" 
-              alt="Oregon Soccer Referee Organization" 
-              className="h-20 shrink-0 hidden md:block"
-            />
-            <div className="text-left">
-              <h1 className="text-2xl font-bold">Soccer Referee Concierge</h1>
-              <p className="text-green-100 text-sm mt-1">
-                Your AI assistant for soccer rules and referee procedures
-              </p>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Chat Area */}
       <main className="flex-1 max-w-4xl w-full mx-auto p-2 md:p-4 flex flex-col">
         <div className="flex-1 overflow-y-auto space-y-3 mb-3 md:space-y-4 md:mb-4">
           {messages.length === 0 ? (
@@ -506,82 +694,22 @@ function App() {
           </button>
         </form>
       </main>
+    </>
+  )
+}
 
-      {/* Footer */}
-      <footer className="text-center text-gray-500 text-sm py-3 md:py-4 border-t border-gray-200">
-        <p className="mb-2">Oregon Soccer Referee Concierge &copy; 2026</p>
-        <button
-          type="button"
-          onClick={openFeedbackModal}
-          className="text-oregon-green hover:underline focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-1 rounded"
-        >
-          Submit feedback
-        </button>
-      </footer>
-
-      {/* Feedback Modal */}
-      {showFeedbackModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full shadow-2xl">
-            <div className="p-6">
-              <h2 className="text-xl font-bold text-gray-800 mb-1">Submit feedback</h2>
-              <p className="text-sm text-gray-500 mb-4">
-                Tell us what information is missing or incorrect so we can improve.
-              </p>
-              {feedbackSuccess ? (
-                <p className="text-oregon-green font-medium py-4">Thank you — your feedback has been submitted.</p>
-              ) : (
-                <form onSubmit={handleFeedbackSubmit} className="flex flex-col gap-3">
-                  <div>
-                    <label htmlFor="feedback-name" className="block text-sm font-medium text-gray-700 mb-1">
-                      Name <span className="text-gray-400">(optional)</span>
-                    </label>
-                    <input
-                      id="feedback-name"
-                      type="text"
-                      value={feedbackName}
-                      onChange={(e) => setFeedbackName(e.target.value)}
-                      placeholder="Your name"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-oregon-green focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="feedback-description" className="block text-sm font-medium text-gray-700 mb-1">
-                      What’s missing or incorrect?
-                    </label>
-                    <textarea
-                      id="feedback-description"
-                      value={feedbackDescription}
-                      onChange={(e) => setFeedbackDescription(e.target.value)}
-                      placeholder="Describe what information is missing or incorrect..."
-                      rows={4}
-                      required
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-oregon-green focus:border-transparent resize-y"
-                    />
-                  </div>
-                  <div className="flex gap-2 justify-end pt-1">
-                    <button
-                      type="button"
-                      onClick={closeFeedbackModal}
-                      className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={feedbackSubmitting || !feedbackDescription.trim()}
-                      className="bg-oregon-green hover:bg-green-700 disabled:bg-gray-400 text-white px-4 py-2 rounded-lg font-medium transition-colors disabled:cursor-not-allowed"
-                    >
-                      {feedbackSubmitting ? 'Submitting…' : 'Submit'}
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<ChatView />} />
+        <Route path="/license" element={<Navigate to="/?license=1" replace />} />
+        <Route path="/about" element={<MarkdownPage slug="about" title="About" />} />
+        <Route path="/for-assignors" element={<MarkdownPage slug="for-assignors" title="For Assignors" />} />
+        <Route path="/organizations" element={<MarkdownPage slug="organizations" title="List of Organizations" />} />
+        <Route path="/sample-questions" element={<MarkdownPage slug="sample-questions" title="Sample questions" />} />
+      </Route>
+    </Routes>
   )
 }
 
