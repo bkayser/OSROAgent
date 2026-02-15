@@ -53,6 +53,7 @@ the fall season so kids can play for their high school teams.
 Elite soccer programs exist and have games in regional or national leagues such as MLSNext and ECNL.  These games are assigned by various organizations
 and are usually invite-only for referees.
 
+OYSA leagues have different assignors for different parts of the Portland/Vancouver metropolitan area.
 
 ## Rules of competition
 

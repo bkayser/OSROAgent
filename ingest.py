@@ -37,7 +37,6 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 # Configuration
 DATA_DIR = Path("./data")
 VECTOR_STORE_PATH = Path("./vector_store")
-URLS_FILE = DATA_DIR / "_urls.txt"
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"
 
 # Files to exclude from ingestion (templates, placeholders)
@@ -238,8 +237,13 @@ def load_documents() -> list:
     except Exception as e:
         print(f"Error loading PDF files: {e}")
 
-    # Load from URLs file (in data/ root)
-    documents.extend(load_urls(URLS_FILE))
+    # Load from any _urls.txt found under data/ (recursive)
+    url_files = sorted(DATA_DIR.rglob("_urls.txt"))
+    if not url_files:
+        print("No _urls.txt files found under data/, skipping URL ingestion")
+    for url_file in url_files:
+        print(f"URL list: {url_file}")
+        documents.extend(load_urls(url_file))
 
     # Enrich metadata: doc_type, org, title from path (for file-based docs)
     documents = [_enrich_doc_metadata(d) for d in documents]
