@@ -6,15 +6,17 @@ title: [Organization/League Name] - Referee Information
 # [Organization/League Name]: Referee Information
 
 **RefTown:** [Top-level organization / Payor league under NWSC / Not on RefTown]
-
+**League:** [Name of leagues assigned, comma separated, blank if none]
 **How to get games:** [e.g., "Join PYSO in RefTown" or "Join NWSC in RefTown, then select [League Name] from the payor league list."]
+**Homepage:** [Full Name of org with link to home page, if known]
 
 ---
 
 ## Assignor
 
 - **Name:** [Assignor name]
-- **Contact:** [Email / phone / RefTown link]
+- **Email:** [Assignor email]
+- **Mobile:** [Assignor phone number]
 
 ---
 
@@ -39,6 +41,9 @@ title: [Organization/League Name] - Referee Information
 - **Pay schedule:** [e.g., Every two weeks on Fridays for prior two weeks]
 - **Cancellation / pay:** [e.g., Cancel before 5pm Friday = no pay; cancel 5pm Friday–6am Saturday = half fee; after 6am Saturday = full fee. Adjust for Sunday games if different.]
 
+## Pay Table
+
+[ list of the different fees by age group, level, role (Center or AR), System (Diagonal, Dual, Solo, 4-person) ]
 ---
 
 ## Rules of competition
