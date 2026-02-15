@@ -123,12 +123,12 @@ async def chat(query: Query):
         context = ""
         sources = []
         
-        # Retrieve relevant context if vector store is available
+        # Retrieve relevant context if vector store is available (MMR for diverse results)
         store = get_vector_store()
         if store:
-            docs = store.similarity_search(query.question, k=5)
+            docs = store.max_marginal_relevance_search(query.question, k=5, fetch_k=20)
             context = "\n\n".join([doc.page_content for doc in docs])
-            sources = [doc.metadata.get("source", "Unknown") for doc in docs]
+            sources = [doc.metadata.get("title") or doc.metadata.get("source", "Unknown") for doc in docs]
         
         # Generate response using Gemini
         from google import genai
