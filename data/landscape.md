@@ -4,11 +4,13 @@ This document describes how leagues, tournaments, and assigning work for Oregon 
 
 ## Organizations and assigning
 
-Referees work in multiple leagues and tournaments. Each league or tournament is managed by an **organization**. The organization might be a sanctioned USSF regional authority (e.g., Oregon Youth Soccer / OYSA) or a club (e.g., Oregon City Soccer Club).
+Referees work in multiple leagues and tournaments. Each league or tournament is managed by an **organization**. The organization might be a sanctioned USSF regional authority (e.g., Oregon Youth Soccer / OYSA) or a club (e.g., Oregon City Soccer Club, Eastside Timbers).
+
+Most organizations have a single assignor but OYSA league games are spread across Oregon and southern Washington and use local referee assignors in each area.
 
 Organizations that use **RefTown.com** manage referee assignments through that web app. Referees create an **availability schedule** in RefTown that is shared across organizations and payor leagues; assignors use it to assign games.
 
-Other assigning platforms exist (e.g., Arbiter, RefInsight.com, StackOfficials). Details for those platforms are not covered in this knowledge base.
+Other assigning platforms exist (e.g., Arbiter, RefInsight.com, StackOfficials). Details for those platforms and organizations are not covered in this knowledge base.
 
 ## RefTown: top-level organizations vs payor leagues
 
@@ -23,10 +25,16 @@ If you work for more than one organization or tournament, you must register for 
 
 Each league or tournament has its own:
 
-- **Rules of competition** (often as a PDF)
-- **Procedures** (game reports, misconduct reporting, etc.)
-- **Referee pay scale**
+- **Rules of competition** or **League Rules** (often as a PDF)
+- **Referee pay scale or pay table**
 - **Assignor** with contact information
+
+Additionally the competition may provide referees with:
+
+- **Referee Procedures** (game report submission instructions, misconduct reporting, check-in guidance)
+- **League or Tournament Hotline** for admins, coaches and issues about rosters and eligibility
 - **Game day emergency hotline** (for no-shows, send-offs, injuries, etc.)
 
-Look up the organization or league by name in this knowledge base for assignor contact, hotlines, procedures, and pay. Full rules are often in linked or attached PDFs.
+## How to find the assignor
+
+If the assignor name is not known by this knowledge base or named in the rules or procedures, a referee can find the assignor named in their reftown assignment details, or from the Contact List in the Reftown organization. 
