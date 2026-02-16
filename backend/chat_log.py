@@ -3,7 +3,11 @@ Append chat queries and responses to a Google Sheet for review and improvement.
 """
 
 import logging
+import uuid
 from pathlib import Path
+
+# Chat log columns: Env, IP, Grade, Query, Answer, Sources, Timestamp, Log ID
+CHAT_LOG_HEADERS = ["Env", "IP", "Grade", "Query", "Answer", "Sources", "Timestamp", "Log ID"]
 
 # Backend directory (same as this module); sheet_id and oregon-referees*.json live here
 # so they are included when Docker copies backend/ into the image.
@@ -56,30 +60,77 @@ def _get_sheet_client():
         return None
 
 
-def append_chat_log(env: str, query: str, answer: str, sources: list[str]) -> None:
+def _ensure_header_row(sheet) -> None:
+    """Ensure row 1 is the header. Insert header at top if row 1 is blank or contains data."""
+    try:
+        first_cell = sheet.cell(1, 1).value
+        if (first_cell or "").strip() != "Env":
+            sheet.insert_row(CHAT_LOG_HEADERS, index=1, value_input_option="USER_ENTERED")
+    except Exception as e:
+        logging.warning("Chat log: could not ensure header row: %s", e)
+
+
+def append_chat_log(
+    env: str,
+    query: str,
+    answer: str,
+    sources: list[str],
+    client_ip: str | None = None,
+) -> str | None:
     """
-    Append one row to the chat log sheet. Columns: Env, Timestamp, Query, Answer, Sources.
-    Does nothing if sheet ID or credentials are missing; logs and swallows errors so chat still works.
+    Insert one row at the top of the chat log sheet.
+    Columns (in order): Env, IP, Grade, Query, Answer, Sources, Timestamp, Log ID.
+    Returns the log_id (UUID) or None if sheet/credentials unavailable.
     Timestamp is Pacific time formatted as y/m/d HH:MM pm.
     """
     from datetime import datetime
     from zoneinfo import ZoneInfo
+
     sheet_id = _get_sheet_id()
     if not sheet_id:
-        return
+        return None
     client = _get_sheet_client()
     if not client:
-        return
+        return None
     try:
         sheet = client.open_by_key(sheet_id).sheet1
+        _ensure_header_row(sheet)
+
+        log_id = str(uuid.uuid4())
         dt = datetime.now(ZoneInfo("America/Los_Angeles"))
         ts = dt.strftime("%y/%m/%d %I:%M ") + dt.strftime("%p").lower()
         answer_trunc = (answer[:MAX_CELL_CHARS] + "...") if len(answer) > MAX_CELL_CHARS else answer
         sources_str = ", ".join(sources) if sources else ""
-        row = [env, ts, query, answer_trunc, sources_str]
-        sheet.append_row(row, value_input_option="USER_ENTERED")
+        ip_str = (client_ip or "").strip() or ""
+
+        # Env, IP, Grade, Query, Answer, Sources, Timestamp, Log ID
+        row = [env, ip_str, "", query, answer_trunc, sources_str, ts, log_id]
+        sheet.insert_row(row, index=2, value_input_option="USER_ENTERED")
+        return log_id
     except Exception as e:
-        logging.exception("Chat log append failed: %s", e)
+        logging.exception("Chat log insert failed: %s", e)
+        return None
+
+
+def update_chat_log_grade(log_id: str, grade: str) -> bool:
+    """
+    Update the Grade column for the row with the given log_id.
+    Returns True on success, False if not found or on error.
+    """
+    sheet_id = _get_sheet_id()
+    if not sheet_id:
+        return False
+    client = _get_sheet_client()
+    if not client:
+        return False
+    try:
+        sheet = client.open_by_key(sheet_id).sheet1
+        cell = sheet.find(log_id, in_column=8)
+        sheet.update_cell(cell.row, 3, grade)
+        return True
+    except Exception as e:
+        logging.warning("Chat log grade update failed: %s", e)
+        return False
 
 
 def append_feedback(user: str, feedback: str) -> None:

@@ -8,6 +8,7 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from typing import Literal
 from pydantic import BaseModel
 from pathlib import Path
 # genai/langchain/FAISS imported lazily in handlers for fast startup
@@ -56,6 +57,13 @@ class Response(BaseModel):
     """Response model for chat answers."""
     answer: str
     sources: list[str] = []
+    log_id: str | None = None
+
+
+class GradeSubmit(BaseModel):
+    """Request model for chat response grading."""
+    log_id: str
+    grade: Literal["up", "down"]
 
 
 class FeedbackSubmit(BaseModel):
@@ -77,6 +85,16 @@ def load_vector_store():
             embeddings,
             allow_dangerous_deserialization=True
         )
+
+
+def _get_client_ip(request: Request) -> str:
+    """Extract client IP from request (X-Forwarded-For when behind proxy, else client.host)."""
+    forwarded = request.headers.get("X-Forwarded-For")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    if request.client:
+        return request.client.host or ""
+    return ""
 
 
 def get_vector_store():
@@ -104,15 +122,15 @@ async def health_check():
 
 
 @app.get("/chat", response_model=Response)
-async def chat_get(q: str = ""):
+async def chat_get(request: Request, q: str = ""):
     """Chat via GET ?q= for Cloud Run (avoids 405 on POST)."""
     if not (q or "").strip():
         raise HTTPException(status_code=400, detail="Query parameter 'q' cannot be empty")
-    return await chat(Query(question=q.strip()))
+    return await chat(request, Query(question=q.strip()))
 
 
 @app.post("/chat", response_model=Response)
-async def chat(query: Query):
+async def chat(request: Request, query: Query):
     """
     Process a chat query and return an AI-generated response.
     """
@@ -154,21 +172,40 @@ say so rather than making up information."""
             contents=prompt
         )
         
-        result = Response(
-            answer=response.text,
-            sources=list(set(sources))
-        )
         # Log to Google Sheet for review (best-effort; never fail the request)
         env = "prod" if os.environ.get("K_SERVICE") else "dev"
+        client_ip = _get_client_ip(request)
+        log_id = None
         try:
             from backend.chat_log import append_chat_log
-            append_chat_log(env, query.question, result.answer, result.sources)
+            log_id = append_chat_log(
+                env, query.question, response.text, list(set(sources)),
+                client_ip=client_ip or None
+            )
         except Exception:
             pass
-        return result
+        return Response(
+            answer=response.text,
+            sources=list(set(sources)),
+            log_id=log_id
+        )
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/chat/grade")
+async def chat_grade(data: GradeSubmit):
+    """
+    Record a thumbs up or thumbs down grade for a chat response.
+    Returns 404 if the log_id is not found.
+    """
+    from backend.chat_log import update_chat_log_grade
+
+    ok = update_chat_log_grade(data.log_id, data.grade)
+    if not ok:
+        raise HTTPException(status_code=404, detail="Log entry not found")
+    return {"status": "ok"}
 
 
 @app.get("/license-status")
