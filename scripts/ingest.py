@@ -8,6 +8,12 @@ import os
 import sys
 from pathlib import Path
 
+# Project root must be on path so reftown_auth (in repo root) can be imported when run as python scripts/ingest.py
+SCRIPT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = SCRIPT_DIR.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
 import requests
 from bs4 import BeautifulSoup
 from langchain_community.document_loaders import DirectoryLoader, TextLoader, PyPDFLoader
