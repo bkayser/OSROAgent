@@ -1,0 +1,37 @@
+[
+  {
+    "section": "Getting started",
+    "questions": [
+        "I'm a new ref. Where do I start?",
+        "What equipment do I need?",
+        "How do I sign up for leagues in Reftown?"
+    ]
+  },
+  {
+    "section": "License and certification",
+    "questions": [
+      "Look up my USSF certification status",
+        "When does my safesport license expire?",
+        "When will I get my badge?"
+    ]
+  },
+  {
+    "section": "Rules and procedures",
+    "questions": [
+        "Explain the offside rule",
+        "Is slide tackling allowed in my league?",
+        "Is a referee passback a direct or indirect free kick?",
+      "How do I report a red card?",
+      "What are the check in guidelines for OYSA?"
+    ]
+  },
+  {
+    "section": "Assignments and leagues",
+    "questions": [
+      "Why am I not getting assignments?",
+      "How do I set my availability in Reftown?",
+      "Which organizations assign games in the Portland area?",
+      "How do I cancel an assignment once I've already accepted it?"
+    ]
+  }
+]

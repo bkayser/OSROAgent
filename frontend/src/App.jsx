@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams } from 'react-router-dom'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
@@ -84,6 +84,74 @@ function MarkdownPage({ slug, title }) {
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
         </div>
       )}
+    </main>
+  )
+}
+
+// Sample questions page: clickable questions that navigate to chat and auto-submit
+function SampleQuestionsPage() {
+  const navigate = useNavigate()
+  const [sections, setSections] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    setLoading(true)
+    setError(null)
+    fetch('/sample-questions.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load questions')
+        return res.json()
+      })
+      .then(setSections)
+      .catch(setError)
+      .finally(() => setLoading(false))
+  }, [])
+
+  return (
+    <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6">
+      <div className="mb-4">
+        <button
+          type="button"
+          onClick={() => navigate('/')}
+          className="text-oregon-green hover:underline focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-1 rounded"
+        >
+          ← Chat
+        </button>
+      </div>
+      <h1 className="text-2xl font-bold text-gray-800 mb-2">Sample questions</h1>
+      <p className="text-gray-600 mb-6">
+        Click any question to ask it in the chat. The prompt will be sent automatically.
+      </p>
+      {loading && <p className="text-gray-500">Loading…</p>}
+      {error && <p className="text-red-600">Failed to load sample questions.</p>}
+      {!loading && !error && sections.map(({ section, questions }) => (
+        <section key={section} className="mb-6">
+          <h2 className="text-lg font-semibold text-oregon-green mb-3">{section}</h2>
+          <ul className="space-y-2">
+            {questions.map((q) => (
+              <li key={q}>
+                <button
+                  type="button"
+                  onClick={() => navigate('/', { state: { submitQuestion: q } })}
+                  className="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-200 bg-white hover:bg-oregon-green hover:text-white hover:border-oregon-green focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-2 transition-colors group"
+                >
+                  <span className="flex-1">{q}</span>
+                  <span className="shrink-0 text-sm font-medium text-oregon-green group-hover:text-white flex items-center gap-1">
+                    Ask in chat
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <p className="text-sm text-gray-500 mt-6">
+        Or use <strong>Look up License Info</strong> in the menu to check your USSF license status.
+      </p>
     </main>
   )
 }
@@ -397,6 +465,8 @@ function Layout() {
 }
 
 function ChatView() {
+  const navigate = useNavigate()
+  const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const [question, setQuestion] = useState('')
   const [messages, setMessages] = useState([])
@@ -414,6 +484,17 @@ function ChatView() {
       setSearchParams({}, { replace: true })
     }
   }, [searchParams, setSearchParams])
+
+  const submittedFromStateRef = useRef(false)
+  // When navigated from Sample questions with state.submitQuestion, load and send it
+  useEffect(() => {
+    const q = location.state?.submitQuestion
+    if (q && typeof q === 'string' && !submittedFromStateRef.current) {
+      submittedFromStateRef.current = true
+      navigate('/', { replace: true, state: {} })
+      submitQuestion(q)
+    }
+  }, [location.state?.submitQuestion, navigate])
 
   useEffect(() => {
     const dismissed = localStorage.getItem('betaSplashDismissed')
@@ -707,7 +788,7 @@ function App() {
         <Route path="/about" element={<MarkdownPage slug="about" title="About" />} />
         <Route path="/for-assignors" element={<MarkdownPage slug="for-assignors" title="For Assignors" />} />
         <Route path="/organizations" element={<MarkdownPage slug="organizations" title="List of Organizations" />} />
-        <Route path="/sample-questions" element={<MarkdownPage slug="sample-questions" title="Sample questions" />} />
+        <Route path="/sample-questions" element={<SampleQuestionsPage />} />
       </Route>
     </Routes>
   )
