@@ -8,13 +8,16 @@ OSROAgent/
 │   ├── public/       # Static assets (logos, images)
 │   └── src/          # React components and logic
 ├── backend/          # Python backend application
-│   └── ...           # Flask API and business logic
-├── scripts/          # Utility scripts
-├── ingest.py         # Data ingestion script
+│   └── ...           # FastAPI and business logic
+├── scripts/          # Utility scripts (ingest, fetch_pages, build/deploy shell scripts)
+│   └── ingest.py     # Data ingestion script
+├── Taskfile.yml      # Build and deploy entry point (task ingest, task deploy-full, etc.)
 ├── run.py            # Application runner
 ├── Dockerfile        # Container definition
 └── docker-compose.yml # Multi-container setup
 ```
+
+Build and deploy are run via Task (e.g. `task deploy-full`); scripts are invoked by Task, not directly.
 
 ## Frontend Architecture
 - Framework: React
@@ -23,7 +26,7 @@ OSROAgent/
 - Build Tool: [Vite/Create React App - to be confirmed]
 
 ## Backend Architecture
-- Framework: Python/Flask
+- Framework: Python/FastAPI
 - Location: `/backend`
 - API Structure: RESTful endpoints
 

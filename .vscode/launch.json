@@ -1,7 +1,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-
     {
       "name": "Backend (FastAPI)",
       "type": "debugpy",
@@ -25,16 +24,7 @@
       "name": "Ingest Script",
       "type": "debugpy",
       "request": "launch",
-      "program": "${workspaceFolder}/ingest.py",
-      "cwd": "${workspaceFolder}",
-      "envFile": "${workspaceFolder}/.env",
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Perform build and deployment",
-      "type": "node",
-      "request": "launch",
-      "program": "${workspaceFolder}/scripts/run-deploy.js",
+      "program": "${workspaceFolder}/scripts/ingest.py",
       "cwd": "${workspaceFolder}",
       "envFile": "${workspaceFolder}/.env",
       "console": "integratedTerminal"

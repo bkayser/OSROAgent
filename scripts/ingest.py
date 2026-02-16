@@ -1,28 +1,12 @@
-#!/usr/bin/env python3
 """
 Ingest script for Oregon Soccer Referee Concierge.
 This script handles document ingestion and vector store creation.
+Run via: task ingest (from project root). Environment is provided by Task.
 """
 
 import os
 import sys
 from pathlib import Path
-
-# Load .env file if it exists (before importing modules that need env vars)
-def load_dotenv():
-    """Load environment variables from .env file in project root."""
-    env_file = Path(__file__).parent / ".env"
-    if env_file.exists():
-        with open(env_file) as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith('#') and '=' in line:
-                    key, _, value = line.partition('=')
-                    # Remove surrounding quotes if present
-                    value = value.strip().strip('"').strip("'")
-                    os.environ.setdefault(key.strip(), value)
-
-load_dotenv()
 
 import requests
 from bs4 import BeautifulSoup
@@ -35,7 +19,7 @@ from langchain_community.embeddings import FastEmbedEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-# Configuration
+# Configuration (paths relative to project root; run from root via task ingest)
 DATA_DIR = Path("./data")
 VECTOR_STORE_PATH = Path("./vector_store")
 USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.2 Safari/605.1.15"

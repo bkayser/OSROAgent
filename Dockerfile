@@ -15,7 +15,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY backend/ ./backend/
-COPY ingest.py .
 COPY run.py .
 
 # Create directories for data and vector store

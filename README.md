@@ -23,14 +23,15 @@ OSROAgent/
 │   ├── package.json
 │   ├── tailwind.config.js
 │   └── vite.config.js
-├── scripts/              # Utility scripts
+├── scripts/              # Utility scripts (run via Task, not directly)
+│   ├── ingest.py         # Document ingestion
 │   ├── fetch_pages.py    # Download webpages as markdown
 │   ├── build-push.sh     # Build and push Docker images
 │   ├── deploy-cloudrun.sh # Deploy to Cloud Run
 │   └── update-vector-store.sh # Sync vector store to GCS
 ├── data/                 # Source documents for ingestion
 ├── vector_store/         # Generated FAISS index
-├── ingest.py             # Document ingestion script
+├── Taskfile.yml          # Build and deploy tasks (task ingest, task deploy-full, etc.)
 ├── requirements.txt      # Python dependencies
 ├── LICENSE
 ├── README.md
@@ -90,29 +91,47 @@ OSROAgent/
 
 The AI assistant's knowledge comes from documents you provide. To learn how to add, update, and manage training data, see **[README-ingest.md](README-ingest.md)**.
 
+## Build and deploy (Task)
+
+Build and deploy are driven by [Task](https://taskfile.dev/). Scripts are intended to be run via Task, not invoked directly.
+
+### First-time setup
+
+1. **Install Task** (one-time per machine):
+   - **macOS (Homebrew):** `brew install go-task`
+   - **Linux:** `sh -c "$(curl -fsSL https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin` (ensure `~/.local/bin` is on your `PATH`)
+   - **Windows:** `choco install go-task` or see [taskfile.dev/installation](https://taskfile.dev/installation/)
+   - Verify: `task --version`
+
+2. **No project-specific install:** Task is a single binary; no `npm install` or venv step for Task itself.
+
+### Prepare your shell
+
+Run task commands from the **project root** with your Python venv activated and tools (Docker, gcloud) available. Task loads `.env` from the project root automatically, so you do not need to `source .env` before running tasks.
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `task ingest` | Build the vector store from `data/` |
+| `task build-push` | Build and push Docker images to GCR |
+| `task update-vector-store` | Sync local `vector_store/` to GCS |
+| `task deploy` | Deploy API and UI to Cloud Run |
+| `task deploy-full` | Full pipeline: ingest → build-push → update-vector-store → deploy |
+| `task fetch-pages` | Fetch URLs as markdown (e.g. `task fetch-pages -- --file data/fetch-and-edit.urls`) |
+| `task setup-storage` | One-time: create GCS bucket and IAM for vector store |
+
+Optional tag for build-push: `TAG=sha-abc123 task build-push`.
+
 ## Production (GCR / Cloud Run)
 
 Images are tagged for **Google Container Registry**: `gcr.io/oregon-referees/osro-agent-api`, `gcr.io/oregon-referees/osro-agent-ui`. Deployments target project **oregon-referees**, region **us-west1**. The API reads the vector store from a **Cloud Storage bucket** mounted at `/app/vector_store`.
 
-- **One-time setup (bucket and IAM):** Create the bucket and grant the Cloud Run service account access:
-  ```bash
-  ./scripts/setup-cloudrun-storage.sh
-  ```
-  Uses bucket `{PROJECT}-osro-vector-store` by default; set `VECTOR_STORE_BUCKET` to override.
+- **One-time setup (bucket and IAM):** Run `task setup-storage`. Uses bucket `{PROJECT}-osro-vector-store` by default; set `VECTOR_STORE_BUCKET` to override.
 
-- **Build and push to GCR:** From the project root, run:
-  ```bash
-  ./scripts/build-push.sh
-  ```
-  Optional: `TAG=sha-abc123 ./scripts/build-push.sh` to push a specific tag.
+- **Full deploy:** From the project root (venv activated, `.env` with `GOOGLE_API_KEY`): run `task deploy-full`. This runs ingest, build-push, update-vector-store, and deploy in order.
 
-- **Deploy to Cloud Run:** After pushing images, set `GOOGLE_API_KEY` and run:
-  ```bash
-  ./scripts/deploy-cloudrun.sh
-  ```
-  The script deploys the API (with the GCS bucket mounted at `/app/vector_store`) first, then the UI with `BACKEND_URL` set to the API service URL.
-
-- **Update only the vector store:** After updating training data (see [README-ingest.md](README-ingest.md)), run `./scripts/update-vector-store.sh` to sync the vector store to GCS and deploy a new API revision.
+- **Individual steps:** Use `task ingest`, `task build-push`, `task update-vector-store`, or `task deploy` as needed. After updating training data (see [README-ingest.md](README-ingest.md)), run `task update-vector-store` to sync the vector store to GCS.
 
 - **Local Docker:** `docker compose up` still builds and runs the app; the UI uses `BACKEND_URL=http://osro-agent-api:8080` by default. Local API uses the mounted `./vector_store` directory. The app is at http://localhost:8000 (host port 8000 is the UI).
 

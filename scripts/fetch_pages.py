@@ -1,21 +1,15 @@
-#!/usr/bin/env python3
 """
 Fetch public webpages and convert them to markdown for curation.
 
-Usage:
-    ./scripts/fetch_pages.py <url1> [url2] [url3] ...
-    
-    # Or with a file containing URLs (one per line; empty lines and # comments are ignored):
-    ./scripts/fetch_pages.py --file urls.txt
-
-    # In the file, each line may be: URL  or  URL whitespace output-basename
-    # If the basename is present it is used for the markdown file (e.g. my-page becomes data/my-page.md).
-    # Otherwise the filename is derived from the URL path.
+Run via Task (from project root): task fetch-pages -- <urls or --file path>
+Or invoke directly: python scripts/fetch_pages.py <url1> [url2] ... or --file path
+When run directly, .env in project root is loaded if present (e.g. for REFTOWN_*).
 
 Output files are saved to the data/text/ directory for ingestion.
 """
 
 import argparse
+import os
 import re
 import sys
 from pathlib import Path
@@ -32,26 +26,25 @@ ROOT_DIR = SCRIPT_DIR.parent
 DATA_DIR = ROOT_DIR / "data"
 TEXT_DIR = DATA_DIR / "text"  # Output directory for fetched markdown files
 
-# Load .env file if it exists (before importing reftown_auth)
-def load_dotenv():
-    """Load environment variables from .env file in project root."""
+
+def _load_dotenv():
+    """Load .env from project root when script is run directly (not via Task)."""
     env_file = ROOT_DIR / ".env"
     if env_file.exists():
-        import os
         with open(env_file) as f:
             for line in f:
                 line = line.strip()
-                if line and not line.startswith('#') and '=' in line:
-                    key, _, value = line.partition('=')
-                    # Remove surrounding quotes if present
+                if line and not line.startswith("#") and "=" in line:
+                    key, _, value = line.partition("=")
                     value = value.strip().strip('"').strip("'")
                     os.environ.setdefault(key.strip(), value)
 
-load_dotenv()
 
-# Allow importing reftown_auth when run as ./scripts/fetch_pages.py
+# Ensure project root on path for reftown_auth
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
+
+_load_dotenv()
 
 import reftown_auth
 

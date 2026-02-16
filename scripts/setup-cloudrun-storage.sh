@@ -25,4 +25,4 @@ SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
 echo "Granting ${SA} Storage Object Viewer on gs://${BUCKET}..."
 gsutil iam ch "serviceAccount:${SA}:objectViewer" "gs://${BUCKET}"
 
-echo "Done. Run ./scripts/deploy-cloudrun.sh to deploy with the vector store mount."
+echo "Done. Run task deploy to deploy with the vector store mount."

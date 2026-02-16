@@ -1,6 +1,6 @@
 # Data Ingestion Guide
 
-This document explains how to manage and ingest data sources for the Oregon Soccer Referee Concierge.
+This document explains how to manage and ingest data sources for the Oregon Soccer Referee Concierge. **Ingestion and fetch scripts are run via Task** (e.g. `task ingest`, `task fetch-pages`); direct invocation of scripts is not recommended.
 
 ## Directory Structure
 
@@ -22,8 +22,8 @@ data/
 
 | Directory | Contents | Notes |
 |-----------|----------|-------|
-| `data/_urls.txt` | URLs to fetch **live** during ingestion | Content is fetched fresh each time `ingest.py` runs |
-| `data/_fetch-and-edit.urls` | URLs for one-time download | Used with `fetch_pages.py` for curated content |
+| `data/_urls.txt` | URLs to fetch **live** during ingestion | Content is fetched fresh each time you run `task ingest` |
+| `data/_fetch-and-edit.urls` | URLs for one-time download | Used with `task fetch-pages` for curated content |
 | `data/text/` | `.md` and `.txt` files | Editable content - best for curated web pages |
 | `data/pdfs/` | PDF documents | League rules, handbooks, etc. |
 
@@ -49,9 +49,9 @@ flowchart LR
         end
     end
 
-    subgraph tools [Scripts]
-        fetch["fetch_pages.py"]
-        ingest["ingest.py"]
+    subgraph tools [Task commands]
+        fetch["task fetch-pages"]
+        ingest["task ingest"]
     end
 
     subgraph output [Output]
@@ -69,21 +69,21 @@ flowchart LR
     ingest --> vs
 ```
 
-## Scripts
+## Scripts (run via Task)
 
-### fetch_pages.py - Download and Curate Web Content
+### task fetch-pages - Download and Curate Web Content
 
 Downloads web pages as markdown files that you can edit before ingestion.
 
 ```bash
 # Fetch a single URL
-./scripts/fetch_pages.py https://www.theifab.com/laws/latest/fouls-and-misconduct/
+task fetch-pages -- https://www.theifab.com/laws/latest/fouls-and-misconduct/
 
 # Fetch multiple URLs
-./scripts/fetch_pages.py https://url1.com https://url2.com
+task fetch-pages -- https://url1.com https://url2.com
 
 # Fetch from a file (one URL per line)
-./scripts/fetch_pages.py --file data/fetch-and-edit.urls
+task fetch-pages -- --file data/fetch-and-edit.urls
 ```
 
 **Output:** Markdown files are saved to `data/text/` with filenames derived from the URL.
@@ -112,18 +112,18 @@ After downloading, edit the markdown files to:
 - Remove duplicate or outdated information
 
 **RefTown URLs (reftown.com):**
-Many documents are hosted on [reftown.com](https://reftown.com) and require authentication. Both `fetch_pages.py` and `ingest.py` detect reftown.com URLs and log in automatically when these environment variables are set:
+Many documents are hosted on [reftown.com](https://reftown.com) and require authentication. Both the fetch-pages and ingest tasks detect reftown.com URLs and log in automatically when these environment variables are set (Task loads `.env` from the project root):
 - `REFTOWN_USERNAME` – your RefTown username or email
 - `REFTOWN_PASSWORD` – your RefTown password
 
 If not set, reftown.com URLs are requested without auth (you may get the login page instead of actual content).
 
-### ingest.py - Build the Vector Store
+### task ingest - Build the Vector Store
 
 Processes all documents and builds the FAISS vector store.
 
 ```bash
-./ingest.py
+task ingest
 ```
 
 **What it processes:**
@@ -147,13 +147,13 @@ Best for content you want to edit or that doesn't change frequently.
 echo "https://example.com/rules-page" >> data/fetch-and-edit.urls
 
 # 2. Download as markdown
-./scripts/fetch_pages.py --file data/fetch-and-edit.urls
+task fetch-pages -- --file data/fetch-and-edit.urls
 
 # 3. Edit the generated file in data/text/
 # (Remove unwanted sections, fix formatting, etc.)
 
 # 4. Rebuild the vector store
-./ingest.py
+task ingest
 ```
 
 ### Option 2: Live URLs
@@ -165,7 +165,7 @@ Best for frequently-updated content where you always want the latest version.
 echo "https://example.com/announcements" >> data/urls.txt
 
 # 2. Rebuild (fetches fresh content)
-./ingest.py
+task ingest
 ```
 
 ### Option 3: PDF Documents
@@ -175,7 +175,7 @@ echo "https://example.com/announcements" >> data/urls.txt
 cp ~/Downloads/new-rules.pdf data/pdfs/
 
 # 2. Rebuild
-./ingest.py
+task ingest
 ```
 
 ## Production Deployment
@@ -184,15 +184,15 @@ After updating content locally:
 
 ```bash
 # 1. Rebuild the vector store
-./ingest.py
+task ingest
 
 # 2. Sync to Cloud Storage and deploy
-./scripts/update-vector-store.sh
+task update-vector-store
 ```
 
 ## Tips
 
 - **Prefer curated content** over live URLs for better quality and control
 - **Use descriptive filenames** for markdown files (e.g., `OYSA-referee-certification.md`)
-- **Check the output** of `ingest.py` to verify all sources are loaded
+- **Check the output** of `task ingest` to verify all sources are loaded
 - **Keep PDFs organized** with clear names indicating the source and date

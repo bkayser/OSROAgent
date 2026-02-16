@@ -1,0 +1,44 @@
+# OSRO Agent build and deploy. Run from project root.
+# First-time: install Task (e.g. brew install go-task). Task loads .env automatically.
+version: "3"
+
+dotenv: [".env"]
+
+tasks:
+  ingest:
+    desc: Build the vector store from data/
+    cmds:
+      - python scripts/ingest.py
+
+  build-push:
+    desc: Build and push Docker images to GCR
+    cmds:
+      - ./scripts/build-push.sh
+
+  update-vector-store:
+    desc: Sync local vector_store to GCS
+    cmds:
+      - ./scripts/update-vector-store.sh
+
+  deploy:
+    desc: Deploy API and UI to Cloud Run
+    cmds:
+      - ./scripts/deploy-cloudrun.sh
+
+  deploy-full:
+    desc: Full pipeline — ingest, build-push, update-vector-store, deploy
+    deps:
+      - ingest
+      - build-push
+      - update-vector-store
+      - deploy
+
+  fetch-pages:
+    desc: Fetch URLs as markdown (e.g. task fetch-pages -- --file data/fetch-and-edit.urls)
+    cmds:
+      - python scripts/fetch_pages.py {{.CLI_ARGS}}
+
+  setup-storage:
+    desc: One-time setup — create GCS bucket and IAM for vector store
+    cmds:
+      - ./scripts/setup-cloudrun-storage.sh

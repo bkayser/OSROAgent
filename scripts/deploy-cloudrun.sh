@@ -1,16 +1,8 @@
 #!/usr/bin/env bash
 set -e
 # Deploy OSRO Agent API and UI to Google Cloud Run (us-west1, project oregon-referees).
-# Run scripts/build-push.sh first. One-time: run scripts/setup-cloudrun-storage.sh to create bucket and IAM.
-# Requires: gcloud CLI. Set GOOGLE_API_KEY (or use Secret Manager) for the API service.
-
-# Auto-source .env file if it exists and GOOGLE_API_KEY is not set
-if [ -z "${GOOGLE_API_KEY}" ] && [ -f "$(dirname "$0")/../.env" ]; then
-  echo "Sourcing .env file..."
-  set -a
-  source "$(dirname "$0")/../.env"
-  set +a
-fi
+# Normally run via: task deploy. Run task build-push first. One-time: task setup-storage to create bucket and IAM.
+# Requires: gcloud CLI. Set GOOGLE_API_KEY (Task loads .env from project root).
 
 # Verify API key is set before deploying
 if [ -z "${GOOGLE_API_KEY}" ]; then
@@ -29,7 +21,7 @@ IMAGE_UI="gcr.io/${PROJECT}/osro-agent-ui:${TAG}"
 
 # Ensure vector store bucket exists (create if not)
 if ! gcloud storage buckets describe "gs://${BUCKET}" --project "${PROJECT}" &>/dev/null; then
-  echo "Creating bucket gs://${BUCKET} (run scripts/setup-cloudrun-storage.sh to grant IAM)..."
+  echo "Creating bucket gs://${BUCKET} (run task setup-storage to grant IAM)..."
   gcloud storage buckets create "gs://${BUCKET}" --project "${PROJECT}" --location "${REGION}"
 fi
 
@@ -74,4 +66,4 @@ gcloud run deploy osro-agent-ui \
 
 UI_URL=$(gcloud run services describe osro-agent-ui --region "${REGION}" --project "${PROJECT}" --format 'value(status.url)')
 echo "Done. UI: ${UI_URL}  API: ${API_URL}"
-echo "Vector store is mounted from gs://${BUCKET} at /app/vector_store. To update it only: ./scripts/update-vector-store.sh"
+echo "Vector store is mounted from gs://${BUCKET} at /app/vector_store. To update it only: task update-vector-store"

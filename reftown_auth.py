@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 RefTown.com authentication for scripts that fetch or ingest reftown.com URLs.
 Uses REFTOWN_USERNAME and REFTOWN_PASSWORD from the environment.
