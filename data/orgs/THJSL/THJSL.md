@@ -1,50 +1,41 @@
 ---
-source: https://reftown.com/default.asp?Assoc=THJSL--564
-title: Tualatin Hills Junior Soccer League (THJSL) - Referee Information
+title: "Tualatin Hills Junior Soccer League - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=THJSL--564"
+org_slug: "THJSL"
+org_name_full: "Tualatin Hills Junior Soccer League"
+reftown_link: "https://reftown.com/default.asp?Assoc=THJSL--564"
+signup_type: "reftown_top"
+city: "Beaverton"
+state: "OR"
+general_playing_dates: "April - November"
 ---
 
-# Tualatin Hills Junior Soccer League (THJSL): Referee Information
+# Tualatin Hills Junior Soccer League: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join THJSL in RefTown. Rec games in Beaverton/Aloha; 3-man crews for G5+; uses self-assignment; paid twice a season. Playing dates: April–November.
+- **Org (code):** THJSL
+- **Full name:** Tualatin Hills Junior Soccer League
+- **Homepage:** https://tualatinhillsjuniorsoccerleague.com
+- **Location:** Beaverton, OR
+- **General playing dates:** April - November
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** Ramin Eghdami
-- **Contact:** (503) 329-0479
+- **RefTown link:** https://reftown.com/default.asp?Assoc=THJSL--564
+- **Steps:** Register or log in at RefTown, join "Tualatin Hills Junior Soccer League" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Ramin Eghdami
+- **Phone:** (503) 329-0479
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** Self-assignment; paid twice a season.
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** Twice per season.
-- **Cancellation / pay:** [To be filled]
+Rec games in Beaverton/Aloha; 3-man crews for G5+; uses self-assignment; paid twice a season.
 
 ---
 
-## Rules of competition
-
-- **Rules:** [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. Beaverton, OR. April–November. Youth Rec, High School Rec.*
+*Last updated: 2026-02-16*

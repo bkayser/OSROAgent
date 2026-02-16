@@ -1,50 +1,43 @@
 ---
-source: https://reftown.com/default.asp?Assoc=LOPRACSL--587
-title: Lake Oswego Parks & Recreation Adult Coed Soccer League (LOPRACSL) - Referee Information
+title: "Lake Oswego Parks & Recreation Adult Coed Soccer League - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=LOPRACSL--587"
+org_slug: "LOPRACSL"
+org_name_full: "Lake Oswego Parks & Recreation Adult Coed Soccer League"
+reftown_link: "https://reftown.com/default.asp?Assoc=LOPRACSL--587"
+signup_type: "reftown_top"
+league: "LOP&R Adult Soccer League"
+state: "OR"
+general_playing_dates: "Mar-June, Sept-Nov"
 ---
 
-# Lake Oswego Parks & Recreation Adult Coed Soccer League (LOPRACSL): Referee Information
+# Lake Oswego Parks & Recreation Adult Coed Soccer League: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join LOPRACSL in RefTown. Adult coed league; active referees assigned based on availability info. Playing dates: Mar–June, Sept–Nov.
+- **Org (code):** LOPRACSL
+- **Full name:** Lake Oswego Parks & Recreation Adult Coed Soccer League
+- **League(s):** LOP&R Adult Soccer League
+- **Homepage:** https://www.ci.oswego.or.us/parksrec/coed-soccer-spring-summer-fall-leagues
+- **Location:** OR
+- **General playing dates:** Mar-June, Sept-Nov
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** CJ Koll
-- **Contact:** (503) 675-2549
+- **RefTown link:** https://reftown.com/default.asp?Assoc=LOPRACSL--587
+- **Steps:** Register or log in at RefTown, join "Lake Oswego Parks & Recreation Adult Coed Soccer League" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** CJ Koll
+- **Email:** cj.assigning@gmail.com
+- **Phone:** (503) 675-2549
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
-
----
-
-## Rules of competition
-
-- **Rules:** [To be filled]
+Adult coed league; active referees assigned based on availability info.
 
 ---
 
-*Last updated: 2025-02. Source: directory.md, RefTown. State: OR. General playing dates: Mar–June, Sept–Nov.*
+*Last updated: 2026-02-16*

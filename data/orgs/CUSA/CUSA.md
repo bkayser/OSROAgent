@@ -1,50 +1,41 @@
 ---
-source: https://reftown.com/default.asp?Assoc=CUSA--581
-title: Canby United Soccer Association (CUSA) - Referee Information
+title: "Canby United Soccer Association - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=CUSA--581"
+org_slug: "CUSA"
+org_name_full: "Canby United Soccer Association"
+reftown_link: "https://reftown.com/default.asp?Assoc=CUSA--581"
+signup_type: "reftown_top"
+league: "Soccer-5"
+state: "OR"
 ---
 
-# Canby United Soccer Association (CUSA): Referee Information
+# Canby United Soccer Association: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join CUSA in RefTown. Provides links to 2025/2026 Rules Summary and IFAB laws.
+- **Org (code):** CUSA
+- **Full name:** Canby United Soccer Association
+- **League(s):** Soccer-5
+- **Homepage:** https://www.canbysoccer.org
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** [To be filled – see RefTown Contact]
-- **Contact:** [See RefTown org page]
+- **RefTown link:** https://reftown.com/default.asp?Assoc=CUSA--581
+- **Steps:** Register or log in at RefTown, join "Canby United Soccer Association" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Matt Lawer
+- **Email:** Matt.lawer@canbysoccer.org
+- **Phone:** 503-806-5035
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
+Provides links to 2025/2026 Rules Summary and IFAB laws.
 
 ---
 
-## Rules of competition
-
-- **Rules:** See 2025/2026 Rules Summary and IFAB laws (links on RefTown org page).
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. State: OR.*
+*Last updated: 2026-02-16*

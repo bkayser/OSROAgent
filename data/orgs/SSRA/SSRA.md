@@ -1,50 +1,40 @@
 ---
-source: https://reftown.com/default.asp?Assoc=SSRA--619
-title: Salem Soccer Referee Association (SSRA) - Referee Information
+title: "Salem Soccer Referee Association - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=SSRA--619"
+org_slug: "SSRA"
+org_name_full: "Salem Soccer Referee Association"
+reftown_link: "https://reftown.com/default.asp?Assoc=SSRA--619"
+signup_type: "reftown_top"
+league: "OSAA"
+city: "Salem"
+state: "OR"
 ---
 
-# Salem Soccer Referee Association (SSRA): Referee Information
+# Salem Soccer Referee Association: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join SSRA in RefTown. Covers Middle School and High School; also Karate. Salem, OR.
+- **Org (code):** SSRA
+- **Full name:** Salem Soccer Referee Association
+- **League(s):** OSAA
+- **Location:** Salem, OR
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** [To be filled – see RefTown Contact]
-- **Contact:** [See RefTown org page]
+- **RefTown link:** https://reftown.com/default.asp?Assoc=SSRA--619
+- **Steps:** Register or log in at RefTown, join "Salem Soccer Referee Association" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Jose Maciel
+- **Email:** jose.assigning@gmail.com
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
+Covers Middle School and High School; also Karate.
 
 ---
 
-## Rules of competition
-
-- **Rules:** [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. Salem, OR. Middle School, High School State Assoc.*
+*Last updated: 2026-02-16*

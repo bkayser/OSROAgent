@@ -1,50 +1,43 @@
 ---
-source: https://reftown.com/default.asp?Assoc=SSG--593
-title: Salem Soccer Group (SSG) - Referee Information
+title: "Salem Soccer Group - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=SSG--593"
+org_slug: "SSG"
+org_name_full: "Salem Soccer Group"
+reftown_link: "https://reftown.com/default.asp?Assoc=SSG--593"
+signup_type: "reftown_top"
+league: "CFC Recreational, Capital cup, Girls Academy, ECNL, ECNL-RL"
+city: "Salem"
+state: "OR"
+general_playing_dates: "Year Round"
 ---
 
-# Salem Soccer Group (SSG): Referee Information
+# Salem Soccer Group: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join SSG in RefTown. Covers Recreational, Competitive, and Tournament play. Year round. Salem, OR.
+- **Org (code):** SSG
+- **Full name:** Salem Soccer Group
+- **League(s):** CFC Recreational, Capital cup, Girls Academy, ECNL, ECNL-RL
+- **Homepage:** https://www.cfcsalem.com/referee
+- **Location:** Salem, OR
+- **General playing dates:** Year Round
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** [To be filled – see RefTown Contact]
-- **Contact:** [See RefTown org page]
+- **RefTown link:** https://reftown.com/default.asp?Assoc=SSG--593
+- **Steps:** Register or log in at RefTown, join "Salem Soccer Group" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Jose Maciel
+- **Email:** jose.assigning@gmail.com
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
-
----
-
-## Rules of competition
-
-- **Rules:** [To be filled]
+Covers Recreational, Competitive, and Tournament play.
 
 ---
 
-*Last updated: 2025-02. Source: directory.md, RefTown. Salem, OR. Year round. Recreational, Competitive, Tournament.*
+*Last updated: 2026-02-16*

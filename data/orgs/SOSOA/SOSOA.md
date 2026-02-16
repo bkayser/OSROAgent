@@ -1,50 +1,28 @@
 ---
-source: https://reftown.com/default.asp?Assoc=SOSOA--547
-title: Southern Oregon Soccer Officials Association (SOSOA) - Referee Information
+title: "Southern Oregon Soccer Officials Association - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=SOSOA--547"
+org_slug: "SOSOA"
+org_name_full: "Southern Oregon Soccer Officials Association"
+reftown_link: "https://reftown.com/default.asp?Assoc=SOSOA--547"
+signup_type: "reftown_top"
+state: "OR"
 ---
 
-# Southern Oregon Soccer Officials Association (SOSOA): Referee Information
+# Southern Oregon Soccer Officials Association: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join SOSOA in RefTown.
+- **Org (code):** SOSOA
+- **Full name:** Southern Oregon Soccer Officials Association
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** [To be filled – see RefTown Contact]
-- **Contact:** [See RefTown org page]
-
----
-
-## Game day and emergency contacts
-
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
-
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
+- **RefTown link:** https://reftown.com/default.asp?Assoc=SOSOA--547
+- **Steps:** Register or log in at RefTown, join "Southern Oregon Soccer Officials Association" using the link above, set your availability, and accept assignments as offered.
 
 ---
 
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
-
----
-
-## Rules of competition
-
-- **Rules:** [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. State: OR.*
+*Last updated: 2026-02-16*

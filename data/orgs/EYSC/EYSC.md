@@ -1,50 +1,35 @@
 ---
-source: https://reftown.com/default.asp?Assoc=EYSC--643
-title: Estacada Youth Soccer Club (EYSC) - Referee Information
+title: "Estacada Youth Soccer Club - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=EYSC--643"
+org_slug: "EYSC"
+org_name_full: "Estacada Youth Soccer Club"
+reftown_link: "https://reftown.com/default.asp?Assoc=EYSC--643"
+signup_type: "reftown_top"
+league: "Soccer-5"
+state: "OR"
 ---
 
-# Estacada Youth Soccer Club (EYSC): Referee Information
+# Estacada Youth Soccer Club: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join EYSC in RefTown. Provides specific Referee Checklist & Tips and Code of Conduct documents.
+- **Org (code):** EYSC
+- **Full name:** Estacada Youth Soccer Club
+- **League(s):** Soccer-5
+- **Homepage:** https://www.estacadayouthsoccer.com
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** [To be filled – see RefTown Contact]
-- **Contact:** [See RefTown org page]
+- **RefTown link:** https://reftown.com/default.asp?Assoc=EYSC--643
+- **Steps:** Register or log in at RefTown, join "Estacada Youth Soccer Club" using the link above, set your availability, and accept assignments as offered.
 
----
+## Additional info
 
-## Game day and emergency contacts
-
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
-
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
+Provides specific Referee Checklist & Tips and Code of Conduct documents.
 
 ---
 
-## Rules of competition
-
-- **Rules:** [To be filled]. Referee Checklist & Tips and Code of Conduct on RefTown.
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. State: OR.*
+*Last updated: 2026-02-16*

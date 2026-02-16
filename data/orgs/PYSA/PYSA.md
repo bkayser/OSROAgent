@@ -1,50 +1,43 @@
 ---
-source: https://reftown.com/default.asp?Assoc=PYSA--557
-title: Portland Youth Soccer Association (PYSA) - Referee Information
+title: "Portland Youth Soccer Association - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=PYSA--557"
+org_slug: "PYSA"
+org_name_full: "Portland Youth Soccer Association"
+reftown_link: "https://reftown.com/default.asp?Assoc=PYSA--557"
+signup_type: "reftown_top"
+league: "PYSA"
+city: "Portland"
+state: "OR"
+general_playing_dates: "Spring & Fall"
 ---
 
-# Portland Youth Soccer Association (PYSA): Referee Information
+# Portland Youth Soccer Association: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join PYSA in RefTown. Spring & Fall. New referees must attend one training session; PYSA will NOT apply new IFAB changes for Fall 2025.
+- **Org (code):** PYSA
+- **Full name:** Portland Youth Soccer Association
+- **League(s):** PYSA
+- **Homepage:** https://leagues.bluesombrero.com/Default.aspx?tabid=1711498
+- **Location:** Portland, OR
+- **General playing dates:** Spring & Fall
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** Andrew Marihart
-- **Contact:** (971) 303-1385
+- **RefTown link:** https://reftown.com/default.asp?Assoc=PYSA--557
+- **Steps:** Register or log in at RefTown, join "Portland Youth Soccer Association" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Andrew Marihart
+- **Phone:** (971) 303-1385
 
-- **Referee hotline:** [To be filled – call assignor first; OYSA (503) 332-5432 for no-shows, abuse]
-- **Game day hotline:** OYSA Game Day Hotline (971) 732-9897
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
-
----
-
-## Rules of competition
-
-- **Rules:** [To be filled]
+New referees must attend one training session; PYSA will NOT apply new IFAB changes for Fall 2025.
 
 ---
 
-*Last updated: 2025-02. Source: directory.md, RefTown. City: Portland, OR. General playing dates: Spring & Fall. Youth Recreational.*
+*Last updated: 2026-02-16*

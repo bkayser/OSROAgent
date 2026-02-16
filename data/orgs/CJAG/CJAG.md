@@ -1,50 +1,38 @@
 ---
-source: https://reftown.com/default.asp?Assoc=CJAG--583
-title: CJ's Assigning Group (CJAG) - Referee Information
+title: "CJ's Assigning Group - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=CJAG--583"
+org_slug: "CJAG"
+org_name_full: "CJ's Assigning Group"
+reftown_link: "https://reftown.com/default.asp?Assoc=CJAG--583"
+signup_type: "reftown_top"
+state: "OR"
 ---
 
-# CJ's Assigning Group (CJAG): Referee Information
+# CJ's Assigning Group: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join CJAG in RefTown. Assigns for higher leagues and tournaments; assigns mentors.
+- **Org (code):** CJAG
+- **Full name:** CJ's Assigning Group
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** CJ Koll
-- **Contact:** [See RefTown Contact]
+- **RefTown link:** https://reftown.com/default.asp?Assoc=CJAG--583
+- **Steps:** Register or log in at RefTown, join "CJ's Assigning Group" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** CJ Koll
+- **Email:** cj.assigning@gmail.com
+- **Phone:** (503) 675-2549
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
+Assigns for higher leagues and tournaments; assigns mentors.
 
 ---
 
-## Rules of competition
-
-- **Rules:** [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. State: OR.*
+*Last updated: 2026-02-16*

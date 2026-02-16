@@ -1,50 +1,41 @@
 ---
-source: https://reftown.com/default.asp?Assoc=349
-title: PT - Referee Information
+title: "PT - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=349"
+org_slug: "PT"
+org_name_full: "PT"
+reftown_link: "https://reftown.com/default.asp?Assoc=349"
+nwsc_payor_league: "PT"
+signup_type: "nwsc_payor"
+league: "Portland Timbers"
+state: "OR"
 ---
 
 # PT: Referee Information
 
-**RefTown:** Payor league under NWSC
+## Identity and links
 
-**How to get games:** Join NWSC in RefTown, then request to join PT from your profile.
+- **Org (code):** PT
+- **Full name:** PT
+- **League(s):** Portland Timbers
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Referees are assigned through NorthWest Soccer Central (NWSC). Registering for NWSC in RefTown covers all NWSC payor leagues.
 
-- **Name:** Christopher Job
-- **Contact:** [See RefTown Contact]
+- **RefTown link:** Use the NWSC organization in RefTown (https://reftown.com/default.asp?Assoc=NWSC--555).
+- **Steps:** Join NWSC in RefTown using this link: https://reftown.com/registration.asp?RegType=Official&AssocRID=555&Existing=-1, then from your profile request to join the payor league "PT". Set availability for assignments and look for games to request from the main page.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Christopher Job
+- **Email:** jchortmktg@gmail.com
+- **Phone:** 503-403-9555
 
-- **Referee hotline:** OYSA Referee Hotline (503) 332-5432 – no-shows, referee abuse (call assignor first).
-- **Game day hotline:** OYSA Game Day Hotline (971) 732-9897 – rules, rosters, send-offs, injuries.
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** RefTown/NWSC homepage – Missing Game Reports notice.
-- **Deadline:** Saturday games by 9am Monday; Sunday games by 9am Tuesday.
-- **Misconduct:** Center refs file misconduct report for all cards; call send-offs to game day hotline.
-- **Notes:** Indicate crew changes on game report for correct pay.
+Payor League within NWSC.
 
 ---
 
-## Pay and cancellation policy
-
-- **Pay schedule:** OYSA pays every two weeks; pay dates every other Friday.
-- **Cancellation / pay:** See NWSC procedures.
-
----
-
-## Rules of competition
-
-- **Rules:** [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, NWSC-procedures.md, RefTown. State: OR.*
+*Last updated: 2026-02-16*

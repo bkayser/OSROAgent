@@ -5,8 +5,15 @@ version: "3"
 dotenv: [".env"]
 
 tasks:
+  sync-orgs:
+    desc: Sync organization summaries from Google Sheet to data/orgs/*/<slug>.md
+    cmds:
+      - python scripts/sync_orgs.py {{.CLI_ARGS}}
+
   ingest:
     desc: Build the vector store from data/
+    deps:
+      - sync-orgs
     cmds:
       - python scripts/ingest.py
 

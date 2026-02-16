@@ -1,50 +1,41 @@
 ---
-source: https://reftown.com/default.asp?Assoc=GPSD-TAFC--569
-title: Greater Portland Soccer District & Timbers Army (GPSD-TAFC) - Referee Information
+title: "Greater Portland Soccer District & Timbers Army - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=GPSD-TAFC--569"
+org_slug: "GPSD-TAFC"
+org_name_full: "Greater Portland Soccer District & Timbers Army"
+reftown_link: "https://reftown.com/default.asp?Assoc=GPSD-TAFC--569"
+signup_type: "reftown_top"
+league: "GPSD"
+city: "Portland"
+state: "OR"
 ---
 
-# Greater Portland Soccer District & Timbers Army (GPSD-TAFC): Referee Information
+# Greater Portland Soccer District & Timbers Army: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join GPSD-TAFC in RefTown. Men's adult league; match reports are submitted via external Wufoo link (not RefTown) and only by Center refs.
+- **Org (code):** GPSD-TAFC
+- **Full name:** Greater Portland Soccer District & Timbers Army
+- **League(s):** GPSD
+- **Homepage:** https://www.gpsdsoccer.com/referees
+- **Location:** Portland, OR
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** Justin Phillips / Alex Chilowicz
-- **Contact:** [See RefTown Contact]
+- **RefTown link:** https://reftown.com/default.asp?Assoc=GPSD-TAFC--569
+- **Steps:** Register or log in at RefTown, join "Greater Portland Soccer District & Timbers Army" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Justin Phillips / Alex Chilowicz
+- **Email:** achilowicz@gmail.com
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** External Wufoo link (not RefTown); Center refs only submit match reports.
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** Do not file game reports in RefTown for this league.
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
+Men's adult league; match reports are submitted via external Wufoo link (not RefTown) and only by Center refs.
 
 ---
 
-## Rules of competition
-
-- **Rules:** [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. City: Portland, OR.*
+*Last updated: 2026-02-16*

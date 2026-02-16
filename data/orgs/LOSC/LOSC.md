@@ -1,50 +1,40 @@
 ---
-source: https://reftown.com/default.asp?Assoc=127
-title: Lake Oswego Soccer Club (LOSC) - Referee Information
+title: "Lake Oswego Soccer Club - Referee Information"
+org_slug: "LOSC"
+org_name_full: "Lake Oswego Soccer Club"
+nwsc_payor_league: "S5 - LOSC"
+signup_type: "nwsc_payor"
+league: "Soccer-5"
+state: "OR"
 ---
 
-# Lake Oswego Soccer Club (LOSC): Referee Information
+# Lake Oswego Soccer Club: Referee Information
 
-**RefTown:** Payor league under NWSC
+## Identity and links
 
-**How to get games:** Join NWSC in RefTown, then request to join LOSC (Lake Oswego Soccer Club) from your profile. Rec level payor league.
+- **Org (code):** LOSC
+- **Full name:** Lake Oswego Soccer Club
+- **League(s):** Soccer-5
+- **Homepage:** https://losc.org
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Referees are assigned through NorthWest Soccer Central (NWSC). Registering for NWSC in RefTown covers all NWSC payor leagues.
 
-- **Name:** Erich Asan
-- **Contact:** [See RefTown Contact]
+- **RefTown link:** Use the NWSC organization in RefTown (https://reftown.com/default.asp?Assoc=NWSC--555).
+- **Steps:** Join NWSC in RefTown using this link: https://reftown.com/registration.asp?RegType=Official&AssocRID=555&Existing=-1, then from your profile request to join the payor league "S5 - LOSC". Set availability for assignments and look for games to request from the main page.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Erich Asan
+- **Email:** ea.assigning@pm.me
+- **Phone:** 503-957-9199
 
-- **Referee hotline:** OYSA Referee Hotline (503) 332-5432 – no-shows, referee abuse (call assignor first).
-- **Game day hotline:** OYSA Game Day Hotline (971) 732-9897 – rules, rosters, send-offs, injuries.
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** RefTown/NWSC homepage – Missing Game Reports notice.
-- **Deadline:** Saturday games by 9am Monday; Sunday games by 9am Tuesday.
-- **Misconduct:** Center refs file misconduct report for all cards; call send-offs to game day hotline.
-- **Notes:** Indicate crew changes on game report for correct pay.
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** OYSA pays every two weeks; pay dates every other Friday.
-- **Cancellation / pay:** See NWSC procedures.
+Rec Level Payor League within NWSC.
 
 ---
 
-## Rules of competition
-
-- **Rules:** [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, NWSC-procedures.md, RefTown. State: OR.*
+*Last updated: 2026-02-16*

@@ -1,50 +1,43 @@
 ---
-source: https://reftown.com/default.asp?Assoc=TSC--635
-title: Tualatin Soccer Club (TSC) - Referee Information
+title: "Tualatin Soccer Club - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=TSC--635"
+org_slug: "TSC"
+org_name_full: "Tualatin Soccer Club"
+reftown_link: "https://reftown.com/default.asp?Assoc=TSC--635"
+signup_type: "reftown_top"
+league: "OYSA"
+state: "OR"
+general_playing_dates: "Fall Only"
 ---
 
-# Tualatin Soccer Club (TSC): Referee Information
+# Tualatin Soccer Club: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join TSC in RefTown. Rec games in Tualatin; Center refs only for G3–G4; 3-man crews for G5+. Fall only.
+- **Org (code):** TSC
+- **Full name:** Tualatin Soccer Club
+- **League(s):** OYSA
+- **Homepage:** https://www.tualatinsoccer.com
+- **Location:** OR
+- **General playing dates:** Fall Only
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** Jack Vohland
-- **Contact:** (971) 990-1439
+- **RefTown link:** https://reftown.com/default.asp?Assoc=TSC--635
+- **Steps:** Register or log in at RefTown, join "Tualatin Soccer Club" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Jack Vohland
+- **Email:** Jvohland.TSCassignor@gmail.com
+- **Phone:** (971) 990-1439
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
-
----
-
-## Rules of competition
-
-- **Rules:** [To be filled]
+Rec games in Tualatin; Center refs only for G3-G4; 3-man crews for G5+.
 
 ---
 
-*Last updated: 2025-02. Source: directory.md, RefTown. State: OR. Fall only.*
+*Last updated: 2026-02-16*

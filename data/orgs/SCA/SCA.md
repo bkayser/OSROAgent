@@ -1,50 +1,40 @@
 ---
-source: https://reftown.com/default.asp?Assoc=SCA--751
-title: Scott Clark Assigning (SCA) - Referee Information
+title: "Scott Clark Assigning - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=SCA--751"
+org_slug: "SCA"
+org_name_full: "Scott Clark Assigning"
+reftown_link: "https://reftown.com/default.asp?Assoc=SCA--751"
+signup_type: "reftown_top"
+state: "OR"
+general_playing_dates: "June - July"
 ---
 
-# Scott Clark Assigning (SCA): Referee Information
+# Scott Clark Assigning: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join SCA in RefTown. Assigns for Flavor de Futbol and Oswego Cup tournaments; requires availability submission to be considered. Playing dates: June–July.
+- **Org (code):** SCA
+- **Full name:** Scott Clark Assigning
+- **Location:** OR
+- **General playing dates:** June - July
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-- **Name:** Scott Clark
-- **Contact:** (541) 730-1696
+- **RefTown link:** https://reftown.com/default.asp?Assoc=SCA--751
+- **Steps:** Register or log in at RefTown, join "Scott Clark Assigning" using the link above, set your availability, and accept assignments as offered.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Scott Clark
+- **Email:** sc.assigning@gmail.com
+- **Phone:** (541) 730-1696
 
-- **Referee hotline:** [To be filled]
-- **Game day hotline:** [To be filled]
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** [See RefTown org page]
-- **Deadline:** [To be filled]
-- **Misconduct:** [To be filled]
-- **Notes:** Submit availability to be considered for assignments.
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** [To be filled]
-- **Cancellation / pay:** [To be filled]
+Assigns for Flavor de Futbol and Oswego Cup tournaments; requires availability submission to be considered.
 
 ---
 
-## Rules of competition
-
-- **Rules:** Tournament-specific (Flavor de Futbol, Oswego Cup). [To be filled]
-
----
-
-*Last updated: 2025-02. Source: directory.md, RefTown. State: OR. Youth Tournament. June–July.*
+*Last updated: 2026-02-16*

@@ -1,50 +1,40 @@
 ---
-source: https://reftown.com/default.asp?Assoc=334
-title: Clackamas United Soccer Club (CUSC) - Referee Information
+title: "Clackamas United Soccer Club - Referee Information"
+org_slug: "CUSC"
+org_name_full: "Clackamas United Soccer Club"
+nwsc_payor_league: "S5 - CUSC"
+signup_type: "nwsc_payor"
+league: "Soccer-5"
+state: "OR"
 ---
 
-# Clackamas United Soccer Club (CUSC): Referee Information
+# Clackamas United Soccer Club: Referee Information
 
-**RefTown:** Payor league under NWSC
+## Identity and links
 
-**How to get games:** Join NWSC in RefTown, then request to join CUSC (Clackamas United Soccer Club) from your profile. Offers Rec games in the Clackamas area.
+- **Org (code):** CUSC
+- **Full name:** Clackamas United Soccer Club
+- **League(s):** Soccer-5
+- **Homepage:** https://www.clackamasunited.com/
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Referees are assigned through NorthWest Soccer Central (NWSC). Registering for NWSC in RefTown covers all NWSC payor leagues.
 
-- **Name:** Heather Combs
-- **Contact:** [See RefTown Contact]
+- **RefTown link:** Use the NWSC organization in RefTown (https://reftown.com/default.asp?Assoc=NWSC--555).
+- **Steps:** Join NWSC in RefTown using this link: https://reftown.com/registration.asp?RegType=Official&AssocRID=555&Existing=-1, then from your profile request to join the payor league "S5 - CUSC". Set availability for assignments and look for games to request from the main page.
 
----
+## Assignor and contact
 
-## Game day and emergency contacts
+- **Contact:** Heather Combs
+- **Email:** heathercombs00@gmail.com
+- **Phone:** 503-459-9299
 
-- **Referee hotline:** OYSA Referee Hotline (503) 332-5432 – no-shows, referee abuse (call assignor first).
-- **Game day hotline:** OYSA Game Day Hotline (971) 732-9897 – rules, rosters, send-offs, injuries.
+## Additional info
 
----
-
-## Game reports and procedures
-
-- **Where to file:** RefTown/NWSC homepage – [Missing Game Reports](https://reftown.com/default.asp?Assoc=NWSC--555).
-- **Deadline:** Saturday games by 9am Monday; Sunday games by 9am Tuesday.
-- **Misconduct:** Center refs file misconduct report for all cards; call send-offs to game day hotline immediately.
-- **Notes:** Late report fines (CR $10/game, AR $5/game); indicate crew changes on game report for correct pay.
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** OYSA pays every two weeks (prior two weeks); pay dates every other Friday.
-- **Cancellation / pay:** See NWSC procedures (e.g. cancel before 5pm day before = no pay; 5pm–6am = half fee; after 6am = full fee).
+Payor League within NWSC; offers Rec games in the Clackamas area.
 
 ---
 
-## Rules of competition
-
-- **Rules:** [To be filled – see OYSA/league docs]
-
----
-
-*Last updated: 2025-02. Source: directory.md, NWSC-procedures.md, RefTown. State: OR.*
+*Last updated: 2026-02-16*

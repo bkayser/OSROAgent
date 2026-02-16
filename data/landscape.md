@@ -12,6 +12,8 @@ Organizations that use **RefTown.com** manage referee assignments through that w
 
 Other assigning platforms exist (e.g., Arbiter, RefInsight.com, StackOfficials). Details for those platforms and organizations are not covered in this knowledge base.
 
+To see the list of games available for requesting assignments or claiming assignments, use this reftown link: https://reftown.com/games.asp?openonly=1&AltSort=Date%2FLocation%2FTime&openonlyigav=1
+
 ## RefTown: top-level organizations vs payor leagues
 
 In RefTown there are two ways an organization can appear:

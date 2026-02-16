@@ -1,62 +1,33 @@
 ---
-source: https://reftown.com/default.asp?Assoc=LCSRA%20--553, https://lcsra.org/, https://lcsra.org/about-lcsra/
-title: Lane County Soccer Referees Association (LCSRA) - Referee Information
+title: "Lane County Soccer Referees Association - Referee Information"
+source: "https://reftown.com/default.asp?Assoc=LCSRA%20--553"
+org_slug: "LCSRA"
+org_name_full: "Lane County Soccer Referees Association"
+reftown_link: "https://reftown.com/default.asp?Assoc=LCSRA%20--553"
+signup_type: "reftown_top"
+state: "OR"
 ---
 
-# Lane County Soccer Referees Association (LCSRA): Referee Information
+# Lane County Soccer Referees Association: Referee Information
 
-**RefTown:** Top-level organization
+## Identity and links
 
-**How to get games:** Join LCSRA in RefTown. Game assignments are normally made through RefTown. LCSRA covers Soccer, Hockey, Track, and Kickball in Lane County (Eugene area) and provides 3v3 rules for applicable events. Major leagues include High School, City League, Kidsports, Willamalane, and TTL-Eugene (Timber/Thorns League). Formed in 1982; one of the strongest referee associations in Oregon.
+- **Org (code):** LCSRA
+- **Full name:** Lane County Soccer Referees Association
+- **Homepage:** https://lcsra.org
+- **Location:** OR
 
----
+## How to sign up for games
 
-## Assignor
+Join this organization in RefTown to get assignments and set availability.
 
-Assignors vary by league and event:
+- **RefTown link:** https://reftown.com/default.asp?Assoc=LCSRA%20--553
+- **Steps:** Register or log in at RefTown, join "Lane County Soccer Referees Association" using the link above, set your availability, and accept assignments as offered.
 
-- **Commissioner (general contact):** Cindy Wilgus
-- **High School:** Cindy Wilgus
-- **City League and older Kidsports:** Ben Warren
-- **Willamalane:** Jonathan Siegle
-- **TTL-Eugene (Timber/Thorns League):** Cindy Wilgus
-- **Tournaments:** Assignors vary by event
-- **Younger Kidsports (some games):** Adam Wilgus, Director of Officials – some games scheduled outside LCSRA; checks at Kidsports Civic Park office (2054 Amazon Parkway)
+## Additional info
 
-*Note: MVSC/MVSL (Mid Valley – Albany, Corvallis, Keizer) use Stack Officials and assignor Ryan Pierce; not part of LCSRA RefTown assignments.*
-
-- **Contact:** [Phone/email – see RefTown org page or contact commissioner]
-
----
-
-## Game day and emergency contacts
-
-- **Referee hotline:** [To be filled – contact assignor or commissioner first]
-- **Game day hotline:** [To be filled]
+Covers Soccer, Hockey, Track, and Kickball; provides 3v3 rules.
 
 ---
 
-## Game reports and procedures
-
-- **Where to file:** RefTown (for LCSRA-assigned games). MVSC/MVSL use Stack Officials.
-- **Deadline:** Referees must submit game reports for most games before payment is processed. [Specific deadline – see assignor or RefTown.]
-- **Misconduct:** [To be filled]
-- **Notes:** [To be filled]
-
----
-
-## Pay and cancellation policy
-
-- **Pay schedule:** Most LCSRA referee payments are processed through RefTown (direct deposit; W9 required). LCSRA leagues (High School, City League, Kidsports, Willamalane): approximately twice per month (8% fee withheld). TTL-Eugene: approximately twice per month (4% withheld). Tournaments: direct deposits normally in 7–10 days. ETFC 3v3: checks written on site at tournament desk.
-- **Cancellation / pay:** [To be filled]
-
----
-
-## Rules of competition
-
-- **Rules:** LCSRA provides 3v3 rules. [Link to PDF or RefTown/custom pages – to be filled from org site.]
-
----
-
-*Last updated: 2025-02. Source: directory.md, lcsra.org, about-lcsra, RefTown. Lane County / Eugene, OR. Covers Soccer, Hockey, Track, Kickball; 3v3.*
-
+*Last updated: 2026-02-16*
