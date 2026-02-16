@@ -1,5 +1,10 @@
 """
 In-memory rate limiter for the chat endpoint. Per-IP sliding windows: 50/hour, 100/24h.
+
+When running with multiple uvicorn workers, each process has its own _timestamps dict,
+so rate limits are effectively multiplied by the number of workers. For the circuit
+breaker to be effective across workers, _timestamps must eventually be replaced with
+a shared store (e.g. Redis) so all workers see the same per-IP counts.
 """
 
 import threading
@@ -14,6 +19,8 @@ WINDOW_1H_SEC = 3600
 WINDOW_24H_SEC = 86400
 
 # Per-IP list of request timestamps (epoch seconds). Anonymous/missing IPs share key "".
+# TODO: Replace with Redis (or similar) to share counts across workers so the circuit
+# breaker is effective when using multiple uvicorn workers.
 _timestamps: dict[str, List[float]] = defaultdict(list)
 _lock = threading.Lock()
 
