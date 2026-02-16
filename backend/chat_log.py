@@ -112,6 +112,40 @@ def append_chat_log(
         return None
 
 
+RATE_LIMIT_MSG = "Excessive requests detected. Try again later."
+
+
+def append_rate_limit_log(env: str, client_ip: str | None = None) -> None:
+    """
+    Append one row to the chat log sheet for a rate-limit event.
+    Columns (same as chat log): Env, IP, Grade, Query, Answer, Sources, Timestamp, Log ID.
+    Query = "[RATE LIMIT]", Answer = "Excessive requests detected. Try again later."
+    Does nothing if sheet/credentials unavailable; logs and swallows errors.
+    """
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    sheet_id = _get_sheet_id()
+    if not sheet_id:
+        return
+    client = _get_sheet_client()
+    if not client:
+        return
+    try:
+        sheet = client.open_by_key(sheet_id).sheet1
+        _ensure_header_row(sheet)
+
+        log_id = str(uuid.uuid4())
+        dt = datetime.now(ZoneInfo("America/Los_Angeles"))
+        ts = dt.strftime("%y/%m/%d %I:%M ") + dt.strftime("%p").lower()
+        ip_str = (client_ip or "").strip() or ""
+
+        row = [env, ip_str, "", "[RATE LIMIT]", RATE_LIMIT_MSG, "", ts, log_id]
+        sheet.insert_row(row, index=2, value_input_option="USER_ENTERED")
+    except Exception as e:
+        logging.exception("Rate limit log insert failed: %s", e)
+
+
 def update_chat_log_grade(log_id: str, grade: str) -> bool:
     """
     Update the Grade column for the row with the given log_id.

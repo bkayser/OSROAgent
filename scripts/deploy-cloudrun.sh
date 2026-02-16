@@ -29,6 +29,7 @@ echo "Deploying API to Cloud Run (${REGION})..."
 # Deploy without volume first to verify container starts (volume mount can block startup).
 # To attach vector store bucket, run: gcloud run services update osro-agent-api --region ${REGION} --add-volume=... --add-volume-mount=...
 # min-instances 1 keeps one container warm so first request is fast (no cold start), like Docker Desktop.
+# max-instances 1 keeps in-memory rate limit consistent and avoids surprise scaling cost during beta.
 gcloud run deploy osro-agent-api \
   --image "${IMAGE_API}" \
   --region "${REGION}" \
@@ -39,7 +40,9 @@ gcloud run deploy osro-agent-api \
   --allow-unauthenticated \
   --set-env-vars "GOOGLE_API_KEY=${GOOGLE_API_KEY}" \
   --memory 1Gi \
-  --min-instances 1
+  --min-instances 1 \
+  --max-instances 1 \
+  --timeout 60
 
 API_URL=$(gcloud run services describe osro-agent-api --region "${REGION}" --project "${PROJECT}" --format 'value(status.url)')
 echo "API URL: ${API_URL}"

@@ -542,7 +542,8 @@ function ChatView() {
       )
 
       if (!response.ok) {
-        throw new Error('Failed to get response')
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data.detail || 'Failed to get response')
       }
 
       const data = await response.json()
@@ -556,7 +557,7 @@ function ChatView() {
     } catch (error) {
       const errorMessage = {
         role: 'assistant',
-        content: 'Sorry, there was an error processing your request. Please try again.',
+        content: error.message || 'Sorry, there was an error processing your request. Please try again.',
       }
       setMessages((prev) => [...prev, errorMessage])
     } finally {

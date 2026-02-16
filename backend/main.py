@@ -137,6 +137,18 @@ async def chat(request: Request, query: Query):
     if not query.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
+    from backend.rate_limit import check_and_record
+    from backend.chat_log import append_rate_limit_log, RATE_LIMIT_MSG
+
+    client_ip = _get_client_ip(request)
+    if not check_and_record(client_ip):
+        env = "prod" if os.environ.get("K_SERVICE") else "dev"
+        try:
+            append_rate_limit_log(env, client_ip or None)
+        except Exception:
+            pass
+        raise HTTPException(status_code=429, detail=RATE_LIMIT_MSG)
+
     try:
         context = ""
         sources = []
