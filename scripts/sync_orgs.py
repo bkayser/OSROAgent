@@ -96,13 +96,21 @@ def _location(city, state):
     return s
 
 
-def _format_homepage(url):
-    """Format homepage URL as [domain](url). Returns empty string if blank."""
+def _normalize_url(url):
+    """Return URL with https if missing scheme. Empty string if blank."""
     u = (url or "").strip()
     if not u:
         return ""
     if not u.startswith(("http://", "https://")):
         u = "https://" + u
+    return u
+
+
+def _format_homepage(url):
+    """Format homepage URL as [domain](url). Returns empty string if blank."""
+    u = _normalize_url(url)
+    if not u:
+        return ""
     try:
         p = urlparse(u)
         netloc = (p.netloc or "").replace("www.", "")
@@ -118,54 +126,64 @@ def _table_cell(s):
     return (s or "").replace("|", " - ")
 
 
+def _region_cell(city, state, playing_dates):
+    """Build Region cell: 'City, State' with optional playing dates on new line (using <br>)."""
+    loc = _location(city, state)
+    dates = (playing_dates or "").strip()
+    if not loc and not dates:
+        return ""
+    if not dates:
+        return _table_cell(loc)
+    if not loc:
+        return _table_cell(dates)
+    return _table_cell(f"{loc}<br>{dates}")
+
+
 def _build_reftown_table(rows):
     """Build markdown table for Reftown orgs (no Payor League)."""
     if not rows:
-        return "| Reftown Org Name | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |"
+        return "| Organization | In Reftown | League | Contact | Region | Info |\n| :--- | :--- | :--- | :--- | :--- | :--- |"
     lines = [
-        "| Reftown Org Name | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |",
-        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+        "| Organization | In Reftown | League | Contact | Region | Info |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- |",
     ]
     for d in rows:
         org_id = _table_cell(_val(d, "Org ID"))
-        org_name = _table_cell(_val(d, "Org Name"))
+        org_name_raw = _val(d, "Org Name")
+        org_name = _table_cell(org_name_raw)
         league = _table_cell(_val(d, "League"))
         reftown = _val(d, "Reftown Link")
-        reftown_cell = f"[{reftown}]({reftown})" if reftown else ""
-        homepage = _format_homepage(_val(d, "Homepage"))
+        reftown_org_cell = f"[{org_id}]({reftown})" if reftown else org_id
+        homepage_url = _normalize_url(_val(d, "Homepage"))
+        org_cell = f"[{org_name}]({homepage_url})" if homepage_url else org_name
         contact = _table_cell(_val(d, "Contact"))
-        phone = _table_cell(_val(d, "Phone"))
-        city = _table_cell(_val(d, "City"))
-        state = _table_cell(_val(d, "State"))
-        dates = _table_cell(_val(d, "General Playing Dates"))
+        region = _region_cell(_val(d, "City"), _val(d, "State"), _val(d, "General Playing Dates"))
         info = _table_cell(_val(d, "Info"))
-        lines.append(f"| **{org_id}** | {org_name} | {league} | {reftown_cell} | {homepage} | {contact} | {phone} | {city} | {state} | {dates} | {info} |")
+        lines.append(f"| {org_cell} | {reftown_org_cell} | {league} | {contact} | {region} | {info} |")
     return "\n".join(lines)
 
 
 def _build_nwsc_table(rows):
     """Build markdown table for NWSC payor leagues."""
     if not rows:
-        return "| NWSC Org | Payor League | League | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |"
+        return "| Organization | In Reftown | League | Contact | Region | Info |\n| :--- | :--- | :--- | :--- | :--- | :--- |"
     lines = [
-        "| NWSC Org | Payor League | League | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |",
-        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+        "| Organization | In Reftown | League | Contact | Region | Info |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- |",
     ]
     for d in rows:
-        org_id = _table_cell(_val(d, "Org ID"))
-        nwsc = _table_cell(_val(d, "NWSC Payor League"))
+        payor_league = _table_cell(_val(d, "NWSC Payor League"))
         league = _table_cell(_val(d, "League"))
-        org_name = _table_cell(_val(d, "Org Name"))
+        org_name_raw = _val(d, "Org Name")
+        org_name = _table_cell(org_name_raw)
         reftown = _val(d, "Reftown Link")
-        reftown_cell = f"[{reftown}]({reftown})" if reftown else ""
-        homepage = _format_homepage(_val(d, "Homepage"))
+        reftown_cell = f"[{payor_league}]({reftown})" if reftown else payor_league
+        homepage_url = _normalize_url(_val(d, "Homepage"))
+        org_cell = f"[{org_name}]({homepage_url})" if homepage_url else org_name
         contact = _table_cell(_val(d, "Contact"))
-        phone = _table_cell(_val(d, "Phone"))
-        city = _table_cell(_val(d, "City"))
-        state = _table_cell(_val(d, "State"))
-        dates = _table_cell(_val(d, "General Playing Dates"))
+        region = _region_cell(_val(d, "City"), _val(d, "State"), _val(d, "General Playing Dates"))
         info = _table_cell(_val(d, "Info"))
-        lines.append(f"| **{org_id}** | {nwsc} | {league} | {org_name} | {league} | {reftown_cell} | {homepage} | {contact} | {phone} | {city} | {state} | {dates} | {info} |")
+        lines.append(f"| {org_cell} | {reftown_cell} | {league} | {contact} | {region} | {info} |")
     return "\n".join(lines)
 
 

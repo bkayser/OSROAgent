@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 
 // Beta Splash Screen Component
 function BetaSplash({ onDismiss, content }) {
@@ -64,7 +65,10 @@ function MarkdownPage({ slug, title }) {
       .finally(() => setLoading(false))
   }, [slug])
 
-  const proseClass = 'prose prose-sm max-w-none prose-headings:text-gray-800 prose-h2:text-lg prose-h2:font-semibold prose-h2:text-oregon-green prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-p:text-gray-600 prose-li:text-gray-600 prose-a:text-oregon-green prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-700'
+  const linkStyle = slug === 'organizations'
+    ? 'prose-a:text-oregon-green prose-a:underline hover:prose-a:underline'
+    : 'prose-a:text-oregon-green prose-a:no-underline hover:prose-a:underline'
+  const proseClass = `prose prose-sm max-w-none prose-headings:text-gray-800 prose-h2:text-lg prose-h2:font-semibold prose-h2:text-oregon-green prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-p:text-gray-600 prose-li:text-gray-600 ${linkStyle} prose-strong:text-gray-700`
   return (
     <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6">
       <div className="mb-4">
@@ -81,7 +85,7 @@ function MarkdownPage({ slug, title }) {
       {error && <p className="text-red-600">Failed to load content.</p>}
       {!loading && !error && content && (
         <div className={proseClass}>
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
         </div>
       )}
     </main>
@@ -661,7 +665,7 @@ function ChatView() {
               </div>
               <h2 className="text-xl font-semibold mb-1 md:mb-2">Welcome!</h2>
               <p className="max-w-md mx-auto mb-3 md:mb-6">
-                Ask me anything about being a soccer official in Oregon: IFAB and league rules, referee procedures, getting assignments, and using Reftown.
+                Ask about Oregon soccer officiating: IFAB and league rules, procedures, getting assignments, and Reftown. Include the organization or league name when your question is specific to one.
               </p>
               <div className="flex flex-col items-end gap-2 md:gap-3 max-w-md mx-auto">
                 {exampleQuestions.map((q, i) => (
