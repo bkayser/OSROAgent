@@ -35,7 +35,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Men's adult league; match reports are submitted via external Wufoo link (not RefTown) and only by Center refs.
-
----
-
-*Last updated: 2026-02-16*

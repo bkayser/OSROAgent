@@ -32,7 +32,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Assigns for higher leagues and tournaments; assigns mentors.
-
----
-
-*Last updated: 2026-02-16*

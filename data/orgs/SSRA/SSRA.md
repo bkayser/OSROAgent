@@ -34,7 +34,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Covers Middle School and High School; also Karate.
-
----
-
-*Last updated: 2026-02-16*

@@ -32,7 +32,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Intercollegiate officials association; holds seasonal meetings.
-
----
-
-*Last updated: 2026-02-16*

@@ -37,7 +37,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 New referees must attend one training session; PYSA will NOT apply new IFAB changes for Fall 2025.
-
----
-
-*Last updated: 2026-02-16*

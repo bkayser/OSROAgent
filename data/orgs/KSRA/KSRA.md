@@ -28,7 +28,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Covers Soccer and Softball.
-
----
-
-*Last updated: 2026-02-16*

@@ -34,7 +34,3 @@ Referees are assigned through NorthWest Soccer Central (NWSC). Registering for N
 ## Additional info
 
 High paying Soccer 5 club with loyalty bonuses ($50/10 games); requires black/navy undershirt; uses self-assignment.
-
----
-
-*Last updated: 2026-02-16*

@@ -34,7 +34,3 @@ Referees are assigned through NorthWest Soccer Central (NWSC). Registering for N
 ## Additional info
 
 Payor League within NWSC; offers Rec games in the Clackamas area.
-
----
-
-*Last updated: 2026-02-16*

@@ -38,7 +38,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Recreational games in the Tigard area; Center referees only for G2-G4, 3-man crews for G5-HS.
-
----
-
-*Last updated: 2026-02-16*

@@ -34,7 +34,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Umbrella org merging OYSA and local clubs; use one registration for all member Payor Leagues.
-
----
-
-*Last updated: 2026-02-16*

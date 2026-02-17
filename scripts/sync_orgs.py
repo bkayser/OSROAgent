@@ -22,7 +22,6 @@ Usage:
 """
 
 import argparse
-from datetime import date
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -338,10 +337,6 @@ def _build_body(d, signup_type_val):
     if info:
         info_lines = ["## Additional info", "", info, ""]
         parts.append("\n".join(info_lines))
-
-    # Footer
-    today = date.today().strftime("%Y-%m-%d")
-    parts.append(f"---\n\n*Last updated: {today}*")
 
     return "\n".join(parts)
 

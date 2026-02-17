@@ -37,7 +37,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Covers Recreational, Competitive, and Tournament play.
-
----
-
-*Last updated: 2026-02-16*

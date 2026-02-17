@@ -22,7 +22,3 @@ Join this organization in RefTown to get assignments and set availability.
 
 - **RefTown link:** https://reftown.com/default.asp?Assoc=SOSOA--547
 - **Steps:** Register or log in at RefTown, join "Southern Oregon Soccer Officials Association" using the link above, set your availability, and accept assignments as offered.
-
----
-
-*Last updated: 2026-02-16*

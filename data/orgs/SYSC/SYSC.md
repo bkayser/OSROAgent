@@ -37,7 +37,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Rec club (2nd Grade - HS); uses self-assignment; paid through RefTown/SYSC.
-
----
-
-*Last updated: 2026-02-16*

@@ -34,7 +34,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Assigns for Flavor de Futbol and Oswego Cup tournaments; requires availability submission to be considered.
-
----
-
-*Last updated: 2026-02-16*

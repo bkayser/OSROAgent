@@ -36,7 +36,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Hosts Bend Premier Cup and various leagues; GA Aspire games require Red Card reporting via specific links.
-
----
-
-*Last updated: 2026-02-16*

@@ -34,7 +34,3 @@ Referees are assigned through NorthWest Soccer Central (NWSC). Registering for N
 ## Additional info
 
 Includes Fall/Spring Leagues and State Cups; pays every two weeks; requires online game reports for pay.
-
----
-
-*Last updated: 2026-02-16*

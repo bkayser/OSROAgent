@@ -29,7 +29,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Women's adult league; primarily uses solo center referees.
-
----
-
-*Last updated: 2026-02-16*

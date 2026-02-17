@@ -35,7 +35,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Provides links to 2025/2026 Rules Summary and IFAB laws.
-
----
-
-*Last updated: 2026-02-16*

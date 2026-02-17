@@ -33,7 +33,3 @@ Referees are assigned through NorthWest Soccer Central (NWSC). Registering for N
 ## Additional info
 
 Payor League within NWSC.
-
----
-
-*Last updated: 2026-02-16*

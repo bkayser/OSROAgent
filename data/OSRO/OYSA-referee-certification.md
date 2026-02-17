@@ -5,13 +5,9 @@ title: Become a Referee - USYS Oregon
 
 # Become a Referee - USYS Oregon
 
-## OYSA’s Commitment
-
 ### Oregon Youth Soccer Association is committed to fostering an educational environment to allow referees at all levels develop.
 
 Consistent and constant referee education is a key priority in OYSA’s mission. We rely on a statewide team of instructors, mentors and coaches to share their knowledge and experiences.
-
-### **The Details**
 
 **Courses for Beginners**
 
@@ -35,8 +31,5 @@ Another great perk of being a soccer official is the pay! Rates vary by league, 
 
 The Oregon Soccer Referee Organization offers entry-level referee courses year round, all over the state.  If you do not currently see a convenient course option, check back frequently as new training opportunities are added regularly.
 
-Good luck!
+You can find the latet open courses here: https://www.oregonreferee.com/courses
 
-[Sign Up For A Course Today!](https://www.oregonreferee.com/courses)
-
-[Contact the Oregon Soccer Referee Organization!](mailto:osro.coordinator@gmail.com)

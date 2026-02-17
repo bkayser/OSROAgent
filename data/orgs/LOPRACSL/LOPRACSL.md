@@ -37,7 +37,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Adult coed league; active referees assigned based on availability info.
-
----
-
-*Last updated: 2026-02-16*

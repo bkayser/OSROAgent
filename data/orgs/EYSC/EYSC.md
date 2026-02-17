@@ -29,7 +29,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Provides specific Referee Checklist & Tips and Code of Conduct documents.
-
----
-
-*Last updated: 2026-02-16*

@@ -31,7 +31,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 High School State Association; provides OSAA Playoff procedures and tie-breaker rules.
-
----
-
-*Last updated: 2026-02-16*

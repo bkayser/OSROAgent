@@ -24,7 +24,3 @@ Join this organization in RefTown to get assignments and set availability.
 
 - **RefTown link:** https://reftown.com/default.asp?Assoc=CBSR--804
 - **Steps:** Register or log in at RefTown, join "Coos-Brookings Soccer Referees" using the link above, set your availability, and accept assignments as offered.
-
----
-
-*Last updated: 2026-02-16*

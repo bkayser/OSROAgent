@@ -1,9 +1,7 @@
 ---
 title: "PT - Referee Information"
-source: "https://reftown.com/default.asp?Assoc=349"
 org_slug: "PT"
 org_name_full: "PT"
-reftown_link: "https://reftown.com/default.asp?Assoc=349"
 nwsc_payor_league: "PT"
 signup_type: "nwsc_payor"
 league: "Portland Timbers"
@@ -35,7 +33,3 @@ Referees are assigned through NorthWest Soccer Central (NWSC). Registering for N
 ## Additional info
 
 Payor League within NWSC.
-
----
-
-*Last updated: 2026-02-16*

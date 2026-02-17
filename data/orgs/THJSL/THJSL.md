@@ -35,7 +35,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Rec games in Beaverton/Aloha; 3-man crews for G5+; uses self-assignment; paid twice a season.
-
----
-
-*Last updated: 2026-02-16*

@@ -27,7 +27,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Covers Soccer, Hockey, Track, and Kickball; provides 3v3 rules.
-
----
-
-*Last updated: 2026-02-16*

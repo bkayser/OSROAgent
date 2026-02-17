@@ -32,7 +32,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 High School officials must have OSAA certification; holds meetings/trainings at Mt. View HS and Bend FC Complex.
-
----
-
-*Last updated: 2026-02-16*

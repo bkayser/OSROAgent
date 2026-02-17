@@ -37,7 +37,3 @@ Join this organization in RefTown to get assignments and set availability.
 ## Additional info
 
 Rec games in Tualatin; Center refs only for G3-G4; 3-man crews for G5+.
-
----
-
-*Last updated: 2026-02-16*
