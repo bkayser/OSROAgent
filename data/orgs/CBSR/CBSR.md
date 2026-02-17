@@ -6,6 +6,7 @@ org_name_full: "Coos-Brookings Soccer Referees"
 reftown_link: "https://reftown.com/default.asp?Assoc=CBSR--804"
 signup_type: "reftown_top"
 league: "OSAA"
+city: "Coos Bay, Brookings"
 state: "OR"
 ---
 
@@ -16,7 +17,7 @@ state: "OR"
 - **Org (code):** CBSR
 - **Full name:** Coos-Brookings Soccer Referees
 - **League(s):** OSAA
-- **Location:** OR
+- **Location:** Coos Bay, Brookings, OR
 
 ## How to sign up for games
 

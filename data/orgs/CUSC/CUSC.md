@@ -5,6 +5,7 @@ org_name_full: "Clackamas United Soccer Club"
 nwsc_payor_league: "S5 - CUSC"
 signup_type: "nwsc_payor"
 league: "Soccer-5"
+city: "Happy Valley"
 state: "OR"
 ---
 
@@ -16,7 +17,7 @@ state: "OR"
 - **Full name:** Clackamas United Soccer Club
 - **League(s):** Soccer-5
 - **Homepage:** https://www.clackamasunited.com/
-- **Location:** OR
+- **Location:** Happy Valley, OR
 
 ## How to sign up for games
 

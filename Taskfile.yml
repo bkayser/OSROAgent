@@ -8,7 +8,12 @@ tasks:
   sync-orgs:
     desc: Sync organization summaries from Google Sheet to data/orgs/*/<slug>.md
     cmds:
-      - python scripts/sync_orgs.py {{.CLI_ARGS}}
+      - |
+        if [ -f venv/bin/python ]; then
+          venv/bin/python scripts/sync_orgs.py {{.CLI_ARGS}}
+        else
+          python scripts/sync_orgs.py {{.CLI_ARGS}}
+        fi
 
   ingest:
     desc: Build the vector store from data/

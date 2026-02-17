@@ -1,0 +1,747 @@
+{
+  "nodes": [
+    {
+      "id": "NWSC",
+      "label": "NWSC",
+      "type": "organization",
+      "subtype": "nwsc_parent",
+      "fullName": "NorthWest Soccer Central",
+      "region": "Happy Valley, OR",
+      "contact": "Heather Combs"
+    },
+    {
+      "id": "Albion_SC",
+      "label": "Albion SC",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Albion Soccer Club Jr",
+      "region": "Tigard, OR",
+      "contact": "Jack Vohland",
+      "league": "Tualatin Hills Junior Soccer League"
+    },
+    {
+      "id": "Bend_FC",
+      "label": "Bend FC",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Bend FC",
+      "region": "Bend, OR",
+      "contact": "Jessica Passage",
+      "league": "Central Oregon Soccer League, Bend Premier Cup"
+    },
+    {
+      "id": "CBSR",
+      "label": "CBSR",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Coos-Brookings Soccer Referees",
+      "region": "Coos Bay, Brookings, OR",
+      "league": "OSAA"
+    },
+    {
+      "id": "CJAG",
+      "label": "CJAG",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "CJ's Assigning Group",
+      "region": "OR",
+      "contact": "CJ Koll"
+    },
+    {
+      "id": "COSOA",
+      "label": "COSOA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Central Oregon Soccer Officials Association",
+      "region": "Bend, OR",
+      "contact": "Michael Armstrong",
+      "league": "Central Oregon Soccer League"
+    },
+    {
+      "id": "CUSA",
+      "label": "CUSA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Canby United Soccer Association",
+      "region": "Canby, OR",
+      "contact": "Matt Lawer",
+      "league": "Soccer-5"
+    },
+    {
+      "id": "EYSC",
+      "label": "EYSC",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Estacada Youth Soccer Club",
+      "region": "Estacada, OR",
+      "league": "Soccer-5"
+    },
+    {
+      "id": "GPSD-TAFC",
+      "label": "GPSD-TAFC",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Greater Portland Soccer District & Timbers Army",
+      "region": "Portland, OR",
+      "contact": "Justin Phillips / Alex Chilowicz",
+      "league": "GPSD"
+    },
+    {
+      "id": "HSRA",
+      "label": "HSRA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Hermiston Soccer Referee Association",
+      "region": "Hermiston, OR",
+      "league": "OSAA"
+    },
+    {
+      "id": "KSRA",
+      "label": "KSRA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Klamath Soccer Referee Association",
+      "region": "Klamath, OR",
+      "league": "OSAA"
+    },
+    {
+      "id": "LCSRA",
+      "label": "LCSRA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Lane County Soccer Referees Association",
+      "region": "Lane County, OR"
+    },
+    {
+      "id": "LOPRACSL",
+      "label": "LOPRACSL",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Lake Oswego Parks & Recreation Adult Coed Soccer League",
+      "region": "Lake Oswego, OR",
+      "contact": "CJ Koll",
+      "league": "LOP&R Adult Soccer League"
+    },
+    {
+      "id": "MISOA",
+      "label": "MISOA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Metropolitan Interscholastic Soccer Officials Association",
+      "region": "Portland Metro Area, OR",
+      "league": "OSAA"
+    },
+    {
+      "id": "MVSRA",
+      "label": "MVSRA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Mid-Valley Soccer Referees Association",
+      "region": "OR",
+      "league": "OSAA"
+    },
+    {
+      "id": "NUWS",
+      "label": "NUWS",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "NUWS",
+      "region": "Portland Metro Area, OR",
+      "league": "Northwest United Women's Soccer"
+    },
+    {
+      "id": "OFA",
+      "label": "OFA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Oregon Futbol Academy",
+      "region": "Grants Pass, OR"
+    },
+    {
+      "id": "OISOA",
+      "label": "OISOA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Oregon Intercollegiate Soccer Officials Association",
+      "region": "OR",
+      "contact": "Andrew Marihart",
+      "league": "NISOA"
+    },
+    {
+      "id": "PYSA",
+      "label": "PYSA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Portland Youth Soccer Association",
+      "region": "Portland, OR",
+      "contact": "Andrew Marihart",
+      "league": "PYSA"
+    },
+    {
+      "id": "SCA",
+      "label": "SCA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Scott Clark Assigning",
+      "region": "OR",
+      "contact": "Scott Clark"
+    },
+    {
+      "id": "SOCL-SODL",
+      "label": "SOCL-SODL",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "SOCL-SODL",
+      "region": "OR"
+    },
+    {
+      "id": "SOSOA",
+      "label": "SOSOA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Southern Oregon Soccer Officials Association",
+      "region": "OR"
+    },
+    {
+      "id": "SSG",
+      "label": "SSG",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Salem Soccer Group",
+      "region": "Salem, OR",
+      "contact": "Jose Maciel",
+      "league": "CFC Recreational, Capital cup, Girls Academy, ECNL, ECNL-RL"
+    },
+    {
+      "id": "SSRA",
+      "label": "SSRA",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Salem Soccer Referee Association",
+      "region": "Salem, OR",
+      "contact": "Jose Maciel",
+      "league": "OSAA"
+    },
+    {
+      "id": "SYSC",
+      "label": "SYSC",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Sherwood Youth SC",
+      "region": "Sherwood, OR",
+      "contact": "Jack Vohland",
+      "league": "THJSL"
+    },
+    {
+      "id": "THJSL",
+      "label": "THJSL",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Tualatin Hills Junior Soccer League",
+      "region": "Beaverton, OR",
+      "contact": "Ramin Eghdami"
+    },
+    {
+      "id": "TSC",
+      "label": "TSC",
+      "type": "organization",
+      "subtype": "reftown_top",
+      "fullName": "Tualatin Soccer Club",
+      "region": "Tualatin, OR",
+      "contact": "Jack Vohland",
+      "league": "OYSA"
+    },
+    {
+      "id": "S5_-_CUSC",
+      "label": "S5 - CUSC",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "Clackamas United Soccer Club",
+      "region": "Happy Valley, OR",
+      "contact": "Heather Combs",
+      "league": "Soccer-5"
+    },
+    {
+      "id": "Eastside_Timbers",
+      "label": "Eastside Timbers",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "Eastside Timbers",
+      "region": "Gresham, OR",
+      "contact": "Carly Copplestone",
+      "league": "Eastside Timbers Rec"
+    },
+    {
+      "id": "S5_-_LOSC",
+      "label": "S5 - LOSC",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "Lake Oswego Soccer Club",
+      "region": "Lake Oswego, OR",
+      "contact": "Erich Asan",
+      "league": "Soccer-5"
+    },
+    {
+      "id": "S5_-_NCSC",
+      "label": "S5 - NCSC",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "North Clackamas Soccer Club",
+      "region": "Oak Grove, Milwaukie, OR",
+      "contact": "Bill Kayser",
+      "league": "Soccer-5"
+    },
+    {
+      "id": "S5_-_OCSC",
+      "label": "S5 - OCSC",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "Oregon City Soccer Club",
+      "region": "Oregon City, OR",
+      "contact": "Jeff Rine",
+      "league": "Soccer-5"
+    },
+    {
+      "id": "OYSA_Leagues",
+      "label": "OYSA Leagues",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "OYSA (Leagues, Cups, Academy)",
+      "region": "OR",
+      "contact": "Scott Clark",
+      "league": "OYSA,State Cup,Founders Cup,Presidents Cup"
+    },
+    {
+      "id": "PT",
+      "label": "PT",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "PT",
+      "region": "OR",
+      "contact": "Christopher Job",
+      "league": "Portland Timbers"
+    },
+    {
+      "id": "TVYSL",
+      "label": "TVYSL",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "Tualatin Valley Youth Soccer League",
+      "region": "Tualatin, OR",
+      "contact": "Christopher Job",
+      "league": "TVYSL"
+    },
+    {
+      "id": "USYS",
+      "label": "USYS",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "USYS",
+      "region": "OR",
+      "contact": "Sally Pietsch"
+    },
+    {
+      "id": "S5_-_WUFC",
+      "label": "S5 - WUFC",
+      "type": "organization",
+      "subtype": "nwsc_payor",
+      "fullName": "Willamette United Football Club",
+      "region": "Wilsonville, West Linn, OR",
+      "contact": "Heather Combs",
+      "league": "Soccer-5"
+    },
+    {
+      "id": "tualatin-hills-junior-soccer-league",
+      "label": "tualatin-hills-junior-soccer-league",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "Tualatin Hills Junior Soccer League"
+    },
+    {
+      "id": "central-oregon-soccer-league",
+      "label": "central-oregon-soccer-league",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "Central Oregon Soccer League"
+    },
+    {
+      "id": "bend-premier-cup",
+      "label": "bend-premier-cup",
+      "type": "competition",
+      "subtype": "tournament",
+      "fullName": "Bend Premier Cup"
+    },
+    {
+      "id": "osaa",
+      "label": "osaa",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "OSAA"
+    },
+    {
+      "id": "soccer-5",
+      "label": "soccer-5",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "Soccer-5"
+    },
+    {
+      "id": "gpsd",
+      "label": "gpsd",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "GPSD"
+    },
+    {
+      "id": "lopr-adult-soccer-league",
+      "label": "lopr-adult-soccer-league",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "LOP&R Adult Soccer League"
+    },
+    {
+      "id": "northwest-united-womens-soccer",
+      "label": "northwest-united-womens-soccer",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "Northwest United Women's Soccer"
+    },
+    {
+      "id": "nisoa",
+      "label": "nisoa",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "NISOA"
+    },
+    {
+      "id": "pysa",
+      "label": "pysa",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "PYSA"
+    },
+    {
+      "id": "cfc-recreational",
+      "label": "cfc-recreational",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "CFC Recreational"
+    },
+    {
+      "id": "capital-cup",
+      "label": "capital-cup",
+      "type": "competition",
+      "subtype": "tournament",
+      "fullName": "Capital cup"
+    },
+    {
+      "id": "girls-academy",
+      "label": "girls-academy",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "Girls Academy"
+    },
+    {
+      "id": "ecnl",
+      "label": "ecnl",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "ECNL"
+    },
+    {
+      "id": "ecnl-rl",
+      "label": "ecnl-rl",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "ECNL-RL"
+    },
+    {
+      "id": "thjsl",
+      "label": "thjsl",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "THJSL"
+    },
+    {
+      "id": "oysa",
+      "label": "oysa",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "OYSA"
+    },
+    {
+      "id": "eastside-timbers-rec",
+      "label": "eastside-timbers-rec",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "Eastside Timbers Rec"
+    },
+    {
+      "id": "state-cup",
+      "label": "state-cup",
+      "type": "competition",
+      "subtype": "tournament",
+      "fullName": "State Cup"
+    },
+    {
+      "id": "founders-cup",
+      "label": "founders-cup",
+      "type": "competition",
+      "subtype": "tournament",
+      "fullName": "Founders Cup"
+    },
+    {
+      "id": "presidents-cup",
+      "label": "presidents-cup",
+      "type": "competition",
+      "subtype": "tournament",
+      "fullName": "Presidents Cup"
+    },
+    {
+      "id": "portland-timbers",
+      "label": "portland-timbers",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "Portland Timbers"
+    },
+    {
+      "id": "tvysl",
+      "label": "tvysl",
+      "type": "competition",
+      "subtype": "league",
+      "fullName": "TVYSL"
+    }
+  ],
+  "edges": [
+    {
+      "source": "Albion_SC",
+      "target": "tualatin-hills-junior-soccer-league",
+      "type": "serves"
+    },
+    {
+      "source": "Bend_FC",
+      "target": "central-oregon-soccer-league",
+      "type": "serves"
+    },
+    {
+      "source": "Bend_FC",
+      "target": "bend-premier-cup",
+      "type": "serves"
+    },
+    {
+      "source": "CBSR",
+      "target": "osaa",
+      "type": "serves"
+    },
+    {
+      "source": "COSOA",
+      "target": "central-oregon-soccer-league",
+      "type": "serves"
+    },
+    {
+      "source": "CUSA",
+      "target": "soccer-5",
+      "type": "serves"
+    },
+    {
+      "source": "EYSC",
+      "target": "soccer-5",
+      "type": "serves"
+    },
+    {
+      "source": "GPSD-TAFC",
+      "target": "gpsd",
+      "type": "serves"
+    },
+    {
+      "source": "HSRA",
+      "target": "osaa",
+      "type": "serves"
+    },
+    {
+      "source": "KSRA",
+      "target": "osaa",
+      "type": "serves"
+    },
+    {
+      "source": "LOPRACSL",
+      "target": "lopr-adult-soccer-league",
+      "type": "serves"
+    },
+    {
+      "source": "MISOA",
+      "target": "osaa",
+      "type": "serves"
+    },
+    {
+      "source": "MVSRA",
+      "target": "osaa",
+      "type": "serves"
+    },
+    {
+      "source": "NUWS",
+      "target": "northwest-united-womens-soccer",
+      "type": "serves"
+    },
+    {
+      "source": "OISOA",
+      "target": "nisoa",
+      "type": "serves"
+    },
+    {
+      "source": "PYSA",
+      "target": "pysa",
+      "type": "serves"
+    },
+    {
+      "source": "SSG",
+      "target": "cfc-recreational",
+      "type": "serves"
+    },
+    {
+      "source": "SSG",
+      "target": "capital-cup",
+      "type": "serves"
+    },
+    {
+      "source": "SSG",
+      "target": "girls-academy",
+      "type": "serves"
+    },
+    {
+      "source": "SSG",
+      "target": "ecnl",
+      "type": "serves"
+    },
+    {
+      "source": "SSG",
+      "target": "ecnl-rl",
+      "type": "serves"
+    },
+    {
+      "source": "SSRA",
+      "target": "osaa",
+      "type": "serves"
+    },
+    {
+      "source": "SYSC",
+      "target": "thjsl",
+      "type": "serves"
+    },
+    {
+      "source": "TSC",
+      "target": "oysa",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "S5_-_CUSC",
+      "type": "parent_of"
+    },
+    {
+      "source": "S5_-_CUSC",
+      "target": "soccer-5",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "Eastside_Timbers",
+      "type": "parent_of"
+    },
+    {
+      "source": "Eastside_Timbers",
+      "target": "eastside-timbers-rec",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "S5_-_LOSC",
+      "type": "parent_of"
+    },
+    {
+      "source": "S5_-_LOSC",
+      "target": "soccer-5",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "S5_-_NCSC",
+      "type": "parent_of"
+    },
+    {
+      "source": "S5_-_NCSC",
+      "target": "soccer-5",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "S5_-_OCSC",
+      "type": "parent_of"
+    },
+    {
+      "source": "S5_-_OCSC",
+      "target": "soccer-5",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "OYSA_Leagues",
+      "type": "parent_of"
+    },
+    {
+      "source": "OYSA_Leagues",
+      "target": "oysa",
+      "type": "serves"
+    },
+    {
+      "source": "OYSA_Leagues",
+      "target": "state-cup",
+      "type": "serves"
+    },
+    {
+      "source": "OYSA_Leagues",
+      "target": "founders-cup",
+      "type": "serves"
+    },
+    {
+      "source": "OYSA_Leagues",
+      "target": "presidents-cup",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "PT",
+      "type": "parent_of"
+    },
+    {
+      "source": "PT",
+      "target": "portland-timbers",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "TVYSL",
+      "type": "parent_of"
+    },
+    {
+      "source": "TVYSL",
+      "target": "tvysl",
+      "type": "serves"
+    },
+    {
+      "source": "NWSC",
+      "target": "USYS",
+      "type": "parent_of"
+    },
+    {
+      "source": "NWSC",
+      "target": "S5_-_WUFC",
+      "type": "parent_of"
+    },
+    {
+      "source": "S5_-_WUFC",
+      "target": "soccer-5",
+      "type": "serves"
+    }
+  ]
+}

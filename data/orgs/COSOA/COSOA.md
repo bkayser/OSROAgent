@@ -6,6 +6,7 @@ org_name_full: "Central Oregon Soccer Officials Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=COSOA--543"
 signup_type: "reftown_top"
 league: "Central Oregon Soccer League"
+city: "Bend"
 state: "OR"
 ---
 
@@ -16,7 +17,7 @@ state: "OR"
 - **Org (code):** COSOA
 - **Full name:** Central Oregon Soccer Officials Association
 - **League(s):** Central Oregon Soccer League
-- **Location:** OR
+- **Location:** Bend, OR
 
 ## How to sign up for games
 

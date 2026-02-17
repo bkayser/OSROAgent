@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams, useLocat
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
+import OrganizationsPage from './OrganizationsPage.jsx'
 
 // Beta Splash Screen Component
 function BetaSplash({ onDismiss, content }) {
@@ -616,6 +617,41 @@ function ChatView() {
     setLicenseEmail('')
   }
 
+  const skipLicenseLookup = async () => {
+    const lastMsg = messages[messages.length - 1]
+    const query = lastMsg?.role === 'user' ? lastMsg.content : ''
+    if (!query || isLoading || licenseLoading) return
+    setShowEmailPrompt(false)
+    setLicenseEmail('')
+    setIsLoading(true)
+    try {
+      const response = await fetch(
+        `/api/chat?q=${encodeURIComponent(query)}`,
+        { method: 'GET' }
+      )
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data.detail || 'Failed to get response')
+      }
+      const data = await response.json()
+      const assistantMessage = {
+        role: 'assistant',
+        content: data.answer,
+        sources: data.sources,
+        logId: data.log_id ?? null,
+      }
+      setMessages((prev) => [...prev, assistantMessage])
+    } catch (error) {
+      const errorMessage = {
+        role: 'assistant',
+        content: error.message || 'Sorry, there was an error processing your request. Please try again.',
+      }
+      setMessages((prev) => [...prev, errorMessage])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     submitQuestion(question)
@@ -801,6 +837,13 @@ function ChatView() {
                     </button>
                     <button
                       type="button"
+                      onClick={skipLicenseLookup}
+                      className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
+                    >
+                      Skip
+                    </button>
+                    <button
+                      type="button"
                       onClick={cancelLicenseLookup}
                       className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors"
                     >
@@ -856,7 +899,7 @@ function App() {
         <Route path="/license" element={<Navigate to="/?license=1" replace />} />
         <Route path="/about" element={<MarkdownPage slug="about" title="About" />} />
         <Route path="/for-assignors" element={<MarkdownPage slug="for-assignors" title="For Assignors" />} />
-        <Route path="/organizations" element={<MarkdownPage slug="organizations" title="List of Organizations" />} />
+        <Route path="/organizations" element={<OrganizationsPage />} />
         <Route path="/sample-questions" element={<SampleQuestionsPage />} />
       </Route>
     </Routes>

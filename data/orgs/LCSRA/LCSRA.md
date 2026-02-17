@@ -5,6 +5,7 @@ org_slug: "LCSRA"
 org_name_full: "Lane County Soccer Referees Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=LCSRA%20--553"
 signup_type: "reftown_top"
+city: "Lane County"
 state: "OR"
 ---
 
@@ -15,7 +16,7 @@ state: "OR"
 - **Org (code):** LCSRA
 - **Full name:** Lane County Soccer Referees Association
 - **Homepage:** https://lcsra.org
-- **Location:** OR
+- **Location:** Lane County, OR
 
 ## How to sign up for games
 

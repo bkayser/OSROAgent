@@ -6,6 +6,7 @@ org_name_full: "Sherwood Youth SC"
 reftown_link: "https://reftown.com/default.asp?Assoc=SYSC--568"
 signup_type: "reftown_top"
 league: "THJSL"
+city: "Sherwood"
 state: "OR"
 general_playing_dates: "Apr-May, Sept-Oct"
 ---
@@ -18,7 +19,7 @@ general_playing_dates: "Apr-May, Sept-Oct"
 - **Full name:** Sherwood Youth SC
 - **League(s):** THJSL
 - **Homepage:** https://www.sherwoodsoccer.org/Default.aspx?tabid=854299
-- **Location:** OR
+- **Location:** Sherwood, OR
 - **General playing dates:** Apr-May, Sept-Oct
 
 ## How to sign up for games

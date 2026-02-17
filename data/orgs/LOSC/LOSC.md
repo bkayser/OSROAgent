@@ -5,6 +5,7 @@ org_name_full: "Lake Oswego Soccer Club"
 nwsc_payor_league: "S5 - LOSC"
 signup_type: "nwsc_payor"
 league: "Soccer-5"
+city: "Lake Oswego"
 state: "OR"
 ---
 
@@ -16,7 +17,7 @@ state: "OR"
 - **Full name:** Lake Oswego Soccer Club
 - **League(s):** Soccer-5
 - **Homepage:** https://losc.org
-- **Location:** OR
+- **Location:** Lake Oswego, OR
 
 ## How to sign up for games
 

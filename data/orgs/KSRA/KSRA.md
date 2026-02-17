@@ -6,6 +6,7 @@ org_name_full: "Klamath Soccer Referee Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=KSRA--645"
 signup_type: "reftown_top"
 league: "OSAA"
+city: "Klamath"
 state: "OR"
 ---
 
@@ -16,7 +17,7 @@ state: "OR"
 - **Org (code):** KSRA
 - **Full name:** Klamath Soccer Referee Association
 - **League(s):** OSAA
-- **Location:** OR
+- **Location:** Klamath, OR
 
 ## How to sign up for games
 

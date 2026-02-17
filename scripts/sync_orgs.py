@@ -22,6 +22,8 @@ Usage:
 """
 
 import argparse
+import json
+import re
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -32,6 +34,7 @@ ORGS_DIR = PROJECT_ROOT / "data" / "orgs"
 BACKEND_DIR = PROJECT_ROOT / "backend"
 ORGANIZATIONS_TEMPLATE = PROJECT_ROOT / "data" / "_organizations.md"
 ORGANIZATIONS_OUTPUT = PROJECT_ROOT / "frontend" / "public" / "organizations.md"
+ORGANIZATIONS_GRAPH_OUTPUT = PROJECT_ROOT / "frontend" / "public" / "organizations-graph.json"
 
 COLUMNS = [
     "Org ID",
@@ -50,6 +53,9 @@ COLUMNS = [
     "State",
     "General Playing Dates",
     "Info",
+    "Competition Type",
+    "Competitions",
+    "Region",
 ]
 
 
@@ -341,6 +347,153 @@ def _build_body(d, signup_type_val):
     return "\n".join(parts)
 
 
+def _competition_slug(name):
+    """Slugify competition/league name for node id."""
+    if not name or not name.strip():
+        return ""
+    s = name.strip().lower()
+    s = s.replace(" ", "-").replace("/", "-")
+    s = re.sub(r"[^\w\-]", "", s)
+    s = re.sub(r"-+", "-", s).strip("-")
+    return s or "unnamed"
+
+
+def _competition_sublist(league_val, competitions_val):
+    """Return list of competition names: Competitions column if present, else split League by comma."""
+    comp = (competitions_val or "").strip()
+    if comp:
+        return [p.strip() for p in comp.split(",") if p.strip()]
+    league = (league_val or "").strip()
+    if not league:
+        return []
+    return [p.strip() for p in league.split(",") if p.strip()]
+
+
+def _competition_type(name, override_val):
+    """Return 'tournament' or 'league'. Use Competition Type column if present, else infer from Cup suffix."""
+    override = (override_val or "").strip().lower()
+    if override in ("tournament", "league"):
+        return override
+    if name and name.strip().lower().endswith("cup"):
+        return "tournament"
+    return "league"
+
+
+def _build_graph_json(rows):
+    """Build {nodes, edges} for organizations graph from parsed rows. Uses header-based keys only."""
+    nodes = []
+    edges = []
+    node_ids = set()
+    competition_nodes = {}  # slug -> node dict
+
+    def add_competition(league_name, override_type=None):
+        slug = _competition_slug(league_name)
+        if not slug:
+            return None
+        if slug in competition_nodes:
+            return slug
+        sub = _competition_type(league_name, override_type)
+        competition_nodes[slug] = {
+            "id": slug,
+            "label": slug,
+            "type": "competition",
+            "subtype": sub,
+            "fullName": league_name.strip(),
+        }
+        return slug
+
+    reftown_rows = [r for r in rows if not _val(r, "NWSC Payor League")]
+    nwsc_rows = [r for r in rows if _val(r, "NWSC Payor League")]
+
+    # Synthetic NWSC parent node
+    if nwsc_rows:
+        nwsc_node = {
+            "id": "NWSC",
+            "label": "NWSC",
+            "type": "organization",
+            "subtype": "nwsc_parent",
+            "fullName": "NorthWest Soccer Central",
+        }
+        region = _val(nwsc_rows[0], "Region") or _location(_val(nwsc_rows[0], "City"), _val(nwsc_rows[0], "State"))
+        contact = _val(nwsc_rows[0], "Contact")
+        if region:
+            nwsc_node["region"] = region
+        if contact:
+            nwsc_node["contact"] = contact
+        nodes.append(nwsc_node)
+        node_ids.add("NWSC")
+
+    for d in reftown_rows:
+        org_id = _val(d, "Org ID")
+        if not org_id or _val(d, "NWSC Payor League"):
+            continue
+        nid = _slug(org_id)
+        if nid in node_ids:
+            continue
+        node_ids.add(nid)
+        full_name = _val(d, "Org Name")
+        region = _val(d, "Region") or _location(_val(d, "City"), _val(d, "State"))
+        contact = _val(d, "Contact")
+        league_val = _val(d, "League")
+        competitions_val = _val(d, "Competitions") if "Competitions" in COLUMNS else ""
+        comp_list = _competition_sublist(league_val, d.get("Competitions", ""))
+        node = {
+            "id": nid,
+            "label": org_id,
+            "type": "organization",
+            "subtype": "reftown_top",
+            "fullName": full_name or org_id,
+        }
+        if region:
+            node["region"] = region
+        if contact:
+            node["contact"] = contact
+        if league_val:
+            node["league"] = league_val
+        nodes.append(node)
+        override_type = d.get("Competition Type", "")
+        for comp_name in comp_list:
+            cslug = add_competition(comp_name, override_type)
+            if cslug:
+                edges.append({"source": nid, "target": cslug, "type": "serves"})
+
+    for d in nwsc_rows:
+        payor = _val(d, "NWSC Payor League")
+        org_id = _val(d, "Org ID")
+        nid = _slug(payor or org_id)
+        if nid not in node_ids:
+            node_ids.add(nid)
+            full_name = _val(d, "Org Name")
+            region = _val(d, "Region") or _location(_val(d, "City"), _val(d, "State"))
+            contact = _val(d, "Contact")
+            league_val = _val(d, "League")
+            node = {
+                "id": nid,
+                "label": payor or org_id,
+                "type": "organization",
+                "subtype": "nwsc_payor",
+                "fullName": full_name or payor or org_id,
+            }
+            if region:
+                node["region"] = region
+            if contact:
+                node["contact"] = contact
+            if league_val:
+                node["league"] = league_val
+            nodes.append(node)
+            edges.append({"source": "NWSC", "target": nid, "type": "parent_of"})
+        league_val = _val(d, "League")
+        comp_list = _competition_sublist(league_val, d.get("Competitions", ""))
+        override_type = d.get("Competition Type", "")
+        for comp_name in comp_list:
+            cslug = add_competition(comp_name, override_type)
+            if cslug:
+                edges.append({"source": nid, "target": cslug, "type": "serves"})
+
+    nodes.extend(competition_nodes.values())
+    return {"nodes": nodes, "edges": edges}
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Sync organization summaries from Google Sheet to data/orgs/<org_slug>/ORG.md"
@@ -367,20 +520,9 @@ def main():
         raise SystemExit("Sheet is empty")
 
     headers = [c.strip() for c in all_values[0]]
-    # Map expected column names to sheet indices (match by header)
-    col_indices = {}
-    for i, h in enumerate(headers):
-        if h in COLUMNS:
-            col_indices[h] = i
-    # Fallback: if sheet order matches COLUMNS, use position
-    for j, col in enumerate(COLUMNS):
-        if col not in col_indices and j < len(headers):
-            col_indices[col] = j
+    col_indices = {h: i for i, h in enumerate(headers)}
 
-    reftown_rows = []  # No NWSC Payor League
-    nwsc_rows = []     # Has NWSC Payor League
-
-    count = 0
+    rows = []
     for row_data in all_values[1:]:
         d = {}
         for col in COLUMNS:
@@ -393,33 +535,36 @@ def main():
         org_id = _val(d, "Org ID")
         if not org_id:
             continue
+        rows.append(d)
 
-        if _val(d, "NWSC Payor League"):
-            nwsc_rows.append(d)
-        else:
-            reftown_rows.append(d)
+    reftown_rows = [r for r in rows if not _val(r, "NWSC Payor League")]
+    nwsc_rows = [r for r in rows if _val(r, "NWSC Payor League")]
 
+    count = 0
+    for d in rows:
+        org_id = _val(d, "Org ID")
         slug = _slug(org_id)
         signup_type_val = _signup_type(d)
-
         fm = _build_frontmatter(d, signup_type_val)
         body = _build_body(d, signup_type_val)
-
         out_path = ORGS_DIR / slug / f"{slug}.md"
         out_path.parent.mkdir(parents=True, exist_ok=True)
         content = _render_yaml(fm) + "\n\n" + body
         out_path.write_text(content, encoding="utf-8")
         count += 1
 
-    # Generate organizations.md for frontend from template
     template_text = ORGANIZATIONS_TEMPLATE.read_text(encoding="utf-8")
     reftown_table = _build_reftown_table(reftown_rows)
     nwsc_table = _build_nwsc_table(nwsc_rows)
     org_md = template_text.replace("{{REFTOWN_TABLE}}", reftown_table).replace("{{NWSC_TABLE}}", nwsc_table)
     ORGANIZATIONS_OUTPUT.write_text(org_md, encoding="utf-8")
 
+    graph_data = _build_graph_json(rows)
+    ORGANIZATIONS_GRAPH_OUTPUT.write_text(json.dumps(graph_data, indent=2), encoding="utf-8")
+
     print(f"Wrote {count} organization files to {ORGS_DIR}")
     print(f"Wrote {ORGANIZATIONS_OUTPUT}")
+    print(f"Wrote {ORGANIZATIONS_GRAPH_OUTPUT}")
 
 
 if __name__ == "__main__":
