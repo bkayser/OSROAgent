@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """
-Sync organization summary files from a Google Sheet to data/orgs/<org_slug>/<org_slug>.md.
+Sync organization summary files from a Google Sheet to data/orgs/<org_slug>/<org_slug>.md
+and frontend/public/organizations.md.
 
-Reads organization data via the Google Sheets API and generates <slug>.md files for each
-row, using the structure defined in data/_league-template.md (the template is not read
-at runtime—structure is hardcoded).
+Reads organization data via the Google Sheets API and:
+- Generates <slug>.md files for each row (structure from data/_league-template.md, hardcoded)
+- Generates frontend/public/organizations.md from data/_organizations.md template (Reftown table
+  for orgs without Payor League, NWSC table for orgs with Payor League)
 
 Expected sheet columns (in order):
   Org ID, Reftown Link, Reftown ID, NWSC Payor League, Org Name, Contact, Email,
@@ -22,12 +24,15 @@ Usage:
 import argparse
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SHEET_ID = "1UfzRZQPEhV1mYemzhwSFbi66hJaEbFiMIP6tSEO4c_I"
 DEFAULT_GID = 1877948281
 ORGS_DIR = PROJECT_ROOT / "data" / "orgs"
 BACKEND_DIR = PROJECT_ROOT / "backend"
+ORGANIZATIONS_TEMPLATE = PROJECT_ROOT / "data" / "_organizations.md"
+ORGANIZATIONS_OUTPUT = PROJECT_ROOT / "frontend" / "public" / "organizations.md"
 
 COLUMNS = [
     "Org ID",
@@ -89,6 +94,79 @@ def _location(city, state):
     if c:
         return f"{c}, {s}"
     return s
+
+
+def _format_homepage(url):
+    """Format homepage URL as [domain](url). Returns empty string if blank."""
+    u = (url or "").strip()
+    if not u:
+        return ""
+    if not u.startswith(("http://", "https://")):
+        u = "https://" + u
+    try:
+        p = urlparse(u)
+        netloc = (p.netloc or "").replace("www.", "")
+        if netloc:
+            return f"[{netloc}]({u})"
+    except Exception:
+        pass
+    return f"[{u}]({u})"
+
+
+def _table_cell(s):
+    """Sanitize string for markdown table cell (escape pipes)."""
+    return (s or "").replace("|", " - ")
+
+
+def _build_reftown_table(rows):
+    """Build markdown table for Reftown orgs (no Payor League)."""
+    if not rows:
+        return "| Reftown Org Name | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |"
+    lines = [
+        "| Reftown Org Name | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+    ]
+    for d in rows:
+        org_id = _table_cell(_val(d, "Org ID"))
+        org_name = _table_cell(_val(d, "Org Name"))
+        league = _table_cell(_val(d, "League"))
+        reftown = _val(d, "Reftown Link")
+        reftown_cell = f"[{reftown}]({reftown})" if reftown else ""
+        homepage = _format_homepage(_val(d, "Homepage"))
+        contact = _table_cell(_val(d, "Contact"))
+        phone = _table_cell(_val(d, "Phone"))
+        city = _table_cell(_val(d, "City"))
+        state = _table_cell(_val(d, "State"))
+        dates = _table_cell(_val(d, "General Playing Dates"))
+        info = _table_cell(_val(d, "Info"))
+        lines.append(f"| **{org_id}** | {org_name} | {league} | {reftown_cell} | {homepage} | {contact} | {phone} | {city} | {state} | {dates} | {info} |")
+    return "\n".join(lines)
+
+
+def _build_nwsc_table(rows):
+    """Build markdown table for NWSC payor leagues."""
+    if not rows:
+        return "| NWSC Org | Payor League | League | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |"
+    lines = [
+        "| NWSC Org | Payor League | League | Full Name | League | Reftown Link | Homepage | Contact | Phone # | City | State | General Playing Dates | Info |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+    ]
+    for d in rows:
+        org_id = _table_cell(_val(d, "Org ID"))
+        nwsc = _table_cell(_val(d, "NWSC Payor League"))
+        league = _table_cell(_val(d, "League"))
+        org_name = _table_cell(_val(d, "Org Name"))
+        reftown = _val(d, "Reftown Link")
+        reftown_cell = f"[{reftown}]({reftown})" if reftown else ""
+        homepage = _format_homepage(_val(d, "Homepage"))
+        contact = _table_cell(_val(d, "Contact"))
+        phone = _table_cell(_val(d, "Phone"))
+        city = _table_cell(_val(d, "City"))
+        state = _table_cell(_val(d, "State"))
+        dates = _table_cell(_val(d, "General Playing Dates"))
+        info = _table_cell(_val(d, "Info"))
+        lines.append(f"| **{org_id}** | {nwsc} | {league} | {org_name} | {league} | {reftown_cell} | {homepage} | {contact} | {phone} | {city} | {state} | {dates} | {info} |")
+    return "\n".join(lines)
 
 
 def _build_frontmatter(d, signup_type_val):
@@ -286,6 +364,9 @@ def main():
         if col not in col_indices and j < len(headers):
             col_indices[col] = j
 
+    reftown_rows = []  # No NWSC Payor League
+    nwsc_rows = []     # Has NWSC Payor League
+
     count = 0
     for row_data in all_values[1:]:
         d = {}
@@ -300,6 +381,11 @@ def main():
         if not org_id:
             continue
 
+        if _val(d, "NWSC Payor League"):
+            nwsc_rows.append(d)
+        else:
+            reftown_rows.append(d)
+
         slug = _slug(org_id)
         signup_type_val = _signup_type(d)
 
@@ -312,7 +398,15 @@ def main():
         out_path.write_text(content, encoding="utf-8")
         count += 1
 
+    # Generate organizations.md for frontend from template
+    template_text = ORGANIZATIONS_TEMPLATE.read_text(encoding="utf-8")
+    reftown_table = _build_reftown_table(reftown_rows)
+    nwsc_table = _build_nwsc_table(nwsc_rows)
+    org_md = template_text.replace("{{REFTOWN_TABLE}}", reftown_table).replace("{{NWSC_TABLE}}", nwsc_table)
+    ORGANIZATIONS_OUTPUT.write_text(org_md, encoding="utf-8")
+
     print(f"Wrote {count} organization files to {ORGS_DIR}")
+    print(f"Wrote {ORGANIZATIONS_OUTPUT}")
 
 
 if __name__ == "__main__":
