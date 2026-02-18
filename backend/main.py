@@ -177,7 +177,12 @@ Context from knowledge base:
 Question: {query.question}
 
 Provide a clear, accurate, and helpful response. If you're unsure about something, 
-say so rather than making up information."""
+say so rather than making up information.
+
+If the response varies by organization and one was not specified, encourage the user to specify the organization in a follow-up question.
+
+Respond in the same language the user used. If the question is in Spanish, answer in Spanish; 
+if in English, answer in English; and so on for other languages."""
 
         response = client.models.generate_content(
             model="gemini-3-flash-preview",
