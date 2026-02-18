@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams, useLocation, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
@@ -153,6 +153,37 @@ function SampleQuestionsPage() {
           </ul>
         </section>
       ))}
+      {!loading && !error && sections.length > 0 && (
+        <section className="mb-6">
+          <h2 className="text-lg font-semibold text-oregon-green mb-3">Other languages</h2>
+          <ul className="space-y-2">
+            {[
+              { lang: 'Español', q: '¿Cómo me certifico para ser árbitro?' },
+              { lang: 'Русский', q: 'Как мне получить сертификат судьи?' },
+              { lang: 'Tiếng Việt', q: 'Làm thế nào để tôi được cấp chứng chỉ trọng tài?' },
+              { lang: '中文', q: '如何获得裁判员认证？' },
+              { lang: '한국어', q: '어떻게 심판 자격을 취득하나요?' },
+            ].map(({ lang, q }) => (
+              <li key={lang}>
+                <button
+                  type="button"
+                  onClick={() => navigate('/', { state: { submitQuestion: q } })}
+                  className="w-full text-left flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-200 bg-white hover:bg-oregon-green hover:text-white hover:border-oregon-green focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-2 transition-colors group"
+                >
+                  <span className="flex-1">{q}</span>
+                  <span className="shrink-0 text-sm text-gray-500 group-hover:text-white">{lang}</span>
+                  <span className="shrink-0 text-sm font-medium text-oregon-green group-hover:text-white flex items-center gap-1">
+                    Ask in chat
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <p className="text-sm text-gray-500 mt-6">
         Or use <strong>Look up License Info</strong> in the menu to check your USSF license status.
       </p>
@@ -677,12 +708,6 @@ function ChatView() {
     }
   }
 
-  const exampleQuestions = [
-    "I'm a new ref. Where do I start?",
-    'Check my license status',
-    'Why am I not getting assignments?',
-  ]
-
   return (
     <>
       {showBetaSplash && <BetaSplash onDismiss={dismissBetaSplash} content={betaContent} />}
@@ -702,19 +727,17 @@ function ChatView() {
               <p className="max-w-md mx-auto mb-3 md:mb-6">
                 Ask about Oregon soccer officiating: IFAB and league rules, procedures, getting assignments, and Reftown. Include the organization or league name when your question is specific to one.
               </p>
-              <div className="flex flex-col items-end gap-2 md:gap-3 max-w-md mx-auto">
-                {exampleQuestions.map((q, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => submitQuestion(q)}
-                    disabled={isLoading}
-                    className="w-full max-w-[80%] text-left rounded-2xl rounded-br-md px-4 py-3 bg-oregon-green text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
-                  >
-                    <p className="whitespace-pre-wrap">{q}</p>
-                  </button>
-                ))}
-              </div>
+              <p className="max-w-md mx-auto mb-4">
+                <Link
+                  to="/sample-questions"
+                  className="text-oregon-green hover:underline focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-1 rounded font-medium"
+                >
+                  Sample questions
+                </Link>
+              </p>
+              <p className="max-w-md mx-auto text-sm italic text-gray-400">
+                I understand Español, Русский, Tiếng Việt, and 中文.
+              </p>
             </div>
           ) : (
             messages.map((message, index) => (
@@ -873,7 +896,7 @@ function ChatView() {
             type="text"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Ask about soccer rules, offside, fouls, or Oregon regulations..."
+            placeholder="Ask about league rules, using Reftown, assignments, certification, and more..."
             className="flex-1 rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-oregon-green focus:border-transparent shadow-sm"
             disabled={isLoading || licenseLoading || showEmailPrompt}
           />
