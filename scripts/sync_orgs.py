@@ -416,10 +416,13 @@ def _build_graph_json(rows):
         }
         region = _val(nwsc_rows[0], "Region") or _location(_val(nwsc_rows[0], "City"), _val(nwsc_rows[0], "State"))
         contact = _val(nwsc_rows[0], "Contact")
+        homepage = _normalize_url(_val(nwsc_rows[0], "Homepage"))
         if region:
             nwsc_node["region"] = region
         if contact:
             nwsc_node["contact"] = contact
+        if homepage:
+            nwsc_node["homepage"] = homepage
         nodes.append(nwsc_node)
         node_ids.add("NWSC")
 
@@ -450,6 +453,9 @@ def _build_graph_json(rows):
             node["contact"] = contact
         if league_val:
             node["league"] = league_val
+        homepage = _normalize_url(_val(d, "Homepage"))
+        if homepage:
+            node["homepage"] = homepage
         nodes.append(node)
         override_type = d.get("Competition Type", "")
         for comp_name in comp_list:
@@ -480,6 +486,9 @@ def _build_graph_json(rows):
                 node["contact"] = contact
             if league_val:
                 node["league"] = league_val
+            homepage = _normalize_url(_val(d, "Homepage"))
+            if homepage:
+                node["homepage"] = homepage
             nodes.append(node)
             edges.append({"source": "NWSC", "target": nid, "type": "parent_of"})
         league_val = _val(d, "League")

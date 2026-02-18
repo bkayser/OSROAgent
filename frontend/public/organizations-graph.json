@@ -7,7 +7,8 @@
       "subtype": "nwsc_parent",
       "fullName": "NorthWest Soccer Central",
       "region": "Happy Valley, OR",
-      "contact": "Heather Combs"
+      "contact": "Heather Combs",
+      "homepage": "https://www.clackamasunited.com/"
     },
     {
       "id": "Albion_SC",
@@ -17,7 +18,8 @@
       "fullName": "Albion Soccer Club Jr",
       "region": "Tigard, OR",
       "contact": "Jack Vohland",
-      "league": "Tualatin Hills Junior Soccer League"
+      "league": "Tualatin Hills Junior Soccer League",
+      "homepage": "https://tualatinhillsjuniorsoccerleague.com"
     },
     {
       "id": "Bend_FC",
@@ -27,7 +29,8 @@
       "fullName": "Bend FC",
       "region": "Bend, OR",
       "contact": "Jessica Passage",
-      "league": "Central Oregon Soccer League, Bend Premier Cup"
+      "league": "Central Oregon Soccer League, Bend Premier Cup",
+      "homepage": "https://www.bendfctimbers.com"
     },
     {
       "id": "CBSR",
@@ -65,7 +68,8 @@
       "fullName": "Canby United Soccer Association",
       "region": "Canby, OR",
       "contact": "Matt Lawer",
-      "league": "Soccer-5"
+      "league": "Soccer-5",
+      "homepage": "https://www.canbysoccer.org"
     },
     {
       "id": "EYSC",
@@ -74,7 +78,8 @@
       "subtype": "reftown_top",
       "fullName": "Estacada Youth Soccer Club",
       "region": "Estacada, OR",
-      "league": "Soccer-5"
+      "league": "Soccer-5",
+      "homepage": "https://www.estacadayouthsoccer.com"
     },
     {
       "id": "GPSD-TAFC",
@@ -84,7 +89,8 @@
       "fullName": "Greater Portland Soccer District & Timbers Army",
       "region": "Portland, OR",
       "contact": "Justin Phillips / Alex Chilowicz",
-      "league": "GPSD"
+      "league": "GPSD",
+      "homepage": "https://www.gpsdsoccer.com/referees"
     },
     {
       "id": "HSRA",
@@ -110,7 +116,8 @@
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Lane County Soccer Referees Association",
-      "region": "Lane County, OR"
+      "region": "Lane County, OR",
+      "homepage": "https://lcsra.org"
     },
     {
       "id": "LOPRACSL",
@@ -120,7 +127,8 @@
       "fullName": "Lake Oswego Parks & Recreation Adult Coed Soccer League",
       "region": "Lake Oswego, OR",
       "contact": "CJ Koll",
-      "league": "LOP&R Adult Soccer League"
+      "league": "LOP&R Adult Soccer League",
+      "homepage": "https://www.ci.oswego.or.us/parksrec/coed-soccer-spring-summer-fall-leagues"
     },
     {
       "id": "MISOA",
@@ -138,7 +146,8 @@
       "subtype": "reftown_top",
       "fullName": "Mid-Valley Soccer Referees Association",
       "region": "OR",
-      "league": "OSAA"
+      "league": "OSAA",
+      "homepage": "https://www.mvsra.net"
     },
     {
       "id": "NUWS",
@@ -147,7 +156,8 @@
       "subtype": "reftown_top",
       "fullName": "NUWS",
       "region": "Portland Metro Area, OR",
-      "league": "Northwest United Women's Soccer"
+      "league": "Northwest United Women's Soccer",
+      "homepage": "https://www.oregonwomenssoccer.com"
     },
     {
       "id": "OFA",
@@ -155,7 +165,8 @@
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Oregon Futbol Academy",
-      "region": "Grants Pass, OR"
+      "region": "Grants Pass, OR",
+      "homepage": "https://www.oregonfutbolacademy.com"
     },
     {
       "id": "OISOA",
@@ -175,7 +186,8 @@
       "fullName": "Portland Youth Soccer Association",
       "region": "Portland, OR",
       "contact": "Andrew Marihart",
-      "league": "PYSA"
+      "league": "PYSA",
+      "homepage": "https://leagues.bluesombrero.com/Default.aspx?tabid=1711498"
     },
     {
       "id": "SCA",
@@ -210,7 +222,8 @@
       "fullName": "Salem Soccer Group",
       "region": "Salem, OR",
       "contact": "Jose Maciel",
-      "league": "CFC Recreational, Capital cup, Girls Academy, ECNL, ECNL-RL"
+      "league": "CFC Recreational, Capital cup, Girls Academy, ECNL, ECNL-RL",
+      "homepage": "https://www.cfcsalem.com/referee"
     },
     {
       "id": "SSRA",
@@ -230,7 +243,8 @@
       "fullName": "Sherwood Youth SC",
       "region": "Sherwood, OR",
       "contact": "Jack Vohland",
-      "league": "THJSL"
+      "league": "THJSL",
+      "homepage": "https://www.sherwoodsoccer.org/Default.aspx?tabid=854299"
     },
     {
       "id": "THJSL",
@@ -239,7 +253,8 @@
       "subtype": "reftown_top",
       "fullName": "Tualatin Hills Junior Soccer League",
       "region": "Beaverton, OR",
-      "contact": "Ramin Eghdami"
+      "contact": "Ramin Eghdami",
+      "homepage": "https://tualatinhillsjuniorsoccerleague.com"
     },
     {
       "id": "TSC",
@@ -249,7 +264,8 @@
       "fullName": "Tualatin Soccer Club",
       "region": "Tualatin, OR",
       "contact": "Jack Vohland",
-      "league": "OYSA"
+      "league": "OYSA",
+      "homepage": "https://www.tualatinsoccer.com"
     },
     {
       "id": "S5_-_CUSC",
@@ -259,7 +275,8 @@
       "fullName": "Clackamas United Soccer Club",
       "region": "Happy Valley, OR",
       "contact": "Heather Combs",
-      "league": "Soccer-5"
+      "league": "Soccer-5",
+      "homepage": "https://www.clackamasunited.com/"
     },
     {
       "id": "Eastside_Timbers",
@@ -269,7 +286,8 @@
       "fullName": "Eastside Timbers",
       "region": "Gresham, OR",
       "contact": "Carly Copplestone",
-      "league": "Eastside Timbers Rec"
+      "league": "Eastside Timbers Rec",
+      "homepage": "https://www.eastsidetimbers.com/recreation"
     },
     {
       "id": "S5_-_LOSC",
@@ -279,7 +297,8 @@
       "fullName": "Lake Oswego Soccer Club",
       "region": "Lake Oswego, OR",
       "contact": "Erich Asan",
-      "league": "Soccer-5"
+      "league": "Soccer-5",
+      "homepage": "https://losc.org"
     },
     {
       "id": "S5_-_NCSC",
@@ -289,7 +308,8 @@
       "fullName": "North Clackamas Soccer Club",
       "region": "Oak Grove, Milwaukie, OR",
       "contact": "Bill Kayser",
-      "league": "Soccer-5"
+      "league": "Soccer-5",
+      "homepage": "https://www.ncsoccerclub.com"
     },
     {
       "id": "S5_-_OCSC",
@@ -299,7 +319,8 @@
       "fullName": "Oregon City Soccer Club",
       "region": "Oregon City, OR",
       "contact": "Jeff Rine",
-      "league": "Soccer-5"
+      "league": "Soccer-5",
+      "homepage": "https://www.ocsoccerclub.org"
     },
     {
       "id": "OYSA_Leagues",
@@ -309,7 +330,8 @@
       "fullName": "OYSA (Leagues, Cups, Academy)",
       "region": "OR",
       "contact": "Scott Clark",
-      "league": "OYSA,State Cup,Founders Cup,Presidents Cup"
+      "league": "OYSA,State Cup,Founders Cup,Presidents Cup",
+      "homepage": "https://www.oregonyouthsoccer.org"
     },
     {
       "id": "PT",
@@ -329,7 +351,8 @@
       "fullName": "Tualatin Valley Youth Soccer League",
       "region": "Tualatin, OR",
       "contact": "Christopher Job",
-      "league": "TVYSL"
+      "league": "TVYSL",
+      "homepage": "https://www.hillsbororush.org/tualitin-valley-youth-soccer-league/"
     },
     {
       "id": "USYS",
@@ -348,7 +371,8 @@
       "fullName": "Willamette United Football Club",
       "region": "Wilsonville, West Linn, OR",
       "contact": "Heather Combs",
-      "league": "Soccer-5"
+      "league": "Soccer-5",
+      "homepage": "https://willametteunitedfc.com/resources/referee-resources/"
     },
     {
       "id": "tualatin-hills-junior-soccer-league",

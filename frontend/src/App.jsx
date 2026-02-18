@@ -81,7 +81,6 @@ function MarkdownPage({ slug, title }) {
           ← Chat
         </button>
       </div>
-      <h1 className="text-2xl font-bold text-gray-800 mb-4">{title}</h1>
       {loading && <p className="text-gray-500">Loading…</p>}
       {error && <p className="text-red-600">Failed to load content.</p>}
       {!loading && !error && content && (

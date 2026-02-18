@@ -15,7 +15,6 @@ export default function OrganizationsPage() {
   const [listLoading, setListLoading] = useState(true)
   const [listError, setListError] = useState(null)
   const graphRef = useRef(null)
-  const cyRef = useRef(null)
 
   useEffect(() => {
     setListLoading(true)
@@ -30,10 +29,9 @@ export default function OrganizationsPage() {
       .finally(() => setListLoading(false))
   }, [])
 
-  const handlePrint = useCallback(() => {
-    const cy = graphRef.current?.getCy?.() ?? cyRef.current
-    if (!cy) return
-    const dataUrl = cy.png({ full: true, scale: 2 })
+  const handlePrint = useCallback(async () => {
+    const dataUrl = await graphRef.current?.getPrintDataUrl?.()
+    if (!dataUrl) return
     const w = window.open('', '_blank')
     if (!w) return
     w.document.write(`
@@ -111,10 +109,7 @@ export default function OrganizationsPage() {
               Print
             </button>
           </div>
-          <OrganizationsGraph
-            ref={graphRef}
-            onCyReady={(cy) => { cyRef.current = cy }}
-          />
+          <OrganizationsGraph ref={graphRef} />
         </div>
       )}
     </main>

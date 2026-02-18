@@ -11,16 +11,15 @@
     "generate-favicon": "node scripts/generate-favicon.mjs"
   },
   "dependencies": {
-    "cytoscape": "^3.33.1",
-    "cytoscape-popper": "^4.0.1",
+    "@dagrejs/dagre": "^2.0.4",
+    "@xyflow/react": "^12.3.6",
+    "html-to-image": "^1.11.11",
     "react": "^18.3.1",
-    "react-cytoscapejs": "^2.0.0",
     "react-dom": "^18.3.1",
     "react-markdown": "^9.0.1",
     "react-router-dom": "^7.13.0",
     "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.0",
-    "tippy.js": "^6.3.7"
+    "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
