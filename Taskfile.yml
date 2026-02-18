@@ -46,9 +46,9 @@ tasks:
       - deploy
 
   fetch-pages:
-    desc: Fetch URLs as markdown (e.g. task fetch-pages -- --file data/fetch-and-edit.urls)
+    desc: Fetch URLs from data/_fetch-and-edit.urls as markdown
     cmds:
-      - python scripts/fetch_pages.py {{.CLI_ARGS}}
+      - python scripts/fetch_pages.py --file data/_fetch-and-edit.urls
 
   setup-storage:
     desc: One-time setup — create GCS bucket and IAM for vector store

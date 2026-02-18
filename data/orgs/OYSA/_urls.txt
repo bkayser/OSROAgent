@@ -21,7 +21,8 @@ https://www.oregonyouthsoccer.org/news/2025/12/03/2026-2027-updated-decision-on-
 https://reftown.com/link.asp?A=555&Q=RID%3D73&P=custom.asp
 
 # Who are the Rec League assignors?
-https://reftown.com/link.asp?A=555&Q=RID%3D105&P=custom.asp
+# This was fetched and manually edited in this directory.
+# https://reftown.com/link.asp?A=555&Q=RID%3D105&P=custom.asp
 
 # OYSA Assignors:
 https://reftown.com/link.asp?A=555&Q=RID%3D41&P=custom.asp
