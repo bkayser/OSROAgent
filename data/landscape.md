@@ -2,6 +2,22 @@
 
 This document describes how leagues, tournaments, and assigning work for Oregon soccer referees.
 
+## Recreational, Developmental and Competitive
+
+Many clubs host recreational (Rec) leagues.  These include:
+
+* Soccer-5
+* Portland Youth Soccer Association (PYSA)
+* Tualatin Valley Junior Soccer League
+
+OYSA sanctions programs to develop kids for competitive soccer.   These start with Developmental Programs from U8 to U10, followed by Youth Competitive, or Classic.  These programs are from U11 to U19.
+
+There are also higher level and elite programs that operate in regional and national leagues such as Girls Academy (GA), GA Aspire, UPSL, ECNL.
+
+High School Soccer is operated under the Oregon Sports Athletic Association (OSAA) which is sanctioned by NFHS.  High School Soccer is not sanctioned by US Soccer or FIFA and has its own rules and requirements for Referees.  Multiple organizations in Reftown assign games for OSAA.
+
+For college there is NISOA.  The NISOA (National Intercollegiate Soccer Officials Association) is the primary organization responsible for recruiting, training, and certifying soccer referees for college soccer in the United States.
+
 ## Organizations and assigning
 
 Referees typically work in competitions which include leagues and tournaments. Each competition is managed by an **organization**. The organization might

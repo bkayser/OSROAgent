@@ -1,6 +1,12 @@
-# OYSA Development Academy
+# OYSA Developmental Academy
 
-Also referred to as "development league", OYSA Development is a great opportunity for new and young referees to start out.
+Also referred to as "development league", OYSA Developmental is a great opportunity for new and young referees to start out.  This covers the U8-U10 age groups, typically 1st to 3rd grade.
+
+There are several Developmental leagues in Oregon.
+* The main one in Portland is OYSA Developmental League.
+* Valley Academy hosts games at Capital FC Soccer Complex in Salem.
+* Capitol Futbol Club (CFC) hosts CFC Junior Academy.
+* Bend FC Junior Development Academy hosted by Bend FC.
 
 * REFEREE PAY – A great perk of being a soccer official is the pay! Development Academy League (DL) pay for a solo center is $35 per game.  Once you gain some experience, you can take on more demanding assignments within OYSA – and with that comes even higher rates.  See our PayScale in RefTown for more details.
 * REFEREE MENTOR SUPPORT – OYSA DL offers mentor support to all our referees throughout the spring season for league games.  Our experienced staff is dedicated to creating a fun, supportive, learning environment for all referees to enjoy and to have a memorable experience.  When you are out on the fields and have a question or need assistance, simply look for a mentor and we’d be happy to help!      
