@@ -167,6 +167,48 @@ def update_chat_log_grade(log_id: str, grade: str) -> bool:
         return False
 
 
+def append_license_lookup_log(
+    env: str,
+    trigger_query: str,
+    no_match: bool,
+    license_count: int | None,
+    client_ip: str | None = None,
+) -> None:
+    """
+    Append one row to the chat log sheet when the US Soccer profile (license) API is used.
+    Does not log the actual result; logs only the triggering query text, whether the email
+    had no match, and the number of license records returned.
+    Columns (same as chat log): Env, IP, Grade, Query, Answer, Sources, Timestamp, Log ID.
+    Query = trigger_query; Answer = "[License lookup] no_match=<bool>, license_count=<n>".
+    Does nothing if sheet/credentials unavailable; logs and swallows errors.
+    """
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+
+    sheet_id = _get_sheet_id()
+    if not sheet_id:
+        return
+    client = _get_sheet_client()
+    if not client:
+        return
+    try:
+        sheet = client.open_by_key(sheet_id).sheet1
+        _ensure_header_row(sheet)
+
+        log_id = str(uuid.uuid4())
+        dt = datetime.now(ZoneInfo("America/Los_Angeles"))
+        ts = dt.strftime("%y/%m/%d %I:%M ") + dt.strftime("%p").lower()
+        ip_str = (client_ip or "").strip() or ""
+        query_str = (trigger_query or "").strip() or "[License lookup from menu]"
+        count_str = str(license_count) if license_count is not None else "—"
+        answer_str = f"[License lookup] no_match={no_match}, license_count={count_str}"
+
+        row = [env, ip_str, "", query_str, answer_str, "", ts, log_id]
+        sheet.insert_row(row, index=2, value_input_option="USER_ENTERED")
+    except Exception as e:
+        logging.exception("License lookup log insert failed: %s", e)
+
+
 def append_feedback(user: str, feedback: str) -> None:
     """
     Append one row to the Feedback sheet. Columns: Timestamp, User, Feedback.

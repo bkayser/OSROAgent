@@ -226,10 +226,12 @@ async def chat_grade(data: GradeSubmit):
 
 
 @app.get("/license-status")
-async def license_status(email: str = ""):
+async def license_status(request: Request, email: str = "", trigger_query: str = ""):
     """
     Look up the active USSF licenses for a referee by email address.
     Returns licenses grouped by discipline, ordered by rank within each group.
+    When called (referee prompt triggered this API), we log the trigger query text,
+    whether the email had no match, and the number of license records returned—not the actual result.
     """
     if not email.strip():
         raise HTTPException(status_code=400, detail="Query parameter 'email' is required")
@@ -242,6 +244,16 @@ async def license_status(email: str = ""):
         raise HTTPException(status_code=500, detail=str(e))
 
     if ussf_id is None:
+        env = "prod" if os.environ.get("K_SERVICE") else "dev"
+        client_ip = _get_client_ip(request)
+        try:
+            from backend.chat_log import append_license_lookup_log
+            append_license_lookup_log(
+                env, (trigger_query or "").strip(), no_match=True, license_count=None,
+                client_ip=client_ip or None,
+            )
+        except Exception:
+            pass
         raise HTTPException(
             status_code=404,
             detail="No USSF ID found associated with that e-mail address",
@@ -252,8 +264,19 @@ async def license_status(email: str = ""):
     except RuntimeError as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+    env = "prod" if os.environ.get("K_SERVICE") else "dev"
+    client_ip = _get_client_ip(request)
+    try:
+        from backend.chat_log import append_license_lookup_log
+        append_license_lookup_log(
+            env, (trigger_query or "").strip(), no_match=False, license_count=len(raw_licenses),
+            client_ip=client_ip or None,
+        )
+    except Exception:
+        pass
+
     grouped_licenses = enrich_and_group_licenses(raw_licenses)
-    
+
     return {
         "ussf_id": ussf_id,
         "full_name": full_name,

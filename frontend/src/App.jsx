@@ -605,6 +605,10 @@ function ChatView() {
     const email = licenseEmail.trim()
     if (!email || licenseLoading) return
 
+    // Triggering query: the user message that led to the license prompt (empty if from menu)
+    const lastUser = messages[messages.length - 1]
+    const triggerQuery = lastUser?.role === 'user' ? lastUser.content : ''
+
     setLicenseLoading(true)
     setShowEmailPrompt(false)
 
@@ -612,9 +616,12 @@ function ChatView() {
     const userMessage = { role: 'user', content: `Look up licenses for: ${email}` }
     setMessages((prev) => [...prev, userMessage])
 
+    const params = new URLSearchParams({ email })
+    if (triggerQuery) params.set('trigger_query', triggerQuery)
+
     try {
       const response = await fetch(
-        `/api/license-status?email=${encodeURIComponent(email)}`,
+        `/api/license-status?${params.toString()}`,
         { method: 'GET' }
       )
 
