@@ -72,6 +72,9 @@ def _enrich_doc_metadata(doc: Document) -> Document:
             new_meta["doc_type"] = "laws"
         if new_meta.get("competition"):
             new_meta["scope"] = "competition"
+        elif new_meta.get("org"):
+            new_meta["scope"] = "org"
+            new_meta["doc_type"] = "org"
         else:
             new_meta["scope"] = "general"
         return Document(page_content=doc.page_content, metadata=new_meta)
@@ -123,6 +126,18 @@ def _enrich_doc_metadata(doc: Document) -> Document:
     return Document(page_content=doc.page_content, metadata=new_meta)
 
 
+def _org_from_url_file_path(url_file: Path) -> str | None:
+    """If url_file is under data/orgs/<slug>/, return the slug; else None."""
+    parts = url_file.parts
+    try:
+        i = parts.index("orgs")
+        if i + 1 < len(parts):
+            return parts[i + 1]
+    except ValueError:
+        pass
+    return None
+
+
 def _competition_from_url_file_path(url_file: Path) -> str | None:
     """If url_file is under data/competitions/<slug>/, return the slug; else None."""
     parts = url_file.parts
@@ -138,6 +153,7 @@ def _competition_from_url_file_path(url_file: Path) -> str | None:
 def load_urls(url_file: Path) -> list:
     """Load and scrape documents from URLs listed in a file."""
     documents = []
+    org_slug = _org_from_url_file_path(url_file)
     competition_slug = _competition_from_url_file_path(url_file)
 
     if not url_file.exists():
@@ -180,6 +196,8 @@ def load_urls(url_file: Path) -> list:
                 meta = {"source": u, "doc_type": "web_page"}
                 if title:
                     meta["title"] = title
+                if org_slug:
+                    meta["org"] = org_slug
                 if competition_slug:
                     meta["competition"] = competition_slug
                 return Document(page_content=text, metadata=meta)

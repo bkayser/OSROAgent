@@ -49,7 +49,7 @@ When e-mailing your assignor with questions or special requests, be polite and p
 
 ## Turnbacks
 
-"Turnback" is the term used to cancel an assignment you have already accepted.
+"Turnback" is the term used to cancel an assignment you have already accepted.  If you are unable to work a game that you confirmed in Reftown, there may or may not be an option to turn back the assignment after you accepted it, depending on the organization's policy.
 
 If you must return a game (illness, emergency), do it **immediately**. Avoid "Turnback Etiquette" sins like turning back a game on Friday night for a Saturday morning kickoff without a phone call.
 
