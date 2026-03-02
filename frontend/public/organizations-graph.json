@@ -3,6 +3,7 @@
     {
       "id": "NWSC",
       "label": "NWSC",
+      "slug": "NWSC",
       "type": "organization",
       "subtype": "nwsc_parent",
       "fullName": "NorthWest Soccer Central",
@@ -13,6 +14,7 @@
     {
       "id": "Albion_SC",
       "label": "Albion SC",
+      "slug": "Albion_SC",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Albion Soccer Club Jr",
@@ -23,6 +25,7 @@
     {
       "id": "Bend_FC",
       "label": "Bend FC",
+      "slug": "Bend_FC",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Bend FC",
@@ -33,6 +36,7 @@
     {
       "id": "CBSR",
       "label": "CBSR",
+      "slug": "CBSR",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Coos-Brookings Soccer Referees",
@@ -41,6 +45,7 @@
     {
       "id": "COSOA",
       "label": "COSOA",
+      "slug": "COSOA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Central Oregon Soccer Officials Association",
@@ -50,6 +55,7 @@
     {
       "id": "CUSA",
       "label": "CUSA",
+      "slug": "CUSA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Canby United Soccer Association",
@@ -60,6 +66,7 @@
     {
       "id": "EYSC",
       "label": "EYSC",
+      "slug": "EYSC",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Estacada Youth Soccer Club",
@@ -69,6 +76,7 @@
     {
       "id": "GPSD-TAFC",
       "label": "GPSD-TAFC",
+      "slug": "GPSD-TAFC",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Greater Portland Soccer District & Timbers Army",
@@ -79,6 +87,7 @@
     {
       "id": "HSRA",
       "label": "HSRA",
+      "slug": "HSRA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Hermiston Soccer Referee Association",
@@ -87,6 +96,7 @@
     {
       "id": "KSRA",
       "label": "KSRA",
+      "slug": "KSRA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Klamath Soccer Referee Association",
@@ -95,6 +105,7 @@
     {
       "id": "LCSRA",
       "label": "LCSRA",
+      "slug": "LCSRA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Lane County Soccer Referees Association",
@@ -104,6 +115,7 @@
     {
       "id": "LOPRACSL",
       "label": "LOPRACSL",
+      "slug": "LOPRACSL",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Lake Oswego Parks & Recreation Adult Coed Soccer League",
@@ -114,6 +126,7 @@
     {
       "id": "MISOA",
       "label": "MISOA",
+      "slug": "MISOA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Metropolitan Interscholastic Soccer Officials Association",
@@ -122,6 +135,7 @@
     {
       "id": "MVSRA",
       "label": "MVSRA",
+      "slug": "MVSRA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Mid-Valley Soccer Referees Association",
@@ -131,6 +145,7 @@
     {
       "id": "NUWS",
       "label": "NUWS",
+      "slug": "NUWS",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "NUWS",
@@ -140,6 +155,7 @@
     {
       "id": "OFA",
       "label": "OFA",
+      "slug": "OFA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Oregon Futbol Academy",
@@ -149,6 +165,7 @@
     {
       "id": "OISOA",
       "label": "OISOA",
+      "slug": "OISOA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Oregon Intercollegiate Soccer Officials Association",
@@ -158,6 +175,7 @@
     {
       "id": "PYSA",
       "label": "PYSA",
+      "slug": "PYSA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Portland Youth Soccer Association",
@@ -168,6 +186,7 @@
     {
       "id": "SCA",
       "label": "SCA",
+      "slug": "SCA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Scott Clark Assigning",
@@ -177,6 +196,7 @@
     {
       "id": "SOCL-SODL",
       "label": "SOCL-SODL",
+      "slug": "SOCL-SODL",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "SOCL-SODL",
@@ -185,6 +205,7 @@
     {
       "id": "SOSOA",
       "label": "SOSOA",
+      "slug": "SOSOA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Southern Oregon Soccer Officials Association",
@@ -193,6 +214,7 @@
     {
       "id": "SSG",
       "label": "SSG",
+      "slug": "SSG",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Salem Soccer Group",
@@ -203,6 +225,7 @@
     {
       "id": "SSRA",
       "label": "SSRA",
+      "slug": "SSRA",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Salem Soccer Referee Association",
@@ -212,6 +235,7 @@
     {
       "id": "SYSC",
       "label": "SYSC",
+      "slug": "SYSC",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Sherwood Youth SC",
@@ -222,6 +246,7 @@
     {
       "id": "THJSL",
       "label": "THJSL",
+      "slug": "THJSL",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Tualatin Hills Junior Soccer League",
@@ -232,6 +257,7 @@
     {
       "id": "TSC",
       "label": "TSC",
+      "slug": "TSC",
       "type": "organization",
       "subtype": "reftown_top",
       "fullName": "Tualatin Soccer Club",
@@ -242,6 +268,7 @@
     {
       "id": "S5_-_CUSC",
       "label": "S5 - CUSC",
+      "slug": "CUSC",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "Clackamas United Soccer Club",
@@ -252,6 +279,7 @@
     {
       "id": "Eastside_Timbers",
       "label": "Eastside Timbers",
+      "slug": "Eastside_Timbers",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "Eastside Timbers",
@@ -262,6 +290,7 @@
     {
       "id": "S5_-_LOSC",
       "label": "S5 - LOSC",
+      "slug": "LOSC",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "Lake Oswego Soccer Club",
@@ -272,6 +301,7 @@
     {
       "id": "S5_-_NCSC",
       "label": "S5 - NCSC",
+      "slug": "NCSC",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "North Clackamas Soccer Club",
@@ -282,6 +312,7 @@
     {
       "id": "S5_-_OCSC",
       "label": "S5 - OCSC",
+      "slug": "OCSC",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "Oregon City Soccer Club",
@@ -292,6 +323,7 @@
     {
       "id": "OYSA_Leagues",
       "label": "OYSA Leagues",
+      "slug": "OYSA",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "OYSA (Leagues, Cups, Academy)",
@@ -302,6 +334,7 @@
     {
       "id": "PT",
       "label": "PT",
+      "slug": "PT",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "PT",
@@ -311,6 +344,7 @@
     {
       "id": "TVYSL",
       "label": "TVYSL",
+      "slug": "TVYSL",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "Tualatin Valley Youth Soccer League",
@@ -321,6 +355,7 @@
     {
       "id": "USYS",
       "label": "USYS",
+      "slug": "USYS",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "USYS",
@@ -330,6 +365,7 @@
     {
       "id": "S5_-_WUFC",
       "label": "S5 - WUFC",
+      "slug": "WUFC",
       "type": "organization",
       "subtype": "nwsc_payor",
       "fullName": "Willamette United Football Club",
@@ -340,6 +376,7 @@
     {
       "id": "tualatin-hills-junior-soccer-league",
       "label": "tualatin-hills-junior-soccer-league",
+      "slug": "tualatin-hills-junior-soccer-league",
       "type": "competition",
       "subtype": "league",
       "fullName": "Tualatin Hills Junior Soccer League"
@@ -347,6 +384,7 @@
     {
       "id": "central-oregon-soccer-league",
       "label": "central-oregon-soccer-league",
+      "slug": "central-oregon-soccer-league",
       "type": "competition",
       "subtype": "league",
       "fullName": "Central Oregon Soccer League"
@@ -354,6 +392,7 @@
     {
       "id": "bend-premier-cup",
       "label": "bend-premier-cup",
+      "slug": "bend-premier-cup",
       "type": "competition",
       "subtype": "tournament",
       "fullName": "Bend Premier Cup"
@@ -361,6 +400,7 @@
     {
       "id": "osaa",
       "label": "osaa",
+      "slug": "osaa",
       "type": "competition",
       "subtype": "league",
       "fullName": "OSAA"
@@ -368,6 +408,7 @@
     {
       "id": "soccer-5",
       "label": "soccer-5",
+      "slug": "soccer-5",
       "type": "competition",
       "subtype": "league",
       "fullName": "Soccer-5"
@@ -375,6 +416,7 @@
     {
       "id": "gpsd",
       "label": "gpsd",
+      "slug": "gpsd",
       "type": "competition",
       "subtype": "league",
       "fullName": "GPSD"
@@ -382,6 +424,7 @@
     {
       "id": "lopr-adult-soccer-league",
       "label": "lopr-adult-soccer-league",
+      "slug": "lopr-adult-soccer-league",
       "type": "competition",
       "subtype": "league",
       "fullName": "LOP&R Adult Soccer League"
@@ -389,6 +432,7 @@
     {
       "id": "northwest-united-womens-soccer",
       "label": "northwest-united-womens-soccer",
+      "slug": "northwest-united-womens-soccer",
       "type": "competition",
       "subtype": "league",
       "fullName": "Northwest United Women's Soccer"
@@ -396,6 +440,7 @@
     {
       "id": "nisoa",
       "label": "nisoa",
+      "slug": "nisoa",
       "type": "competition",
       "subtype": "league",
       "fullName": "NISOA"
@@ -403,6 +448,7 @@
     {
       "id": "pysa",
       "label": "pysa",
+      "slug": "pysa",
       "type": "competition",
       "subtype": "league",
       "fullName": "PYSA"
@@ -410,6 +456,7 @@
     {
       "id": "cfc-recreational",
       "label": "cfc-recreational",
+      "slug": "cfc-recreational",
       "type": "competition",
       "subtype": "league",
       "fullName": "CFC Recreational"
@@ -417,6 +464,7 @@
     {
       "id": "capital-cup",
       "label": "capital-cup",
+      "slug": "capital-cup",
       "type": "competition",
       "subtype": "tournament",
       "fullName": "Capital cup"
@@ -424,6 +472,7 @@
     {
       "id": "girls-academy",
       "label": "girls-academy",
+      "slug": "girls-academy",
       "type": "competition",
       "subtype": "league",
       "fullName": "Girls Academy"
@@ -431,6 +480,7 @@
     {
       "id": "ecnl",
       "label": "ecnl",
+      "slug": "ecnl",
       "type": "competition",
       "subtype": "league",
       "fullName": "ECNL"
@@ -438,6 +488,7 @@
     {
       "id": "ecnl-rl",
       "label": "ecnl-rl",
+      "slug": "ecnl-rl",
       "type": "competition",
       "subtype": "league",
       "fullName": "ECNL-RL"
@@ -445,6 +496,7 @@
     {
       "id": "thjsl",
       "label": "thjsl",
+      "slug": "thjsl",
       "type": "competition",
       "subtype": "league",
       "fullName": "THJSL"
@@ -452,6 +504,7 @@
     {
       "id": "oysa",
       "label": "oysa",
+      "slug": "oysa",
       "type": "competition",
       "subtype": "league",
       "fullName": "OYSA"
@@ -459,6 +512,7 @@
     {
       "id": "eastside-timbers-rec",
       "label": "eastside-timbers-rec",
+      "slug": "eastside-timbers-rec",
       "type": "competition",
       "subtype": "league",
       "fullName": "Eastside Timbers Rec"
@@ -466,6 +520,7 @@
     {
       "id": "state-cup",
       "label": "state-cup",
+      "slug": "state-cup",
       "type": "competition",
       "subtype": "tournament",
       "fullName": "State Cup"
@@ -473,6 +528,7 @@
     {
       "id": "founders-cup",
       "label": "founders-cup",
+      "slug": "founders-cup",
       "type": "competition",
       "subtype": "tournament",
       "fullName": "Founders Cup"
@@ -480,6 +536,7 @@
     {
       "id": "presidents-cup",
       "label": "presidents-cup",
+      "slug": "presidents-cup",
       "type": "competition",
       "subtype": "tournament",
       "fullName": "Presidents Cup"
@@ -487,6 +544,7 @@
     {
       "id": "valley-academy",
       "label": "valley-academy",
+      "slug": "valley-academy",
       "type": "competition",
       "subtype": "league",
       "fullName": "Valley Academy"
@@ -494,6 +552,7 @@
     {
       "id": "developmental-league",
       "label": "developmental-league",
+      "slug": "developmental-league",
       "type": "competition",
       "subtype": "league",
       "fullName": "Developmental League"
@@ -501,6 +560,7 @@
     {
       "id": "portland-timbers",
       "label": "portland-timbers",
+      "slug": "portland-timbers",
       "type": "competition",
       "subtype": "league",
       "fullName": "Portland Timbers"
@@ -508,6 +568,7 @@
     {
       "id": "tvysl",
       "label": "tvysl",
+      "slug": "tvysl",
       "type": "competition",
       "subtype": "league",
       "fullName": "TVYSL"

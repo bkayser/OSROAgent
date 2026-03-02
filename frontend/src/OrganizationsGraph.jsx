@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef, useImperativeHandle, forwardRef } from 'react'
+import { Link } from 'react-router-dom'
 import {
   ReactFlow,
   Background,
@@ -168,14 +169,22 @@ function NodePopup({ node, onClose }) {
           </div>
         )}
       </div>
-      <button
-        type="button"
-        onClick={onClose}
-        className="mt-2 text-xs text-oregon-green hover:underline"
-        aria-label="Close"
-      >
-        Close
-      </button>
+      <div className="mt-2 flex items-center gap-3">
+        <Link
+          to={`/${d.slug ?? (d.id?.match(/^S5_-_(.+)$/)?.[1] ?? d.id)}`}
+          className="text-xs font-medium text-oregon-green hover:underline"
+        >
+          Ask about {fullName}
+        </Link>
+        <button
+          type="button"
+          onClick={onClose}
+          className="text-xs text-gray-500 hover:underline"
+          aria-label="Close"
+        >
+          Close
+        </button>
+      </div>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
@@ -14,7 +14,40 @@ export default function OrganizationsPage() {
   const [listContent, setListContent] = useState('')
   const [listLoading, setListLoading] = useState(true)
   const [listError, setListError] = useState(null)
+  const [scopeLinks, setScopeLinks] = useState({ orgs: [], competitions: [] })
+  const [scopeLinksLoading, setScopeLinksLoading] = useState(true)
   const graphRef = useRef(null)
+
+  useEffect(() => {
+    fetch('/organizations-graph.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load graph')
+        return res.json()
+      })
+      .then((data) => {
+        const nodes = data.nodes || []
+        const nodeSlug = (n) =>
+          n.slug ?? (n.id?.match(/^S5_-_(.+)$/)?.[1]) ?? n.id
+        const orgs = nodes
+          .filter((n) => n.type === 'organization')
+          .map((n) => ({
+            id: nodeSlug(n),
+            fullName: n.fullName || n.label || n.id,
+          }))
+          .filter((o, i, arr) => arr.findIndex((x) => x.id === o.id) === i)
+          .sort((a, b) => (a.fullName || '').localeCompare(b.fullName || ''))
+        const competitions = nodes
+          .filter((n) => n.type === 'competition')
+          .map((n) => ({
+            id: nodeSlug(n),
+            fullName: n.fullName || n.label || n.id,
+          }))
+          .sort((a, b) => (a.fullName || '').localeCompare(b.fullName || ''))
+        setScopeLinks({ orgs, competitions })
+      })
+      .catch(() => setScopeLinks({ orgs: [], competitions: [] }))
+      .finally(() => setScopeLinksLoading(false))
+  }, [])
 
   useEffect(() => {
     setListLoading(true)
@@ -86,6 +119,48 @@ export default function OrganizationsPage() {
 
       {tab === 'list' && (
         <>
+          <section className="mb-6">
+            <h2 className="text-lg font-semibold text-oregon-green mb-3">Chat with an organization or competition</h2>
+            <p className="text-sm text-gray-600 mb-3">
+              Click a link below to open the chat scoped to that organization or competition. Your questions will use their rules and information.
+            </p>
+            {scopeLinksLoading ? (
+              <p className="text-gray-500 text-sm">Loading…</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-sm font-medium text-gray-700 mb-2">Organizations</h3>
+                  <ul className="space-y-1 text-sm">
+                    {scopeLinks.orgs.map((o) => (
+                      <li key={o.id}>
+                        <Link
+                          to={`/${o.id}`}
+                          className="text-oregon-green hover:underline"
+                        >
+                          {o.fullName}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium text-gray-700 mb-2">Competitions</h3>
+                  <ul className="space-y-1 text-sm">
+                    {scopeLinks.competitions.map((c) => (
+                      <li key={c.id}>
+                        <Link
+                          to={`/${c.id}`}
+                          className="text-oregon-green hover:underline"
+                        >
+                          {c.fullName}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+          </section>
           {listLoading && <p className="text-gray-500">Loading…</p>}
           {listError && <p className="text-red-600">Failed to load content.</p>}
           {!listLoading && !listError && listContent && (

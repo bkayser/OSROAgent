@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams, useLocation, Link } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet, useNavigate, useSearchParams, useLocation, Link, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import OrganizationsPage from './OrganizationsPage.jsx'
+import { resolveScopeSlug } from './scopeSlug.js'
 
 // Beta Splash Screen Component
 function BetaSplash({ onDismiss, content }) {
@@ -499,7 +500,59 @@ function Layout() {
   )
 }
 
-function ChatView() {
+function ScopedChatView() {
+  const { scopeSlug } = useParams()
+  const navigate = useNavigate()
+  const [resolved, setResolved] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    if (!scopeSlug) {
+      setResolved(null)
+      setLoading(false)
+      return
+    }
+    setLoading(true)
+    setError(null)
+    resolveScopeSlug(scopeSlug)
+      .then(setResolved)
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [scopeSlug])
+
+  if (loading) {
+    return (
+      <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6">
+        <p className="text-gray-500">Loading…</p>
+      </main>
+    )
+  }
+  if (error || !resolved) {
+    return (
+      <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6">
+        <div className="mb-4">
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="text-oregon-green hover:underline focus:outline-none focus:ring-2 focus:ring-oregon-green focus:ring-offset-1 rounded"
+          >
+            ← Chat
+          </button>
+        </div>
+        <p className="text-red-600 mb-4">
+          No organization or competition found for &quot;{scopeSlug}&quot;.
+        </p>
+        <p>
+          Check the <Link to="/organizations" className="text-oregon-green hover:underline">List of Organizations</Link> for valid links.
+        </p>
+      </main>
+    )
+  }
+  return <ChatView scope={resolved} />
+}
+
+function ChatView({ scope }) {
   const navigate = useNavigate()
   const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -570,9 +623,13 @@ function ChatView() {
     setQuestion('')
     setIsLoading(true)
 
+    const params = new URLSearchParams({ q: q })
+    if (scope?.type === 'organization') params.set('org', scope.canonicalSlug)
+    if (scope?.type === 'competition') params.set('competition', scope.canonicalSlug)
+
     try {
       const response = await fetch(
-        `/api/chat?q=${encodeURIComponent(q)}`,
+        `/api/chat?${params.toString()}`,
         { method: 'GET' }
       )
 
@@ -661,9 +718,12 @@ function ChatView() {
     setShowEmailPrompt(false)
     setLicenseEmail('')
     setIsLoading(true)
+    const params = new URLSearchParams({ q: query })
+    if (scope?.type === 'organization') params.set('org', scope.canonicalSlug)
+    if (scope?.type === 'competition') params.set('competition', scope.canonicalSlug)
     try {
       const response = await fetch(
-        `/api/chat?q=${encodeURIComponent(query)}`,
+        `/api/chat?${params.toString()}`,
         { method: 'GET' }
       )
       if (!response.ok) {
@@ -719,6 +779,19 @@ function ChatView() {
     <>
       {showBetaSplash && <BetaSplash onDismiss={dismissBetaSplash} content={betaContent} />}
       <main className="flex-1 max-w-4xl w-full mx-auto p-2 md:p-4 flex flex-col">
+        {scope && (
+          <div className="mb-3 md:mb-4 flex items-center justify-between gap-2 rounded-lg bg-oregon-green/10 border border-oregon-green/30 px-4 py-2">
+            <p className="text-sm text-gray-800">
+              Providing information about <strong>{scope.fullName}</strong>
+            </p>
+            <Link
+              to="/"
+              className="text-sm text-oregon-green hover:underline font-medium shrink-0"
+            >
+              Clear scope
+            </Link>
+          </div>
+        )}
         <div className="flex-1 overflow-y-auto space-y-3 mb-3 md:space-y-4 md:mb-4">
           {messages.length === 0 ? (
             <div className="text-center text-gray-500 mt-2 md:mt-20">
@@ -930,6 +1003,7 @@ function App() {
         <Route path="/for-assignors" element={<MarkdownPage slug="for-assignors" title="For Assignors" />} />
         <Route path="/organizations" element={<OrganizationsPage />} />
         <Route path="/sample-questions" element={<SampleQuestionsPage />} />
+        <Route path="/:scopeSlug" element={<ScopedChatView />} />
       </Route>
     </Routes>
   )

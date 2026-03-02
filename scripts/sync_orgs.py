@@ -401,6 +401,7 @@ def _build_graph_json(rows):
         competition_nodes[slug] = {
             "id": slug,
             "label": slug,
+            "slug": slug,
             "type": "competition",
             "subtype": sub,
             "fullName": league_name.strip(),
@@ -415,6 +416,7 @@ def _build_graph_json(rows):
         nwsc_node = {
             "id": "NWSC",
             "label": "NWSC",
+            "slug": "NWSC",
             "type": "organization",
             "subtype": "nwsc_parent",
             "fullName": "NorthWest Soccer Central",
@@ -448,6 +450,7 @@ def _build_graph_json(rows):
         node = {
             "id": nid,
             "label": org_id,
+            "slug": nid,
             "type": "organization",
             "subtype": "reftown_top",
             "fullName": full_name or org_id,
@@ -478,9 +481,11 @@ def _build_graph_json(rows):
             region = _val(d, "Region") or _location(_val(d, "City"), _val(d, "State"))
             contact = _val(d, "Contact")
             league_val = _val(d, "League")
+            org_slug = _slug(org_id) if org_id else nid
             node = {
                 "id": nid,
                 "label": payor or org_id,
+                "slug": org_slug,
                 "type": "organization",
                 "subtype": "nwsc_payor",
                 "fullName": full_name or payor or org_id,

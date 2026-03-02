@@ -137,6 +137,26 @@ def _load_scope_graph() -> dict:
     return _scope_graph
 
 
+def _resolve_slug_to_canonical(slug: str, graph: dict, key: str) -> str | None:
+    """Resolve URL param to canonical slug. Case-insensitive; hyphens/underscores interchangeable."""
+    if not (slug or "").strip():
+        return None
+    s = slug.strip().lower()
+    variants = [s, s.replace("_", "-"), s.replace("-", "_")]
+    items = graph.get(key, [])
+    for item in items:
+        canonical = item.get("slug", "")
+        if not canonical:
+            continue
+        c_lower = canonical.lower()
+        c_hyphen = c_lower.replace("_", "-")
+        c_underscore = c_lower.replace("-", "_")
+        for v in variants:
+            if v == c_lower or v == c_hyphen or v == c_underscore:
+                return canonical
+    return None
+
+
 def _detect_and_expand(query_text: str) -> tuple[set[str], set[str]]:
     """Detect org and competition tokens, then expand via relationships.
     Returns (expanded_org_slugs, expanded_comp_slugs)."""
@@ -187,17 +207,50 @@ async def health_check():
 
 
 @app.get("/chat", response_model=Response)
-async def chat_get(request: Request, q: str = ""):
-    """Chat via GET ?q= for Cloud Run (avoids 405 on POST)."""
+async def chat_get(
+    request: Request,
+    q: str = "",
+    org: str | None = None,
+    competition: str | None = None,
+):
+    """Chat via GET ?q= for Cloud Run (avoids 405 on POST). Optional org/competition scope from URL."""
     if not (q or "").strip():
         raise HTTPException(status_code=400, detail="Query parameter 'q' cannot be empty")
-    return await chat(request, Query(question=q.strip()))
+    graph = _load_scope_graph()
+    resolved_org = None
+    resolved_comp = None
+    if org:
+        resolved_org = _resolve_slug_to_canonical(org, graph, "orgs")
+        if not resolved_org:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unknown organization or competition: {org}",
+            )
+    if competition:
+        resolved_comp = _resolve_slug_to_canonical(competition, graph, "competitions")
+        if not resolved_comp:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unknown organization or competition: {competition}",
+            )
+    return await chat(
+        request,
+        Query(question=q.strip()),
+        url_org=resolved_org,
+        url_competition=resolved_comp,
+    )
 
 
 @app.post("/chat", response_model=Response)
-async def chat(request: Request, query: Query):
+async def chat(
+    request: Request,
+    query: Query,
+    url_org: str | None = None,
+    url_competition: str | None = None,
+):
     """
     Process a chat query and return an AI-generated response.
+    Optional url_org/url_competition scope from URL path.
     """
     if not query.question.strip():
         raise HTTPException(status_code=400, detail="Question cannot be empty")
@@ -218,21 +271,59 @@ async def chat(request: Request, query: Query):
         context = ""
         sources = []
         detected_orgs, detected_comps = _detect_and_expand(query.question)
+        if url_org:
+            detected_orgs = detected_orgs | {url_org}
+        if url_competition:
+            detected_comps = detected_comps | {url_competition}
+
+        scope_tokens = []
+        if url_org:
+            scope_tokens.append(url_org)
+        if url_competition:
+            scope_tokens.append(url_competition)
 
         store = get_vector_store()
         if store:
-            if detected_orgs or detected_comps:
+            # When URL scope is present, use two-phase retrieval so scoped docs are guaranteed
+            # in context. Otherwise similarity ranking can exclude org-specific content.
+            search_query = (" ".join(scope_tokens) + " " + query.question) if scope_tokens else query.question
+            has_url_scope = bool(scope_tokens)
+
+            if has_url_scope and (detected_orgs or detected_comps):
+                org_filter = {"org": {"$in": list(detected_orgs)}} if detected_orgs else None
+                comp_filter = {"competition": {"$in": list(detected_comps)}} if detected_comps else None
+                scoped_filter = org_filter or comp_filter
+                if org_filter and comp_filter:
+                    scoped_filter = {"$or": [org_filter, comp_filter]}
+                docs_scoped = store.similarity_search(
+                    search_query, k=8, fetch_k=40, filter=scoped_filter,
+                )
+                docs_general = store.similarity_search(
+                    search_query, k=2, fetch_k=10, filter={"scope": "general"},
+                )
+                seen = set()
+                docs = []
+                for d in docs_scoped + docs_general:
+                    key = (d.metadata.get("source"), d.page_content[:150])
+                    if key not in seen:
+                        seen.add(key)
+                        docs.append(d)
+                    if len(docs) >= 7:
+                        break
+            elif detected_orgs or detected_comps:
                 clauses = [{"scope": "general"}]
                 if detected_orgs:
                     clauses.append({"org": {"$in": list(detected_orgs)}})
                 if detected_comps:
                     clauses.append({"competition": {"$in": list(detected_comps)}})
                 scope_filter = {"$or": clauses}
+                docs = store.similarity_search(
+                    search_query, k=7, fetch_k=20, filter=scope_filter,
+                )
             else:
-                scope_filter = {"scope": "general"}
-            docs = store.similarity_search(
-                query.question, k=7, fetch_k=20, filter=scope_filter,
-            )
+                docs = store.similarity_search(
+                    search_query, k=7, fetch_k=20, filter={"scope": "general"},
+                )
             context = "\n\n".join([doc.page_content for doc in docs])
             sources = [doc.metadata.get("title") or doc.metadata.get("source", "Unknown") for doc in docs]
         
@@ -245,6 +336,9 @@ async def chat(request: Request, query: Query):
         org_instruction = ""
         if not detected_orgs and not detected_comps:
             org_instruction = "\nIf the response varies by organization and one was not specified, encourage the user to specify the organization in a follow-up question.\n"
+        elif scope_tokens:
+            scope_hint = " ".join(scope_tokens)
+            org_instruction = f"\nThe user is asking about {scope_hint}. Prioritize information specific to that organization or competition when it appears in the context.\n"
 
         prompt = f"""I am a soccer referee in Oregon.  I am not an assignor or an administrator.  
 You are a helpful assistant for Oregon soccer referees. 
