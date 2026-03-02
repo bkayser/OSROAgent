@@ -4,7 +4,6 @@ org_slug: "PT"
 org_name_full: "PT"
 nwsc_payor_league: "PT"
 signup_type: "nwsc_payor"
-league: "Portland Timbers"
 state: "OR"
 ---
 
@@ -14,7 +13,6 @@ state: "OR"
 
 - **Org (code):** PT
 - **Full name:** PT
-- **League(s):** Portland Timbers
 - **Location:** OR
 
 ## How to sign up for games

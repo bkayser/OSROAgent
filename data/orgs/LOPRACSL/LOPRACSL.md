@@ -5,7 +5,6 @@ org_slug: "LOPRACSL"
 org_name_full: "Lake Oswego Parks & Recreation Adult Coed Soccer League"
 reftown_link: "https://reftown.com/default.asp?Assoc=LOPRACSL--587"
 signup_type: "reftown_top"
-league: "LOP&R Adult Soccer League"
 city: "Lake Oswego"
 state: "OR"
 general_playing_dates: "Mar-June, Sept-Nov"
@@ -17,7 +16,6 @@ general_playing_dates: "Mar-June, Sept-Nov"
 
 - **Org (code):** LOPRACSL
 - **Full name:** Lake Oswego Parks & Recreation Adult Coed Soccer League
-- **League(s):** LOP&R Adult Soccer League
 - **Homepage:** https://www.ci.oswego.or.us/parksrec/coed-soccer-spring-summer-fall-leagues
 - **Location:** Lake Oswego, OR
 - **General playing dates:** Mar-June, Sept-Nov

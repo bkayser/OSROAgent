@@ -5,7 +5,6 @@ org_slug: "MISOA"
 org_name_full: "Metropolitan Interscholastic Soccer Officials Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=MISOA--535"
 signup_type: "reftown_top"
-league: "OSAA"
 city: "Portland Metro Area"
 state: "OR"
 general_playing_dates: "August - November"
@@ -17,7 +16,6 @@ general_playing_dates: "August - November"
 
 - **Org (code):** MISOA
 - **Full name:** Metropolitan Interscholastic Soccer Officials Association
-- **League(s):** OSAA
 - **Location:** Portland Metro Area, OR
 - **General playing dates:** August - November
 

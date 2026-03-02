@@ -4,7 +4,6 @@ org_slug: "OCSC"
 org_name_full: "Oregon City Soccer Club"
 nwsc_payor_league: "S5 - OCSC"
 signup_type: "nwsc_payor"
-league: "Soccer-5"
 city: "Oregon City"
 state: "OR"
 ---
@@ -15,7 +14,6 @@ state: "OR"
 
 - **Org (code):** OCSC
 - **Full name:** Oregon City Soccer Club
-- **League(s):** Soccer-5
 - **Homepage:** https://www.ocsoccerclub.org
 - **Location:** Oregon City, OR
 

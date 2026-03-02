@@ -2,7 +2,9 @@
 FastAPI backend for Oregon Soccer Referee Concierge.
 """
 
+import json
 import os
+import re
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -44,8 +46,9 @@ STATIC_DIR = Path(__file__).parent.parent / "static"
 # Configuration
 VECTOR_STORE_PATH = Path(__file__).parent.parent / "vector_store"
 
-# Global vector store instance
+# Global vector store instance and scope graph
 vector_store = None
+_scope_graph: dict | None = None
 
 
 class Query(BaseModel):
@@ -105,6 +108,68 @@ def get_vector_store():
     return vector_store
 
 
+def _load_scope_graph() -> dict:
+    """Load scope_graph.json (cached after first call). Fall back to org_slugs.json if scope_graph missing."""
+    global _scope_graph
+    if _scope_graph is not None:
+        return _scope_graph
+    graph_path = VECTOR_STORE_PATH / "scope_graph.json"
+    if graph_path.exists():
+        try:
+            _scope_graph = json.loads(graph_path.read_text(encoding="utf-8"))
+        except Exception:
+            _scope_graph = {"orgs": [], "competitions": [], "org_to_comps": {}, "comp_to_orgs": {}}
+    else:
+        slugs_path = VECTOR_STORE_PATH / "org_slugs.json"
+        if slugs_path.exists():
+            try:
+                org_slugs = json.loads(slugs_path.read_text(encoding="utf-8"))
+                _scope_graph = {
+                    "orgs": org_slugs,
+                    "competitions": [],
+                    "org_to_comps": {},
+                    "comp_to_orgs": {},
+                }
+            except Exception:
+                _scope_graph = {"orgs": [], "competitions": [], "org_to_comps": {}, "comp_to_orgs": {}}
+        else:
+            _scope_graph = {"orgs": [], "competitions": [], "org_to_comps": {}, "comp_to_orgs": {}}
+    return _scope_graph
+
+
+def _detect_and_expand(query_text: str) -> tuple[set[str], set[str]]:
+    """Detect org and competition tokens, then expand via relationships.
+    Returns (expanded_org_slugs, expanded_comp_slugs)."""
+    graph = _load_scope_graph()
+    detected_orgs = set()
+    detected_comps = set()
+    q_lower = query_text.lower()
+
+    for org in graph.get("orgs", []):
+        for token in org.get("tokens", []):
+            pattern = r"(?<![a-zA-Z0-9])" + re.escape(token.lower()) + r"(?![a-zA-Z0-9])"
+            if re.search(pattern, q_lower):
+                detected_orgs.add(org["slug"])
+                break
+
+    for comp in graph.get("competitions", []):
+        for token in comp.get("tokens", []):
+            pattern = r"(?<![a-zA-Z0-9])" + re.escape(token.lower()) + r"(?![a-zA-Z0-9])"
+            if re.search(pattern, q_lower):
+                detected_comps.add(comp["slug"])
+                break
+
+    org_to_comps = graph.get("org_to_comps", {})
+    comp_to_orgs = graph.get("comp_to_orgs", {})
+
+    for org_slug in list(detected_orgs):
+        detected_comps |= set(org_to_comps.get(org_slug, []))
+    for comp_slug in list(detected_comps):
+        detected_orgs |= set(comp_to_orgs.get(comp_slug, []))
+
+    return detected_orgs, detected_comps
+
+
 @app.get("/")
 async def root():
     """Health check endpoint."""
@@ -152,20 +217,34 @@ async def chat(request: Request, query: Query):
     try:
         context = ""
         sources = []
-        
-        # Retrieve relevant context if vector store is available (MMR for diverse results)
+        detected_orgs, detected_comps = _detect_and_expand(query.question)
+
         store = get_vector_store()
         if store:
-            docs = store.max_marginal_relevance_search(query.question, k=5, fetch_k=20)
+            if detected_orgs or detected_comps:
+                clauses = [{"scope": "general"}]
+                if detected_orgs:
+                    clauses.append({"org": {"$in": list(detected_orgs)}})
+                if detected_comps:
+                    clauses.append({"competition": {"$in": list(detected_comps)}})
+                scope_filter = {"$or": clauses}
+            else:
+                scope_filter = {"scope": "general"}
+            docs = store.similarity_search(
+                query.question, k=7, fetch_k=20, filter=scope_filter,
+            )
             context = "\n\n".join([doc.page_content for doc in docs])
             sources = [doc.metadata.get("title") or doc.metadata.get("source", "Unknown") for doc in docs]
         
-        # Generate response using Gemini
         from google import genai
         api_key = os.environ.get("GOOGLE_API_KEY") or os.environ.get("GEMINI_API_KEY")
         if not api_key:
             raise HTTPException(status_code=500, detail="GOOGLE_API_KEY or GEMINI_API_KEY must be set")
         client = genai.Client(api_key=api_key)
+
+        org_instruction = ""
+        if not detected_orgs and not detected_comps:
+            org_instruction = "\nIf the response varies by organization and one was not specified, encourage the user to specify the organization in a follow-up question.\n"
 
         prompt = f"""I am a soccer referee in Oregon.  I am not an assignor or an administrator.  
 You are a helpful assistant for Oregon soccer referees. 
@@ -178,9 +257,7 @@ Question: {query.question}
 
 Provide a clear, accurate, and helpful response. If you're unsure about something, 
 say so rather than making up information.
-
-If the response varies by organization and one was not specified, encourage the user to specify the organization in a follow-up question.
-
+{org_instruction}
 Respond in the same language the user used. If the question is in Spanish, answer in Spanish; 
 if in English, answer in English; and so on for other languages."""
 

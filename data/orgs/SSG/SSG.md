@@ -5,7 +5,6 @@ org_slug: "SSG"
 org_name_full: "Salem Soccer Group"
 reftown_link: "https://reftown.com/default.asp?Assoc=SSG--593"
 signup_type: "reftown_top"
-league: "CFC Recreational, Capital cup, Girls Academy, ECNL, ECNL-RL"
 city: "Salem"
 state: "OR"
 general_playing_dates: "Year Round"
@@ -17,7 +16,6 @@ general_playing_dates: "Year Round"
 
 - **Org (code):** SSG
 - **Full name:** Salem Soccer Group
-- **League(s):** CFC Recreational, Capital cup, Girls Academy, ECNL, ECNL-RL
 - **Homepage:** https://www.cfcsalem.com/referee
 - **Location:** Salem, OR
 - **General playing dates:** Year Round

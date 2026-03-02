@@ -5,7 +5,6 @@ org_slug: "TSC"
 org_name_full: "Tualatin Soccer Club"
 reftown_link: "https://reftown.com/default.asp?Assoc=TSC--635"
 signup_type: "reftown_top"
-league: "OYSA"
 city: "Tualatin"
 state: "OR"
 general_playing_dates: "Fall Only"
@@ -17,7 +16,6 @@ general_playing_dates: "Fall Only"
 
 - **Org (code):** TSC
 - **Full name:** Tualatin Soccer Club
-- **League(s):** OYSA
 - **Homepage:** https://www.tualatinsoccer.com
 - **Location:** Tualatin, OR
 - **General playing dates:** Fall Only

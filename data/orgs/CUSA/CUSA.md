@@ -5,7 +5,6 @@ org_slug: "CUSA"
 org_name_full: "Canby United Soccer Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=CUSA--581"
 signup_type: "reftown_top"
-league: "Soccer-5"
 city: "Canby"
 state: "OR"
 ---
@@ -16,7 +15,6 @@ state: "OR"
 
 - **Org (code):** CUSA
 - **Full name:** Canby United Soccer Association
-- **League(s):** Soccer-5
 - **Homepage:** https://www.canbysoccer.org
 - **Location:** Canby, OR
 

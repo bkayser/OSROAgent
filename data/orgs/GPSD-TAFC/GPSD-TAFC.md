@@ -5,7 +5,6 @@ org_slug: "GPSD-TAFC"
 org_name_full: "Greater Portland Soccer District & Timbers Army"
 reftown_link: "https://reftown.com/default.asp?Assoc=GPSD-TAFC--569"
 signup_type: "reftown_top"
-league: "GPSD"
 city: "Portland"
 state: "OR"
 ---
@@ -16,7 +15,6 @@ state: "OR"
 
 - **Org (code):** GPSD-TAFC
 - **Full name:** Greater Portland Soccer District & Timbers Army
-- **League(s):** GPSD
 - **Homepage:** https://www.gpsdsoccer.com/referees
 - **Location:** Portland, OR
 

@@ -35,6 +35,10 @@ BACKEND_DIR = PROJECT_ROOT / "backend"
 ORGANIZATIONS_TEMPLATE = PROJECT_ROOT / "data" / "_organizations.md"
 ORGANIZATIONS_OUTPUT = PROJECT_ROOT / "frontend" / "public" / "organizations.md"
 ORGANIZATIONS_GRAPH_OUTPUT = PROJECT_ROOT / "frontend" / "public" / "organizations-graph.json"
+ORG_INDEX_OUTPUT = PROJECT_ROOT / "data" / "org_index.md"
+COMPETITION_INDEX_OUTPUT = PROJECT_ROOT / "data" / "competition_index.md"
+VECTOR_STORE_DIR = PROJECT_ROOT / "vector_store"
+SCOPE_GRAPH_OUTPUT = VECTOR_STORE_DIR / "scope_graph.json"
 
 COLUMNS = [
     "Org ID",
@@ -56,6 +60,7 @@ COLUMNS = [
     "Competition Type",
     "Competitions",
     "Region",
+    "Tokens",
 ]
 
 
@@ -503,6 +508,201 @@ def _build_graph_json(rows):
     return {"nodes": nodes, "edges": edges}
 
 
+def _default_tokens(slug):
+    """Compute default token list for a slug: slug as-is, slug with _ replaced by space,
+    and first segment before _ or - if the slug contains one."""
+    tokens = [slug]
+    spaced = slug.replace("_", " ")
+    if spaced != slug:
+        tokens.append(spaced)
+    for sep in ("_", "-"):
+        if sep in slug:
+            first = slug.split(sep, 1)[0]
+            if first and first not in tokens:
+                tokens.append(first)
+            break
+    return tokens
+
+
+def _build_org_index_md(rows):
+    """Build a markdown index of all orgs for retrieval (unscoped)."""
+    lines = [
+        "---",
+        'title: "Organization Index"',
+        "---",
+        "",
+        "# Organization Index",
+        "",
+        "This index lists all organizations that assign referee games in Oregon.",
+        "",
+    ]
+    for d in rows:
+        org_id = _val(d, "Org ID")
+        org_name = _val(d, "Org Name")
+        city = _val(d, "City")
+        state = _val(d, "State")
+        league = _val(d, "League")
+        contact = _val(d, "Contact")
+        comp_type = _val(d, "Competition Type")
+        competitions = _val(d, "Competitions")
+        info = _val(d, "Info")
+        region = _val(d, "Region") or _location(city, state)
+
+        heading = org_name or org_id
+        lines.append(f"## {heading} ({org_id})")
+        lines.append("")
+        parts = []
+        if region:
+            parts.append(f"Region: {region}")
+        if league:
+            parts.append(f"League: {league}")
+        if competitions:
+            parts.append(f"Competitions: {competitions}")
+        if comp_type:
+            parts.append(f"Type: {comp_type}")
+        if contact:
+            parts.append(f"Assignor/contact: {contact}")
+        if info:
+            parts.append(info)
+        lines.append(". ".join(parts) + ".")
+        lines.append("")
+    return "\n".join(lines)
+
+
+def _default_competition_tokens(slug):
+    """Compute default tokens for a competition slug: slug as-is, slug with - replaced by space,
+    and first segment before - if present."""
+    tokens = [slug]
+    spaced = slug.replace("-", " ")
+    if spaced != slug:
+        tokens.append(spaced)
+    if "-" in slug:
+        first = slug.split("-", 1)[0]
+        if first and first not in tokens:
+            tokens.append(first)
+    return tokens
+
+
+def _build_org_slugs(rows):
+    """Build the org_slugs list from rows, using the Tokens column if available."""
+    slugs = []
+    for d in rows:
+        org_id = _val(d, "Org ID")
+        if not org_id:
+            continue
+        slug = _slug(org_id)
+        tokens_cell = _val(d, "Tokens")
+        if tokens_cell:
+            tokens = [t.strip() for t in tokens_cell.split(",") if t.strip()]
+        else:
+            tokens = _default_tokens(slug)
+        slugs.append({"slug": slug, "tokens": tokens})
+    return slugs
+
+
+def _derive_org_comp_maps(rows):
+    """Derive org_to_comps and comp_to_orgs from Master sheet Competitions/League columns."""
+    org_to_comps = {}
+    comp_to_orgs = {}
+    for d in rows:
+        org_id = _val(d, "Org ID")
+        if not org_id:
+            continue
+        org_slug = _slug(org_id)
+        league_val = _val(d, "League")
+        competitions_val = _val(d, "Competitions")
+        comp_list = _competition_sublist(league_val, competitions_val)
+        override_type = d.get("Competition Type", "")
+        org_comps = []
+        for comp_name in comp_list:
+            comp_slug = _competition_slug(comp_name)
+            if comp_slug:
+                org_comps.append(comp_slug)
+                comp_to_orgs.setdefault(comp_slug, []).append(org_slug)
+        if org_comps:
+            org_to_comps[org_slug] = list(dict.fromkeys(org_comps))
+    return org_to_comps, comp_to_orgs
+
+
+def _build_scope_graph(master_rows, competition_rows, org_to_comps, comp_to_orgs):
+    """Build scope_graph.json with orgs, competitions, and relationship maps."""
+    orgs = _build_org_slugs(master_rows)
+    comp_slug_set = set(comp_to_orgs.keys())
+    for vals in org_to_comps.values():
+        comp_slug_set.update(vals)
+
+    comp_by_slug = {}
+    for d in (competition_rows or []):
+        comp_id = _val(d, "Competition ID")
+        if not comp_id:
+            continue
+        comp_id = _competition_slug(comp_id) or comp_id
+        tokens_cell = _val(d, "Tokens")
+        if tokens_cell:
+            tokens = [t.strip() for t in tokens_cell.split(",") if t.strip()]
+        else:
+            tokens = _default_competition_tokens(comp_id)
+        comp_by_slug[comp_id] = {"slug": comp_id, "tokens": tokens}
+
+    competitions = []
+    for comp_slug in sorted(comp_slug_set):
+        if comp_slug in comp_by_slug:
+            competitions.append(comp_by_slug[comp_slug])
+        else:
+            competitions.append({
+                "slug": comp_slug,
+                "tokens": _default_competition_tokens(comp_slug),
+            })
+
+    return {
+        "orgs": orgs,
+        "competitions": competitions,
+        "org_to_comps": org_to_comps,
+        "comp_to_orgs": comp_to_orgs,
+    }
+
+
+def _build_competition_index_md(competition_rows, comp_to_orgs):
+    """Build a markdown index of all competitions for retrieval (unscoped)."""
+    lines = [
+        "---",
+        'title: "Competition Index"',
+        "---",
+        "",
+        "# Competition Index",
+        "",
+        "This index lists competitions and leagues that assign referee games in Oregon.",
+        "",
+    ]
+    for d in competition_rows:
+        comp_id = _val(d, "Competition ID")
+        full_name = _val(d, "Full Name")
+        comp_type = _val(d, "Type")
+        level = _val(d, "Level")
+        rules_url = _val(d, "Rules URL")
+        info = _val(d, "Info")
+        comp_slug = _competition_slug(comp_id) if comp_id else comp_id
+        orgs = comp_to_orgs.get(comp_slug or comp_id, [])
+
+        heading = full_name or comp_id or comp_slug
+        lines.append(f"## {heading} ({comp_id or comp_slug})")
+        lines.append("")
+        parts = []
+        if comp_type:
+            parts.append(f"Type: {comp_type}")
+        if level:
+            parts.append(f"Level: {level}")
+        if rules_url:
+            parts.append(f"Rules: {rules_url}")
+        if orgs:
+            parts.append(f"Organizations: {', '.join(orgs)}")
+        if info:
+            parts.append(info)
+        lines.append(". ".join(parts) + ".")
+        lines.append("")
+    return "\n".join(lines)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Sync organization summaries from Google Sheet to data/orgs/<org_slug>/ORG.md"
@@ -519,6 +719,10 @@ def main():
         help=f"Worksheet GID (default: {DEFAULT_GID})",
     )
     args = parser.parse_args()
+
+    COMPETITION_COLUMNS = [
+        "Competition ID", "Full Name", "Tokens", "Type", "Level", "Rules URL", "Info",
+    ]
 
     client = _get_sheet_client()
     spreadsheet = client.open_by_key(args.sheet_id)
@@ -546,6 +750,29 @@ def main():
             continue
         rows.append(d)
 
+    competition_rows = []
+    try:
+        from gspread.exceptions import WorksheetNotFound
+        comp_worksheet = spreadsheet.worksheet("Competitions")
+        comp_values = comp_worksheet.get_all_values()
+        if comp_values:
+            comp_headers = [c.strip() for c in comp_values[0]]
+            comp_col_indices = {h: i for i, h in enumerate(comp_headers)}
+            for row_data in comp_values[1:]:
+                d = {}
+                for col in COMPETITION_COLUMNS:
+                    idx = comp_col_indices.get(col, -1)
+                    if idx >= 0 and idx < len(row_data):
+                        d[col] = (row_data[idx] or "").strip()
+                    else:
+                        d[col] = ""
+                comp_id = _val(d, "Competition ID")
+                if comp_id:
+                    competition_rows.append(d)
+    except WorksheetNotFound:
+        pass
+
+    org_to_comps, comp_to_orgs = _derive_org_comp_maps(rows)
     reftown_rows = [r for r in rows if not _val(r, "NWSC Payor League")]
     nwsc_rows = [r for r in rows if _val(r, "NWSC Payor League")]
 
@@ -571,9 +798,29 @@ def main():
     graph_data = _build_graph_json(rows)
     ORGANIZATIONS_GRAPH_OUTPUT.write_text(json.dumps(graph_data, indent=2), encoding="utf-8")
 
+    org_index_md = _build_org_index_md(rows)
+    ORG_INDEX_OUTPUT.write_text(org_index_md, encoding="utf-8")
+
+    scope_graph = _build_scope_graph(rows, competition_rows, org_to_comps, comp_to_orgs)
+    VECTOR_STORE_DIR.mkdir(parents=True, exist_ok=True)
+    SCOPE_GRAPH_OUTPUT.write_text(json.dumps(scope_graph, indent=2), encoding="utf-8")
+
+    if competition_rows:
+        competition_index_md = _build_competition_index_md(competition_rows, comp_to_orgs)
+    else:
+        competition_index_md = _build_competition_index_md(
+            [{"Competition ID": c, "Full Name": c, "Type": "", "Level": "", "Rules URL": "", "Info": ""}
+             for c in sorted(comp_to_orgs.keys())],
+            comp_to_orgs,
+        )
+    COMPETITION_INDEX_OUTPUT.write_text(competition_index_md, encoding="utf-8")
+
     print(f"Wrote {count} organization files to {ORGS_DIR}")
     print(f"Wrote {ORGANIZATIONS_OUTPUT}")
     print(f"Wrote {ORGANIZATIONS_GRAPH_OUTPUT}")
+    print(f"Wrote {ORG_INDEX_OUTPUT}")
+    print(f"Wrote {SCOPE_GRAPH_OUTPUT} ({len(scope_graph['orgs'])} orgs, {len(scope_graph['competitions'])} competitions)")
+    print(f"Wrote {COMPETITION_INDEX_OUTPUT}")
 
 
 if __name__ == "__main__":

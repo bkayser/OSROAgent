@@ -5,7 +5,6 @@ org_slug: "PYSA"
 org_name_full: "Portland Youth Soccer Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=PYSA--557"
 signup_type: "reftown_top"
-league: "PYSA"
 city: "Portland"
 state: "OR"
 general_playing_dates: "Spring & Fall"
@@ -17,7 +16,6 @@ general_playing_dates: "Spring & Fall"
 
 - **Org (code):** PYSA
 - **Full name:** Portland Youth Soccer Association
-- **League(s):** PYSA
 - **Homepage:** https://leagues.bluesombrero.com/Default.aspx?tabid=1711498
 - **Location:** Portland, OR
 - **General playing dates:** Spring & Fall

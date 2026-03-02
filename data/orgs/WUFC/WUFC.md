@@ -4,7 +4,6 @@ org_slug: "WUFC"
 org_name_full: "Willamette United Football Club"
 nwsc_payor_league: "S5 - WUFC"
 signup_type: "nwsc_payor"
-league: "Soccer-5"
 city: "Wilsonville, West Linn"
 state: "OR"
 ---
@@ -15,7 +14,6 @@ state: "OR"
 
 - **Org (code):** WUFC
 - **Full name:** Willamette United Football Club
-- **League(s):** Soccer-5
 - **Homepage:** https://willametteunitedfc.com/resources/referee-resources/
 - **Location:** Wilsonville, West Linn, OR
 

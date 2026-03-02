@@ -5,7 +5,6 @@ org_slug: "MVSRA"
 org_name_full: "Mid-Valley Soccer Referees Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=MVSRA--725"
 signup_type: "reftown_top"
-league: "OSAA"
 state: "OR"
 ---
 
@@ -15,7 +14,6 @@ state: "OR"
 
 - **Org (code):** MVSRA
 - **Full name:** Mid-Valley Soccer Referees Association
-- **League(s):** OSAA
 - **Homepage:** https://www.mvsra.net
 - **Location:** OR
 

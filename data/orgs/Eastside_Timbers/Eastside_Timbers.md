@@ -4,7 +4,6 @@ org_slug: "Eastside_Timbers"
 org_name_full: "Eastside Timbers"
 nwsc_payor_league: "Eastside Timbers"
 signup_type: "nwsc_payor"
-league: "Eastside Timbers Rec"
 city: "Gresham"
 state: "OR"
 ---
@@ -15,7 +14,6 @@ state: "OR"
 
 - **Org (code):** Eastside Timbers
 - **Full name:** Eastside Timbers
-- **League(s):** Eastside Timbers Rec
 - **Homepage:** https://www.eastsidetimbers.com/recreation
 - **Location:** Gresham, OR
 

@@ -5,7 +5,6 @@ org_slug: "SSRA"
 org_name_full: "Salem Soccer Referee Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=SSRA--619"
 signup_type: "reftown_top"
-league: "OSAA"
 city: "Salem"
 state: "OR"
 ---
@@ -16,7 +15,6 @@ state: "OR"
 
 - **Org (code):** SSRA
 - **Full name:** Salem Soccer Referee Association
-- **League(s):** OSAA
 - **Location:** Salem, OR
 
 ## How to sign up for games

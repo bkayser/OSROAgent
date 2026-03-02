@@ -1,11 +1,11 @@
 ---
 source: https://reftown.com/link.asp?A=555&Q=RID%3D41&P=custom.asp
-title: RefTown - OYSA Regional Assignors
+title: OYSA Regional Assignors
 ---
 
-**Assignor Contact Info**
-
 ## Portland Area Assignors
+
+These people assign games for OYSA in the Portland area.
 
 | **Area** | **Assignor Name** | **Email Address** | **Phone/Text** |
 |---------------------|------------|-----------|-------|
@@ -14,7 +14,11 @@ title: RefTown - OYSA Regional Assignors
 | Gresham/East | Carly Copplestone |  [carly@eastsidetimbers.com](mailto:carly@eastsidetimbers.com) | [503-894-4422](tel://5038944422) |
 | Hillsboro/Coast/West | Chris Job  | [jchortmktg@gmail.com](mailto:jchortmktg@gmail.com) | [503-403-9555](tel://5034039555) |
 | Oregon City/Southeast | Jeff Rine | [jeff.rine@aol.com](mailto:jeff.rine@aol.com) | [503-348-0021](tel://5033480021) |
+
+
 ## Outside the Portland Area
+
+These people assign games for OYSA in other regions of Oregon.
 
 | **Area** | **Assignor Name** | **Email Address** | **Phone/Text** |
 |---------------------|------------|-----------|-------|

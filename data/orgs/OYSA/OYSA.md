@@ -4,7 +4,6 @@ org_slug: "OYSA"
 org_name_full: "OYSA (Leagues, Cups, Academy)"
 nwsc_payor_league: "OYSA Leagues"
 signup_type: "nwsc_payor"
-league: "OYSA,State Cup,Founders Cup,Presidents Cup"
 state: "OR"
 ---
 
@@ -14,7 +13,6 @@ state: "OR"
 
 - **Org (code):** OYSA
 - **Full name:** OYSA (Leagues, Cups, Academy)
-- **League(s):** OYSA,State Cup,Founders Cup,Presidents Cup
 - **Homepage:** https://www.oregonyouthsoccer.org
 - **Location:** OR
 

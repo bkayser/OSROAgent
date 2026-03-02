@@ -4,7 +4,6 @@ org_slug: "NCSC"
 org_name_full: "North Clackamas Soccer Club"
 nwsc_payor_league: "S5 - NCSC"
 signup_type: "nwsc_payor"
-league: "Soccer-5"
 city: "Oak Grove, Milwaukie"
 state: "OR"
 ---
@@ -15,7 +14,6 @@ state: "OR"
 
 - **Org (code):** NCSC
 - **Full name:** North Clackamas Soccer Club
-- **League(s):** Soccer-5
 - **Homepage:** https://www.ncsoccerclub.com
 - **Location:** Oak Grove, Milwaukie, OR
 

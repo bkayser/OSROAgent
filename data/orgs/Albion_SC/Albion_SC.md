@@ -5,7 +5,6 @@ org_slug: "Albion_SC"
 org_name_full: "Albion Soccer Club Jr"
 reftown_link: "https://reftown.com/default.asp?Assoc=Albion%20SC--566"
 signup_type: "reftown_top"
-league: "Tualatin Hills Junior Soccer League"
 city: "Tigard"
 state: "OR"
 general_playing_dates: "Fall and Spring"
@@ -17,7 +16,6 @@ general_playing_dates: "Fall and Spring"
 
 - **Org (code):** Albion SC
 - **Full name:** Albion Soccer Club Jr
-- **League(s):** Tualatin Hills Junior Soccer League
 - **Homepage:** https://tualatinhillsjuniorsoccerleague.com
 - **Location:** Tigard, OR
 - **General playing dates:** Fall and Spring

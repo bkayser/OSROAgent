@@ -1,4 +1,4 @@
-# OYSA Developmental Academy
+# OYSA Developmental Soccer
 
 Also referred to as "development league", OYSA Developmental is a great opportunity for new and young referees to start out.  This covers the U8-U10 age groups, typically 1st to 3rd grade.
 

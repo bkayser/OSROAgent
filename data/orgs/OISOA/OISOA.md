@@ -5,7 +5,6 @@ org_slug: "OISOA"
 org_name_full: "Oregon Intercollegiate Soccer Officials Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=OISOA--551"
 signup_type: "reftown_top"
-league: "NISOA"
 state: "OR"
 ---
 
@@ -15,7 +14,6 @@ state: "OR"
 
 - **Org (code):** OISOA
 - **Full name:** Oregon Intercollegiate Soccer Officials Association
-- **League(s):** NISOA
 - **Location:** OR
 
 ## How to sign up for games

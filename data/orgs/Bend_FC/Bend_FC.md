@@ -5,7 +5,6 @@ org_slug: "Bend_FC"
 org_name_full: "Bend FC"
 reftown_link: "https://reftown.com/default.asp?Assoc=Bend%20FC--681"
 signup_type: "reftown_top"
-league: "Central Oregon Soccer League, Bend Premier Cup"
 city: "Bend"
 state: "OR"
 ---
@@ -16,7 +15,6 @@ state: "OR"
 
 - **Org (code):** Bend FC
 - **Full name:** Bend FC
-- **League(s):** Central Oregon Soccer League, Bend Premier Cup
 - **Homepage:** https://www.bendfctimbers.com
 - **Location:** Bend, OR
 

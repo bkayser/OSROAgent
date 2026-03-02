@@ -5,7 +5,6 @@ org_slug: "NUWS"
 org_name_full: "NUWS"
 reftown_link: "https://reftown.com/default.asp?Assoc=NUWS--611"
 signup_type: "reftown_top"
-league: "Northwest United Women's Soccer"
 city: "Portland Metro Area"
 state: "OR"
 ---
@@ -16,7 +15,6 @@ state: "OR"
 
 - **Org (code):** NUWS
 - **Full name:** NUWS
-- **League(s):** Northwest United Women's Soccer
 - **Homepage:** https://www.oregonwomenssoccer.com
 - **Location:** Portland Metro Area, OR
 

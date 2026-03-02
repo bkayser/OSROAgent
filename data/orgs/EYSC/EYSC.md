@@ -5,7 +5,6 @@ org_slug: "EYSC"
 org_name_full: "Estacada Youth Soccer Club"
 reftown_link: "https://reftown.com/default.asp?Assoc=EYSC--643"
 signup_type: "reftown_top"
-league: "Soccer-5"
 city: "Estacada"
 state: "OR"
 ---
@@ -16,7 +15,6 @@ state: "OR"
 
 - **Org (code):** EYSC
 - **Full name:** Estacada Youth Soccer Club
-- **League(s):** Soccer-5
 - **Homepage:** https://www.estacadayouthsoccer.com
 - **Location:** Estacada, OR
 

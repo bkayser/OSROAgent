@@ -4,7 +4,6 @@ org_slug: "TVYSL"
 org_name_full: "Tualatin Valley Youth Soccer League"
 nwsc_payor_league: "TVYSL"
 signup_type: "nwsc_payor"
-league: "TVYSL"
 city: "Tualatin"
 state: "OR"
 ---
@@ -15,7 +14,6 @@ state: "OR"
 
 - **Org (code):** TVYSL
 - **Full name:** Tualatin Valley Youth Soccer League
-- **League(s):** TVYSL
 - **Homepage:** https://www.hillsbororush.org/tualitin-valley-youth-soccer-league/
 - **Location:** Tualatin, OR
 

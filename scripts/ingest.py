@@ -64,22 +64,37 @@ def _strip_markdown_frontmatter(doc: Document) -> Document:
 
 
 def _enrich_doc_metadata(doc: Document) -> Document:
-    """Add doc_type, org, and title (from path) from file path. URL docs keep existing metadata."""
+    """Add doc_type, org, scope, and title from file path. URL docs keep existing metadata."""
     source = (doc.metadata.get("source") or "").replace("\\", "/")
     new_meta = dict(doc.metadata)
     if source.startswith("http://") or source.startswith("https://"):
         if "theifab.com" in source:
             new_meta["doc_type"] = "laws"
+        if new_meta.get("competition"):
+            new_meta["scope"] = "competition"
+        else:
+            new_meta["scope"] = "general"
         return Document(page_content=doc.page_content, metadata=new_meta)
     # File path
     path_lower = source.lower()
     if "/orgs/" in path_lower or "\\orgs\\" in path_lower:
         new_meta["doc_type"] = "org"
+        new_meta["scope"] = "org"
         parts = source.replace("\\", "/").split("/")
         try:
             i = parts.index("orgs")
             if i + 1 < len(parts):
                 new_meta["org"] = parts[i + 1]
+        except ValueError:
+            pass
+    elif "/competitions/" in path_lower or "\\competitions\\" in path_lower:
+        new_meta["doc_type"] = "competition_rules"
+        new_meta["scope"] = "competition"
+        parts = source.replace("\\", "/").split("/")
+        try:
+            i = parts.index("competitions")
+            if i + 1 < len(parts):
+                new_meta["competition"] = parts[i + 1]
         except ValueError:
             pass
     elif "/text/" in path_lower or "\\text\\" in path_lower:
@@ -91,11 +106,13 @@ def _enrich_doc_metadata(doc: Document) -> Document:
             new_meta["doc_type"] = "certification"
         else:
             new_meta["doc_type"] = "general"
+        new_meta["scope"] = "general"
     else:
         if "rules" in path_lower and (path_lower.endswith(".pdf") or path_lower.endswith(".md")):
             new_meta["doc_type"] = "league_rules"
         else:
             new_meta["doc_type"] = "general"
+        new_meta["scope"] = "general"
     if not new_meta.get("title") and (source.endswith(".md") or source.endswith(".txt") or source.endswith(".pdf")):
         try:
             name = Path(source).stem
@@ -106,10 +123,23 @@ def _enrich_doc_metadata(doc: Document) -> Document:
     return Document(page_content=doc.page_content, metadata=new_meta)
 
 
+def _competition_from_url_file_path(url_file: Path) -> str | None:
+    """If url_file is under data/competitions/<slug>/, return the slug; else None."""
+    parts = url_file.parts
+    try:
+        i = parts.index("competitions")
+        if i + 1 < len(parts):
+            return parts[i + 1]
+    except ValueError:
+        pass
+    return None
+
+
 def load_urls(url_file: Path) -> list:
     """Load and scrape documents from URLs listed in a file."""
     documents = []
-    
+    competition_slug = _competition_from_url_file_path(url_file)
+
     if not url_file.exists():
         print(f"URL file {url_file} not found, skipping URL ingestion")
         return documents
@@ -150,6 +180,8 @@ def load_urls(url_file: Path) -> list:
                 meta = {"source": u, "doc_type": "web_page"}
                 if title:
                     meta["title"] = title
+                if competition_slug:
+                    meta["competition"] = competition_slug
                 return Document(page_content=text, metadata=meta)
             except Exception as e:
                 print(f"  Error loading {u}: {e}")

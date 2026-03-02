@@ -5,7 +5,6 @@ org_slug: "HSRA"
 org_name_full: "Hermiston Soccer Referee Association"
 reftown_link: "https://reftown.com/default.asp?Assoc=HSRA"
 signup_type: "reftown_top"
-league: "OSAA"
 city: "Hermiston"
 state: "OR"
 ---
@@ -16,7 +15,6 @@ state: "OR"
 
 - **Org (code):** HSRA
 - **Full name:** Hermiston Soccer Referee Association
-- **League(s):** OSAA
 - **Location:** Hermiston, OR
 
 ## How to sign up for games
