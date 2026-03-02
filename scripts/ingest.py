@@ -64,7 +64,10 @@ def _strip_markdown_frontmatter(doc: Document) -> Document:
 
 
 def _enrich_doc_metadata(doc: Document) -> Document:
-    """Add doc_type, org, scope, and title from file path. URL docs keep existing metadata."""
+    """Add doc_type, org, scope, and title from file path.
+    Documents in data/orgs/<slug>/ get org=<slug>, scope=org.
+    Documents in data/competitions/<slug>/ get competition=<slug>, scope=competition.
+    URL docs inherit org/competition from their _urls.txt location."""
     source = (doc.metadata.get("source") or "").replace("\\", "/")
     new_meta = dict(doc.metadata)
     if source.startswith("http://") or source.startswith("https://"):
@@ -74,18 +77,20 @@ def _enrich_doc_metadata(doc: Document) -> Document:
             new_meta["scope"] = "competition"
         elif new_meta.get("org"):
             new_meta["scope"] = "org"
-            new_meta["doc_type"] = "org"
+            if new_meta.get("doc_type") != "laws":
+                new_meta["doc_type"] = "org"
         else:
             new_meta["scope"] = "general"
         return Document(page_content=doc.page_content, metadata=new_meta)
-    # File path
+    # File path: extract org or competition from path so docs are scoped correctly
     path_lower = source.lower()
+    parts = source.replace("\\", "/").split("/")
+    parts_lower = [p.lower() for p in parts]
     if "/orgs/" in path_lower or "\\orgs\\" in path_lower:
         new_meta["doc_type"] = "org"
         new_meta["scope"] = "org"
-        parts = source.replace("\\", "/").split("/")
         try:
-            i = parts.index("orgs")
+            i = parts_lower.index("orgs")
             if i + 1 < len(parts):
                 new_meta["org"] = parts[i + 1]
         except ValueError:
@@ -93,9 +98,8 @@ def _enrich_doc_metadata(doc: Document) -> Document:
     elif "/competitions/" in path_lower or "\\competitions\\" in path_lower:
         new_meta["doc_type"] = "competition_rules"
         new_meta["scope"] = "competition"
-        parts = source.replace("\\", "/").split("/")
         try:
-            i = parts.index("competitions")
+            i = parts_lower.index("competitions")
             if i + 1 < len(parts):
                 new_meta["competition"] = parts[i + 1]
         except ValueError:
@@ -129,8 +133,9 @@ def _enrich_doc_metadata(doc: Document) -> Document:
 def _org_from_url_file_path(url_file: Path) -> str | None:
     """If url_file is under data/orgs/<slug>/, return the slug; else None."""
     parts = url_file.parts
+    parts_lower = [p.lower() for p in parts]
     try:
-        i = parts.index("orgs")
+        i = parts_lower.index("orgs")
         if i + 1 < len(parts):
             return parts[i + 1]
     except ValueError:
@@ -141,8 +146,9 @@ def _org_from_url_file_path(url_file: Path) -> str | None:
 def _competition_from_url_file_path(url_file: Path) -> str | None:
     """If url_file is under data/competitions/<slug>/, return the slug; else None."""
     parts = url_file.parts
+    parts_lower = [p.lower() for p in parts]
     try:
-        i = parts.index("competitions")
+        i = parts_lower.index("competitions")
         if i + 1 < len(parts):
             return parts[i + 1]
     except ValueError:
