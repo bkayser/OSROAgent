@@ -1,29 +1,24 @@
-## What is OregonReferee.app?
+## Welcome to OregonReferee.app
 
-I created OregonRefree.app as an experiment to help new referees, based on the simple proposition:
+This site is a **chat assistant for Oregon soccer referees**. Ask in plain language and get answers drawn from regional procedures, league information, and officiating resources—not generic web guesses.
 
-Which is a more frictionless support path for referees?
+**You might ask about things like:**
 
-1. Telling them to send all the questions to the OSRO coordinator?
-2. Creating a website with all the information they will need to know and asking them to go find answers there?
-3. Creating a Chatbot that reads all that information instead, and tells you specifically what you ask?
+- IFAB / Laws of the Game and how they apply in your situation  
+- Local league or assignor rules and procedures  
+- Getting assignments, using Reftown, and who to contact  
+- Your USSF license status (when the assistant needs to look it up, it will guide you)
 
-Welcome to your Referee Concierge!
+### This is a beta
 
-### How It Works
+We’re still **testing** the experience to see whether it’s **useful for a wider audience**. Answers may be incomplete or wrong sometimes. If something looks off, please use **Feedback** at the bottom of the page (and thumbs up or down on replies) so we can improve.
 
-OregonReferee.app uses a specialized AI chatbot that utilizes a custom knowledge base. Unlike general-purpose AI, this tool is grounded in regional data to prevent generic or irrelevant answers.
+### Your language
 
-* **Data Ingestion:** We ingest documentation from RefTown, OYSA, NWSC, and the Oregon Soccer Referee Organization. The full pipeline for how we add and manage this data is documented in our [README-ingest file](https://github.com/bkayser/OSROAgent/blob/main/README-ingest.md).
-* **Certification Verification:** The bot can query public USSF data to provide real-time license expiration dates to referees, helping them stay compliant without administrative intervention.
-* **Language Support:** It will give you an answer in the language of you question.  It supports any common foreign language.
-* **Organizational Landscape:** You can see the list of common organizations that hire refs and display it all in a graphical view that shows how they relate to leagues.
+**Questions asked in any language are answered in that language.**
 
-### Deployment & Feedback
-
-We are currently in the **Beta phase**. We invite administrators to stress-test the bot with league-specific queries.  Please use the *Feedback* link at the bottom of the page to let us know when information is missing or incorrect.  Use thumbs up or thumbs down to grade the responses.
-
-If your specific league or tournament ROCs are not yet represented, we can ingest your documentation to expand the bot’s utility.
-
-For a full look at the codebase and logic, please visit the [OSROAgent Repository](https://github.com/bkayser/OSROAgent/blob/main/README-ingest.md).
-
+- *Las preguntas en cualquier idioma se responden en ese mismo idioma.* (Español)  
+- *Les questions posées dans n’importe quelle langue reçoivent une réponse dans cette langue.* (Français)  
+- *Fragen in beliebiger Sprache werden in derselben Sprache beantwortet.* (Deutsch)  
+- *您用任何语言提问，我们都会用该语言回复。* (中文)  
+- *الأسئلة بأي لغة تُجاب عليها بنفس اللغة.* (العربية)

@@ -1,21 +1,25 @@
 # Laws of the game, page by page which includes the FAQs.
-https://www.theifab.com/laws/latest/the-field-of-play
-https://www.theifab.com/laws/latest/the-ball
-https://www.theifab.com/laws/latest/the-players
-https://www.theifab.com/laws/latest/the-players-equipment
-https://www.theifab.com/laws/latest/the-referee
-https://www.theifab.com/laws/latest/the-other-match-officials
-https://www.theifab.com/laws/latest/the-duration-of-the-match
-https://www.theifab.com/laws/latest/the-start-and-restart-of-play
-https://www.theifab.com/laws/latest/the-ball-in-and-out-of-play
-https://www.theifab.com/laws/latest/determining-the-outcome-of-a-match
-https://www.theifab.com/laws/latest/offside
-https://www.theifab.com/laws/latest/fouls-and-misconduct
-https://www.theifab.com/laws/latest/free-kicks
-https://www.theifab.com/laws/latest/the-penalty-kick
-https://www.theifab.com/laws/latest/the-throw-in
-https://www.theifab.com/laws/latest/the-goal-kick
-https://www.theifab.com/laws/latest/the-corner-kick
+# I could use the PDF but it doesn't have the FAQs.
+# Also, these pages have a bunch of text in <deletedexplanation> elements
+# which also get embedded into the database.  To work around
+# that I updated the prompt to reference IFAB LOTG.
+# https://www.theifab.com/laws/latest/the-field-of-play
+# https://www.theifab.com/laws/latest/the-ball
+# https://www.theifab.com/laws/latest/the-players
+# https://www.theifab.com/laws/latest/the-players-equipment
+# https://www.theifab.com/laws/latest/the-referee
+# https://www.theifab.com/laws/latest/the-other-match-officials
+# https://www.theifab.com/laws/latest/the-duration-of-the-match
+# https://www.theifab.com/laws/latest/the-start-and-restart-of-play
+# https://www.theifab.com/laws/latest/the-ball-in-and-out-of-play
+# https://www.theifab.com/laws/latest/determining-the-outcome-of-a-match
+# https://www.theifab.com/laws/latest/offside
+# https://www.theifab.com/laws/latest/fouls-and-misconduct
+# https://www.theifab.com/laws/latest/free-kicks
+# https://www.theifab.com/laws/latest/the-penalty-kick
+# https://www.theifab.com/laws/latest/the-throw-in
+# https://www.theifab.com/laws/latest/the-goal-kick
+# https://www.theifab.com/laws/latest/the-corner-kick
 
 
 # US Soccer Referee Abuse Prevention Policy

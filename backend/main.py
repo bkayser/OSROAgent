@@ -349,7 +349,9 @@ Context from knowledge base:
 
 Question: {query.question}
 
-Provide a clear, accurate, and helpful response. If you're unsure about something, 
+Provide a clear, accurate, and helpful response. For questions about rules refer to the 
+latest version of the IFAB Laws of the Game including the FAQs on the LOTG pages, and the USSF Laws of the Game, citing relevant 
+rules of competition if applicable.If you're unsure about something, 
 say so rather than making up information.
 {org_instruction}
 Respond in the same language the user used. If the question is in Spanish, answer in Spanish; 

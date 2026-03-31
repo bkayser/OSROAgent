@@ -20,7 +20,7 @@ function BetaSplash({ onDismiss, content }) {
                 BETA
               </span>
               <h2 className="text-xl font-bold text-gray-800 mt-1">
-                Welcome, Administrators & Assignors
+                Welcome, Oregon Referees
               </h2>
             </div>
           </div>
